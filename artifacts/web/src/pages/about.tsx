@@ -14,26 +14,10 @@ const fadeUp: Variants = {
 };
 
 const DIFFERENTIATORS = [
-  {
-    title: "Seamless Salesforce Integration",
-    desc: "Apps that feel like they've been part of Salesforce all along. No awkward UI, no external systems — 100% native.",
-    icon: Zap,
-  },
-  {
-    title: "Affordable and Powerful",
-    desc: "Premium quality apps without the enterprise price tag. We believe powerful tools shouldn't require an enterprise budget.",
-    icon: Target,
-  },
-  {
-    title: "Created by Salesforce Veterans",
-    desc: "We've lived the problems, and we're building the solutions. Every feature exists because we needed it ourselves.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Fast Setup, Real Results",
-    desc: "Start seeing value right away — no developers required. Install in minutes, not weeks.",
-    icon: Rocket,
-  },
+  { title: "Seamless Salesforce Integration", desc: "Apps that feel like they've been part of Salesforce all along. No awkward UI, no external systems — 100% native.", icon: Zap },
+  { title: "Affordable and Powerful", desc: "Premium quality apps without the enterprise price tag. Powerful tools shouldn't require an enterprise budget.", icon: Target },
+  { title: "Created by Salesforce Veterans", desc: "We've lived the problems, and we're building the solutions. Every feature exists because we needed it ourselves.", icon: ShieldCheck },
+  { title: "Fast Setup, Real Results", desc: "Start seeing value right away — no developers required. Install in minutes, not weeks.", icon: Rocket },
 ];
 
 export default function About() {
@@ -44,12 +28,11 @@ export default function About() {
   return (
     <Layout>
 
-      {/* ── HERO ── */}
+      {/* ── HERO — dark ── */}
       <section className="relative py-32 lg:py-40 overflow-hidden bg-[#0f0e0b]">
-        {/* Single ambient blob */}
         <div className="absolute -top-32 -left-24 w-[500px] h-[500px] rounded-full bg-primary/[0.12] blur-[130px] pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center max-w-4xl">
+        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,10 +70,12 @@ export default function About() {
             At InnovAgents, we turn real-world consulting experience into powerful, Salesforce-native apps that fill critical gaps without the heavy setup.
           </motion.p>
         </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-white to-transparent pointer-events-none" />
       </section>
 
-      {/* ── OUR STORY ── */}
-      <section className="py-28 bg-[#151311]">
+      {/* ── OUR STORY — white ── */}
+      <section className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-3xl mx-auto space-y-5">
             <motion.div
@@ -98,15 +83,15 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/[0.035] border border-white/[0.08] rounded-3xl p-8 md:p-10"
+              className="bg-[#faf8f4] border border-black/[0.07] rounded-3xl p-8 md:p-10"
             >
-              <div className="inline-flex items-center gap-2 bg-primary/[0.12] border border-primary/[0.20] rounded-full px-4 py-1.5 mb-6">
+              <div className="inline-flex items-center gap-2 bg-primary/[0.07] border border-primary/[0.15] rounded-full px-4 py-1.5 mb-6">
                 <span className="text-primary text-[11px] font-semibold uppercase tracking-widest">Our Story</span>
               </div>
-              <p className="text-lg text-white/55 leading-relaxed mb-5">
+              <p className="text-lg text-[#6b6460] leading-relaxed mb-5">
                 We didn't start by building apps in a vacuum. We started as Salesforce consultants, administrators, and architects. For years, we helped companies of all sizes navigate the complexities of the Salesforce ecosystem.
               </p>
-              <p className="text-lg text-white/55 leading-relaxed">
+              <p className="text-lg text-[#6b6460] leading-relaxed">
                 Time and time again, we saw the same gaps. The same frustrations. Teams spending weeks building custom workarounds for things that should have been simple. That's why we created InnovAgents.
               </p>
             </motion.div>
@@ -116,12 +101,12 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/[0.035] border border-white/[0.08] rounded-3xl p-8 md:p-10"
+              className="bg-[#faf8f4] border border-black/[0.07] rounded-3xl p-8 md:p-10"
             >
-              <div className="inline-flex items-center gap-2 bg-accent/[0.12] border border-accent/[0.22] rounded-full px-4 py-1.5 mb-6">
+              <div className="inline-flex items-center gap-2 bg-accent/[0.09] border border-accent/[0.18] rounded-full px-4 py-1.5 mb-6">
                 <span className="text-accent text-[11px] font-semibold uppercase tracking-widest">Our Mission</span>
               </div>
-              <p className="text-lg text-white/55 leading-relaxed">
+              <p className="text-lg text-[#6b6460] leading-relaxed">
                 To build smarter tools for more innovative Salesforce experiences. We believe that powerful software shouldn't require a massive learning curve, an army of developers, or an enterprise-sized budget. Our apps are designed to be installed in minutes and deliver value immediately.
               </p>
             </motion.div>
@@ -129,19 +114,17 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── WHAT MAKES US DIFFERENT ── */}
-      <section className="py-28 bg-[#0f0e0b]">
+      {/* ── WHAT MAKES US DIFFERENT — warm cream ── */}
+      <section className="py-24 bg-[#faf8f4] border-y border-black/[0.07]">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-14"
           >
-            <h2 className="text-4xl md:text-5xl text-white mb-4">
-              What makes us different
-            </h2>
-            <div className="w-12 h-px bg-white/[0.15] mx-auto" />
+            <h2 className="text-4xl md:text-5xl text-[#1a1814] mb-4">What makes us different</h2>
+            <div className="w-10 h-px bg-black/[0.12] mx-auto" />
           </motion.div>
 
           <motion.div
@@ -155,14 +138,14 @@ export default function About() {
               <motion.div
                 key={i}
                 variants={fadeUp}
-                className="flex items-start gap-5 bg-white/[0.035] border border-white/[0.07] rounded-3xl p-7 hover:border-white/[0.12] hover:bg-white/[0.055] transition-all duration-300 group"
+                className="flex items-start gap-5 bg-white border border-black/[0.07] rounded-3xl p-7 hover:border-black/[0.13] hover:shadow-md shadow-sm transition-all duration-300 group"
               >
-                <div className="w-11 h-11 rounded-xl bg-primary/[0.12] border border-primary/[0.18] flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                <div className="w-11 h-11 rounded-xl bg-primary/[0.09] border border-primary/[0.14] flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
                   <item.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-white font-display font-medium text-xl mb-2">{item.title}</h3>
-                  <p className="text-white/38 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="text-[#1a1814] font-display font-medium text-xl mb-2">{item.title}</h3>
+                  <p className="text-[#6b6460] text-sm leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -170,14 +153,14 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-28 bg-[#151311]">
-        <div className="max-w-6xl mx-auto px-6 max-w-3xl text-center">
+      {/* ── CTA — indigo ── */}
+      <section className="py-24 bg-primary">
+        <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl text-white mb-6"
+            className="text-4xl md:text-5xl text-white mb-5"
           >
             Ready to see what we've built?
           </motion.h2>
@@ -186,7 +169,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-white/40 mb-10"
+            className="text-lg text-white/65 mb-10 max-w-xl mx-auto"
           >
             Explore our suite of Salesforce-native solutions and see how we can help your team move faster.
           </motion.p>
@@ -199,13 +182,13 @@ export default function About() {
           >
             <Link
               href="/#apps"
-              className="inline-flex items-center justify-center px-7 h-11 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-sm"
+              className="inline-flex items-center justify-center px-7 h-11 text-sm font-semibold bg-white text-primary rounded-full hover:bg-white/90 transition-colors shadow-sm"
             >
               Explore All Apps
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-7 h-11 text-sm font-medium border border-white/[0.18] text-white/80 hover:text-white hover:bg-white/[0.06] rounded-full transition-colors"
+              className="inline-flex items-center justify-center px-7 h-11 text-sm font-medium border border-white/[0.30] text-white hover:bg-white/[0.10] rounded-full transition-colors"
             >
               Contact Us
             </Link>
