@@ -106,49 +106,49 @@
 }
 
 :root {
-  /* Dark theme */
-  --background: 240 11% 4%;
-  --foreground: 0 0% 93%;
+  /* Warm dark theme */
+  --background: 32 10% 6%;
+  --foreground: 36 15% 93%;
 
-  --border: 240 13% 16%;
-  --input: 240 14% 11%;
-  --ring: 240 74% 62%;
+  --border: 32 6% 14%;
+  --input: 32 7% 10%;
+  --ring: 244 75% 61%;
 
-  --card: 240 14% 7%;
-  --card-foreground: 0 0% 93%;
-  --card-border: 240 13% 16%;
+  --card: 32 8% 9%;
+  --card-foreground: 36 15% 93%;
+  --card-border: 32 6% 14%;
 
-  --popover: 240 16% 9%;
-  --popover-foreground: 0 0% 93%;
-  --popover-border: 240 13% 16%;
+  --popover: 32 8% 10%;
+  --popover-foreground: 36 15% 93%;
+  --popover-border: 32 6% 14%;
 
   /* Indigo: #5555e6 */
-  --primary: 240 74% 62%;
+  --primary: 244 75% 61%;
   --primary-foreground: 0 0% 100%;
 
   /* Deep Indigo: #413c64 */
   --secondary: 248 25% 31%;
   --secondary-foreground: 0 0% 100%;
 
-  /* Dark muted */
-  --muted: 240 12% 11%;
-  --muted-foreground: 240 5% 52%;
+  /* Warm muted */
+  --muted: 32 6% 12%;
+  --muted-foreground: 32 5% 50%;
 
   /* Coral: #fe907f */
   --accent: 9 99% 75%;
-  --accent-foreground: 240 4% 9%;
+  --accent-foreground: 32 4% 9%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --sidebar: 240 14% 7%;
-  --sidebar-foreground: 0 0% 93%;
-  --sidebar-border: 240 13% 16%;
-  --sidebar-primary: 240 74% 62%;
+  --sidebar: 32 8% 9%;
+  --sidebar-foreground: 36 15% 93%;
+  --sidebar-border: 32 6% 14%;
+  --sidebar-primary: 244 75% 61%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 9 99% 75%;
-  --sidebar-accent-foreground: 240 4% 9%;
-  --sidebar-ring: 240 74% 62%;
+  --sidebar-accent-foreground: 32 4% 9%;
+  --sidebar-ring: 244 75% 61%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;

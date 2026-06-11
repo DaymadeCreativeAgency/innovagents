@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { motion, type Variants } from "framer-motion";
 import { Zap, Target, ShieldCheck, Rocket } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
 const stagger: Variants = {
@@ -10,8 +9,8 @@ const stagger: Variants = {
   show: { transition: { staggerChildren: 0.09 } },
 };
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 const DIFFERENTIATORS = [
@@ -46,60 +45,44 @@ export default function About() {
     <Layout>
 
       {/* ── HERO ── */}
-      <section className="relative py-28 lg:py-36 overflow-hidden bg-[#09090f]">
-        <div
-          className="absolute inset-0 opacity-[0.16]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
-        />
-        <motion.div
-          className="absolute -top-24 -left-24 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[130px] pointer-events-none"
-          animate={{ x: [0, 45, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute -bottom-24 -right-24 w-[500px] h-[500px] rounded-full bg-accent/15 blur-[110px] pointer-events-none"
-          animate={{ x: [0, -35, 0], y: [0, 25, 0], scale: [1.08, 1, 1.08] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <section className="relative py-32 lg:py-40 overflow-hidden bg-[#0f0e0b]">
+        {/* Single ambient blob */}
+        <div className="absolute -top-32 -left-24 w-[500px] h-[500px] rounded-full bg-primary/[0.12] blur-[130px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
+        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-white/[0.08] border border-white/[0.14] rounded-full px-4 py-1.5 mb-10"
+            className="inline-flex items-center gap-2 bg-white/[0.07] border border-white/[0.10] rounded-full px-4 py-1.5 mb-10"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-            <span className="text-white/55 text-xs font-medium uppercase tracking-widest">Our Story</span>
+            <span className="text-white/50 text-xs font-medium uppercase tracking-widest">Our Story</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.1 }}
-            className="text-5xl md:text-7xl text-white mb-6 leading-[0.9]"
+            className="text-5xl md:text-7xl text-white mb-6 leading-[0.92]"
           >
-            WE'VE LIVED THE
+            We've lived<br />
             <span
-              className="block mt-1"
               style={{
-                background: "linear-gradient(135deg, #fe907f 0%, #5555e6 100%)",
+                background: "linear-gradient(135deg, #5555e6 0%, #8877f0 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              PROBLEMS
+              the problems
             </span>
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-white/45 leading-relaxed"
+            className="text-lg md:text-xl text-white/45 leading-relaxed max-w-2xl mx-auto"
           >
             At InnovAgents, we turn real-world consulting experience into powerful, Salesforce-native apps that fill critical gaps without the heavy setup.
           </motion.p>
@@ -107,38 +90,38 @@ export default function About() {
       </section>
 
       {/* ── OUR STORY ── */}
-      <section className="py-28 bg-[#0c0c14]">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto space-y-16">
+      <section className="py-28 bg-[#151311]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-3xl mx-auto space-y-5">
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 md:p-10"
+              className="bg-white/[0.035] border border-white/[0.08] rounded-3xl p-8 md:p-10"
             >
-              <div className="inline-flex items-center gap-2 bg-primary/[0.14] border border-primary/25 rounded-full px-4 py-1.5 mb-6">
-                <span className="text-primary text-xs font-semibold uppercase tracking-widest">Our Story</span>
+              <div className="inline-flex items-center gap-2 bg-primary/[0.12] border border-primary/[0.20] rounded-full px-4 py-1.5 mb-6">
+                <span className="text-primary text-[11px] font-semibold uppercase tracking-widest">Our Story</span>
               </div>
-              <p className="text-lg text-white/60 leading-relaxed mb-5">
+              <p className="text-lg text-white/55 leading-relaxed mb-5">
                 We didn't start by building apps in a vacuum. We started as Salesforce consultants, administrators, and architects. For years, we helped companies of all sizes navigate the complexities of the Salesforce ecosystem.
               </p>
-              <p className="text-lg text-white/60 leading-relaxed">
+              <p className="text-lg text-white/55 leading-relaxed">
                 Time and time again, we saw the same gaps. The same frustrations. Teams spending weeks building custom workarounds for things that should have been simple. That's why we created InnovAgents.
               </p>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 md:p-10"
+              className="bg-white/[0.035] border border-white/[0.08] rounded-3xl p-8 md:p-10"
             >
-              <div className="inline-flex items-center gap-2 bg-accent/[0.14] border border-accent/25 rounded-full px-4 py-1.5 mb-6">
-                <span className="text-accent text-xs font-semibold uppercase tracking-widest">Our Mission</span>
+              <div className="inline-flex items-center gap-2 bg-accent/[0.12] border border-accent/[0.22] rounded-full px-4 py-1.5 mb-6">
+                <span className="text-accent text-[11px] font-semibold uppercase tracking-widest">Our Mission</span>
               </div>
-              <p className="text-lg text-white/60 leading-relaxed">
+              <p className="text-lg text-white/55 leading-relaxed">
                 To build smarter tools for more innovative Salesforce experiences. We believe that powerful software shouldn't require a massive learning curve, an army of developers, or an enterprise-sized budget. Our apps are designed to be installed in minutes and deliver value immediately.
               </p>
             </motion.div>
@@ -147,33 +130,18 @@ export default function About() {
       </section>
 
       {/* ── WHAT MAKES US DIFFERENT ── */}
-      <section className="py-28 bg-[#09090f] relative overflow-hidden">
-        <motion.div
-          className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.12] blur-[120px] pointer-events-none"
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="py-28 bg-[#0f0e0b]">
+        <div className="max-w-6xl mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl text-white mb-4">
-              What Makes Us{" "}
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #5555e6 0%, #fe907f 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Different
-              </span>
+              What makes us different
             </h2>
-            <div className="w-16 h-px bg-gradient-to-r from-primary to-accent mx-auto" />
+            <div className="w-12 h-px bg-white/[0.15] mx-auto" />
           </motion.div>
 
           <motion.div
@@ -181,20 +149,20 @@ export default function About() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto"
           >
             {DIFFERENTIATORS.map((item, i) => (
               <motion.div
                 key={i}
                 variants={fadeUp}
-                className="flex items-start gap-5 bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 hover:border-primary/30 hover:bg-white/[0.06] transition-all duration-300 group"
+                className="flex items-start gap-5 bg-white/[0.035] border border-white/[0.07] rounded-3xl p-7 hover:border-white/[0.12] hover:bg-white/[0.055] transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/[0.14] border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/25 transition-colors">
+                <div className="w-11 h-11 rounded-xl bg-primary/[0.12] border border-primary/[0.18] flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
                   <item.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-white font-display font-medium text-xl mb-2">{item.title}</h3>
-                  <p className="text-white/40 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-white/38 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -203,15 +171,10 @@ export default function About() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-28 bg-[#0c0c14] relative overflow-hidden">
-        <motion.div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[250px] rounded-full bg-primary/[0.15] blur-[100px] pointer-events-none"
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="container mx-auto px-4 max-w-3xl text-center relative z-10">
+      <section className="py-28 bg-[#151311]">
+        <div className="max-w-6xl mx-auto px-6 max-w-3xl text-center">
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-4xl md:text-5xl text-white mb-6"
@@ -219,7 +182,7 @@ export default function About() {
             Ready to see what we've built?
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
@@ -228,26 +191,24 @@ export default function About() {
             Explore our suite of Salesforce-native solutions and see how we can help your team move faster.
           </motion.p>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row justify-center gap-4"
+            className="flex flex-col sm:flex-row justify-center gap-3"
           >
-            <Button
-              size="lg"
-              asChild
-              className="text-base px-8 h-12 bg-primary hover:bg-primary/90 shadow-[0_0_35px_rgba(85,85,230,0.4)] hover:shadow-[0_0_55px_rgba(85,85,230,0.6)] transition-all duration-300 rounded-xl"
+            <Link
+              href="/#apps"
+              className="inline-flex items-center justify-center px-7 h-11 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-sm"
             >
-              <Link href="/#apps">Explore All Apps</Link>
-            </Button>
-            <Button
-              size="lg"
-              asChild
-              className="text-base px-8 h-12 bg-transparent border border-white/20 text-white hover:bg-white/[0.07] hover:border-white/30 transition-all duration-300 rounded-xl"
+              Explore All Apps
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-7 h-11 text-sm font-medium border border-white/[0.18] text-white/80 hover:text-white hover:bg-white/[0.06] rounded-full transition-colors"
             >
-              <Link href="/contact">Contact Us</Link>
-            </Button>
+              Contact Us
+            </Link>
           </motion.div>
         </div>
       </section>

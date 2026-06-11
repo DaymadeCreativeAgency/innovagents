@@ -38,56 +38,40 @@ export default function Contact() {
     <Layout>
 
       {/* ── HERO ── */}
-      <section className="relative py-24 lg:py-32 overflow-hidden bg-[#09090f]">
-        <div
-          className="absolute inset-0 opacity-[0.15]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
-        />
-        <motion.div
-          className="absolute -top-20 right-0 w-[600px] h-[400px] rounded-full bg-accent/[0.15] blur-[120px] pointer-events-none"
-          animate={{ x: [0, -30, 0], scale: [1, 1.15, 1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-0 w-[500px] h-[400px] rounded-full bg-primary/[0.12] blur-[110px] pointer-events-none"
-          animate={{ x: [0, 25, 0], scale: [1.1, 1, 1.1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <section className="relative py-28 lg:py-36 overflow-hidden bg-[#0f0e0b]">
+        <div className="absolute -top-24 right-0 w-[500px] h-[380px] rounded-full bg-accent/[0.09] blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 -left-20 w-[400px] h-[380px] rounded-full bg-primary/[0.08] blur-[110px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 relative z-10 text-center max-w-3xl">
+        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center max-w-3xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-white/[0.08] border border-white/[0.14] rounded-full px-4 py-1.5 mb-10"
+            className="inline-flex items-center gap-2 bg-white/[0.07] border border-white/[0.10] rounded-full px-4 py-1.5 mb-10"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="text-white/55 text-xs font-medium uppercase tracking-widest">Get in Touch</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="text-white/50 text-xs font-medium uppercase tracking-widest">Get in Touch</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.65 }}
-            className="text-5xl md:text-7xl text-white mb-6 leading-[0.9]"
+            className="text-5xl md:text-7xl text-white mb-6 leading-[0.92]"
           >
-            LET'S TALK
+            Let's talk<br />
             <span
-              className="block mt-1"
               style={{
-                background: "linear-gradient(135deg, #5555e6 0%, #fe907f 100%)",
+                background: "linear-gradient(135deg, #5555e6 0%, #8877f0 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              SALESFORCE
+              Salesforce
             </span>
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="text-lg text-white/45"
@@ -98,42 +82,42 @@ export default function Contact() {
       </section>
 
       {/* ── FORM + INFO ── */}
-      <section className="py-24 bg-[#0c0c14]">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-start">
+      <section className="py-24 bg-[#151311]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto items-start">
 
             {/* Left: info */}
             <motion.div
-              initial={{ opacity: 0, x: -24 }}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               className="space-y-8"
             >
               <div>
-                <h2 className="text-3xl font-display font-medium text-white mb-3">Get in Touch</h2>
-                <div className="w-14 h-px bg-gradient-to-r from-primary to-accent mb-6" />
+                <h2 className="text-3xl font-display font-medium text-white mb-3">Get in touch</h2>
+                <div className="w-10 h-px bg-white/[0.15] mb-6" />
                 <p className="text-white/45 leading-relaxed">
                   We're a team of Salesforce veterans who have lived the same problems you're facing. Whether you need support, want to request a feature, or just want to chat about the ecosystem, drop us a line. We promise a real person will get back to you.
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-4 bg-white/[0.04] border border-white/[0.08] rounded-2xl p-5 hover:border-primary/30 transition-colors group">
-                  <div className="w-11 h-11 bg-primary/[0.15] border border-primary/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/25 transition-colors">
-                    <Mail className="w-5 h-5 text-primary" />
+              <div className="space-y-3">
+                <div className="flex items-start gap-4 bg-white/[0.035] border border-white/[0.07] rounded-3xl p-5 hover:border-white/[0.12] transition-colors group">
+                  <div className="w-10 h-10 bg-primary/[0.12] border border-primary/[0.18] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                    <Mail className="w-4.5 h-4.5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-base font-medium text-white mb-1">Email</h3>
+                    <h3 className="text-sm font-medium text-white mb-1">Email</h3>
                     <p className="text-white/45 text-sm">hello@innovagents.com</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 bg-white/[0.04] border border-white/[0.08] rounded-2xl p-5 hover:border-accent/30 transition-colors group">
-                  <div className="w-11 h-11 bg-accent/[0.15] border border-accent/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-accent/25 transition-colors">
-                    <MapPin className="w-5 h-5 text-accent" />
+                <div className="flex items-start gap-4 bg-white/[0.035] border border-white/[0.07] rounded-3xl p-5 hover:border-white/[0.12] transition-colors group">
+                  <div className="w-10 h-10 bg-accent/[0.12] border border-accent/[0.20] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors">
+                    <MapPin className="w-4.5 h-4.5 text-accent" />
                   </div>
                   <div>
-                    <h3 className="text-base font-medium text-white mb-1">Headquarters</h3>
+                    <h3 className="text-sm font-medium text-white mb-1">Headquarters</h3>
                     <p className="text-white/45 text-sm leading-relaxed">
                       San Francisco, CA<br />Built for the global Salesforce community
                     </p>
@@ -144,10 +128,10 @@ export default function Contact() {
 
             {/* Right: form */}
             <motion.div
-              initial={{ opacity: 0, x: 24 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="bg-white/[0.04] border border-white/[0.09] rounded-3xl p-8 md:p-10"
+              className="bg-white/[0.035] border border-white/[0.08] rounded-3xl p-8 md:p-10"
             >
               {success ? (
                 <div className="h-full flex flex-col items-center justify-center text-center py-12">
@@ -155,36 +139,36 @@ export default function Contact() {
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="w-20 h-20 bg-primary/[0.15] border border-primary/25 rounded-full flex items-center justify-center mb-6"
+                    className="w-16 h-16 bg-primary/[0.12] border border-primary/[0.22] rounded-full flex items-center justify-center mb-6"
                   >
-                    <CheckCircle2 className="w-10 h-10 text-primary" />
+                    <CheckCircle2 className="w-8 h-8 text-primary" />
                   </motion.div>
-                  <h3 className="text-2xl font-display font-medium text-white mb-3">Message Sent!</h3>
+                  <h3 className="text-2xl font-display font-medium text-white mb-3">Message sent!</h3>
                   <p className="text-white/40 mb-8 text-sm leading-relaxed">
                     Thanks for reaching out. A member of our team will get back to you shortly.
                   </p>
-                  <Button
+                  <button
                     onClick={() => setSuccess(false)}
-                    className="bg-primary/[0.18] hover:bg-primary/30 text-primary border border-primary/25 transition-colors"
+                    className="px-6 py-2 text-sm font-medium bg-primary/[0.15] hover:bg-primary/25 text-primary border border-primary/[0.22] rounded-full transition-colors"
                   >
                     Send Another Message
-                  </Button>
+                  </button>
                 </div>
               ) : (
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white/60 text-xs uppercase tracking-widest font-semibold">Name</FormLabel>
+                            <FormLabel className="text-white/50 text-[11px] uppercase tracking-widest font-semibold">Name</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="Jane Doe"
                                 {...field}
-                                className="h-12 bg-white/[0.06] border-white/[0.12] text-white placeholder:text-white/25 focus:border-primary/50 focus:bg-white/[0.09] transition-colors"
+                                className="h-11 bg-white/[0.05] border-white/[0.10] text-white placeholder:text-white/22 focus:border-primary/40 transition-colors rounded-xl"
                               />
                             </FormControl>
                             <FormMessage />
@@ -196,12 +180,12 @@ export default function Contact() {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white/60 text-xs uppercase tracking-widest font-semibold">Email</FormLabel>
+                            <FormLabel className="text-white/50 text-[11px] uppercase tracking-widest font-semibold">Email</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="jane@company.com"
                                 {...field}
-                                className="h-12 bg-white/[0.06] border-white/[0.12] text-white placeholder:text-white/25 focus:border-primary/50 focus:bg-white/[0.09] transition-colors"
+                                className="h-11 bg-white/[0.05] border-white/[0.10] text-white placeholder:text-white/22 focus:border-primary/40 transition-colors rounded-xl"
                               />
                             </FormControl>
                             <FormMessage />
@@ -215,12 +199,12 @@ export default function Contact() {
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white/60 text-xs uppercase tracking-widest font-semibold">Subject</FormLabel>
+                          <FormLabel className="text-white/50 text-[11px] uppercase tracking-widest font-semibold">Subject</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="How can we help?"
                               {...field}
-                              className="h-12 bg-white/[0.06] border-white/[0.12] text-white placeholder:text-white/25 focus:border-primary/50 focus:bg-white/[0.09] transition-colors"
+                              className="h-11 bg-white/[0.05] border-white/[0.10] text-white placeholder:text-white/22 focus:border-primary/40 transition-colors rounded-xl"
                             />
                           </FormControl>
                           <FormMessage />
@@ -233,11 +217,11 @@ export default function Contact() {
                       name="message"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white/60 text-xs uppercase tracking-widest font-semibold">Message</FormLabel>
+                          <FormLabel className="text-white/50 text-[11px] uppercase tracking-widest font-semibold">Message</FormLabel>
                           <FormControl>
                             <Textarea
                               placeholder="Tell us more about your Salesforce org..."
-                              className="min-h-[140px] bg-white/[0.06] border-white/[0.12] text-white placeholder:text-white/25 focus:border-primary/50 focus:bg-white/[0.09] transition-colors resize-none"
+                              className="min-h-[130px] bg-white/[0.05] border-white/[0.10] text-white placeholder:text-white/22 focus:border-primary/40 transition-colors resize-none rounded-xl"
                               {...field}
                             />
                           </FormControl>
@@ -248,8 +232,7 @@ export default function Contact() {
 
                     <Button
                       type="submit"
-                      className="w-full h-13 text-base bg-primary hover:bg-primary/90 shadow-[0_0_30px_rgba(85,85,230,0.4)] hover:shadow-[0_0_50px_rgba(85,85,230,0.6)] transition-all duration-300 rounded-xl"
-                      style={{ height: "52px" }}
+                      className="w-full h-11 text-sm font-semibold bg-primary hover:bg-primary/90 text-white transition-colors rounded-full shadow-sm"
                     >
                       <Send className="w-4 h-4 mr-2" /> Send Message
                     </Button>
