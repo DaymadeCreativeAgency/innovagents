@@ -1,6 +1,6 @@
-# [Project name]
+# InnovAgents
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Marketing website for InnovAgents — a company that builds affordable, Salesforce-native AppExchange apps for admins, IT leaders, and operations teams.
 
 ## Run & Operate
 
@@ -22,15 +22,21 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/web/` — the InnovAgents marketing site (React + Vite, wouter routing). This is the only product artifact.
+- `artifacts/web/src/index.css` — theme tokens (brand colors as HSL) and `@font-face` declarations for Barlow Condensed.
+- `artifacts/web/public/fonts/` — Barlow Condensed `.ttf` weights served at `/fonts/*`.
+- The `api-server` and `mockup-sandbox` artifacts are scaffold defaults and unused by this site (no backend needed).
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Presentation-first marketing site with NO backend — newsletter and contact forms are client-side only (validate + success state, no persistence).
+- Brand fonts: Barlow Condensed for headings (H1 = weight 900/Black, subheadings = weight 500/Medium), Inter for body (loaded via Google Fonts in `index.html`).
+- Brand palette: indigo `#5555e6` (primary), coral `#fe907f` (accent), deep indigo `#413c64`, near-black `#161618`, warm light gray `#e6e1e1`, white.
+- No logo file was supplied — header/footer use an "InnovAgents" text wordmark in Barlow Condensed Black. Swap in real logo files when provided.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+A 5-page marketing site: Home (`/`), About Us (`/about`), Contact Us (`/contact`), and two product pages (`/products/splash-announcements`, `/products/enhanced-files`). Conveys InnovAgents' Salesforce-native AppExchange apps with featured products, value props, a newsletter signup, and a contact form.
 
 ## User preferences
 
