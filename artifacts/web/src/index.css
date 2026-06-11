@@ -106,43 +106,44 @@
 }
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 240 4% 9%;
-  
-  --border: 0 10% 89%;
-  --input: 0 10% 89%;
+  /* Dark theme */
+  --background: 240 11% 4%;
+  --foreground: 0 0% 93%;
+
+  --border: 240 13% 16%;
+  --input: 240 14% 11%;
   --ring: 240 74% 62%;
-  
-  --card: 0 0% 100%;
-  --card-foreground: 240 4% 9%;
-  --card-border: 0 10% 89%;
-  
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 4% 9%;
-  --popover-border: 0 10% 89%;
-  
+
+  --card: 240 14% 7%;
+  --card-foreground: 0 0% 93%;
+  --card-border: 240 13% 16%;
+
+  --popover: 240 16% 9%;
+  --popover-foreground: 0 0% 93%;
+  --popover-border: 240 13% 16%;
+
   /* Indigo: #5555e6 */
   --primary: 240 74% 62%;
   --primary-foreground: 0 0% 100%;
-  
-  /* Deep Indigo / dark brand: #413c64 */
+
+  /* Deep Indigo: #413c64 */
   --secondary: 248 25% 31%;
   --secondary-foreground: 0 0% 100%;
-  
-  /* Light gray: #e6e1e1 */
-  --muted: 0 10% 89%;
-  --muted-foreground: 240 4% 30%;
-  
+
+  /* Dark muted */
+  --muted: 240 12% 11%;
+  --muted-foreground: 240 5% 52%;
+
   /* Coral: #fe907f */
   --accent: 9 99% 75%;
   --accent-foreground: 240 4% 9%;
-  
+
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  
-  --sidebar: 0 10% 89%;
-  --sidebar-foreground: 240 4% 9%;
-  --sidebar-border: 0 10% 80%;
+
+  --sidebar: 240 14% 7%;
+  --sidebar-foreground: 0 0% 93%;
+  --sidebar-border: 240 13% 16%;
   --sidebar-primary: 240 74% 62%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 9 99% 75%;
@@ -153,7 +154,7 @@
   --app-font-serif: Georgia, serif;
   --app-font-mono: Menlo, monospace;
   --app-font-display: "Barlow Condensed", sans-serif;
-  
+
   --radius: 0.5rem;
 }
 
@@ -165,15 +166,15 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-normal;
   }
-  
+
   h1 {
     @apply font-black;
   }
-  
+
   h2, h3, h4, h5, h6 {
     @apply font-medium;
   }
