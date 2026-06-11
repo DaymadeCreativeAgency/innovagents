@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import logoSrc from "@assets/InnovAgents-Main-Lockup-white_1781206479352.png";
 
 export function Footer() {
   return (
@@ -6,7 +7,7 @@ export function Footer() {
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="md:col-span-1">
           <Link href="/" className="inline-block mb-6">
-            <span className="font-display font-black text-4xl tracking-wide text-white">INNOVAGENTS</span>
+            <img src={logoSrc} alt="InnovAgents" className="h-10 w-auto" />
           </Link>
           <p className="text-secondary-foreground/70 text-sm max-w-sm">
             Powerful Salesforce-native apps built by veterans. Streamline your workflows without the heavy setup.

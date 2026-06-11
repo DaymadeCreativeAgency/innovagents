@@ -32,7 +32,7 @@ Marketing website for InnovAgents — a company that builds affordable, Salesfor
 - Presentation-first marketing site with NO backend — newsletter and contact forms are client-side only (validate + success state, no persistence).
 - Brand fonts: Barlow Condensed for headings (H1 = weight 900/Black, subheadings = weight 500/Medium), Inter for body (loaded via Google Fonts in `index.html`).
 - Brand palette: indigo `#5555e6` (primary), coral `#fe907f` (accent), deep indigo `#413c64`, near-black `#161618`, warm light gray `#e6e1e1`, white.
-- No logo file was supplied — header/footer use an "InnovAgents" text wordmark in Barlow Condensed Black. Swap in real logo files when provided.
+- Logo files live in `attached_assets/`. Header uses `InnovAgents-Main-Lockup-2color_*.png` (coral mark + blue wordmark, for light backgrounds). Footer uses `InnovAgents-Main-Lockup-white_*.png` (all-white, for dark backgrounds). Imported via the `@assets` Vite alias.
 
 ## Product
 

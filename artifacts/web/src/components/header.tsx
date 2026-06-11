@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
+import logoSrc from "@assets/InnovAgents-Main-Lockup-2color_1781206479353.png";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +36,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-muted bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-display font-black text-3xl tracking-wide text-primary">INNOVAGENTS</span>
+          <img src={logoSrc} alt="InnovAgents" className="h-9 w-auto" />
         </Link>
         
         {/* Desktop Nav */}
