@@ -37,7 +37,7 @@ export default function Contact() {
   return (
     <LayoutV2>
       {/* ── HERO — sky gradient ── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#dbe4f7] via-[#edeef5] to-white pt-40 pb-16">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-40 pb-16">
         <Cloud className="top-24 left-[5%] opacity-80" />
         <Cloud className="top-36 right-[8%] opacity-60 scale-75" />
 
