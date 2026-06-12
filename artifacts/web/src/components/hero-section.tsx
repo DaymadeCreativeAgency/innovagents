@@ -199,9 +199,9 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="font-display font-black uppercase text-[clamp(3rem,7.5vw,5.5rem)] leading-[0.95] tracking-[0.01em] text-[#1a1814] mb-6"
+            className="font-display font-black uppercase text-[clamp(3rem,7.5vw,5.5rem)] leading-[0.95] tracking-[0.01em] text-primary mb-6"
           >
-            What if Salesforce actually worked <span className="text-primary">the way you wanted</span> it to?
+            What if Salesforce actually worked the way you wanted it to?
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
