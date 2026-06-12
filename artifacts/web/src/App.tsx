@@ -8,6 +8,8 @@ import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import SplashAnnouncements from "@/pages/products/splash-announcements";
 import EnhancedFiles from "@/pages/products/enhanced-files";
+import ListViewExport from "@/pages/products/list-view-export";
+import EdgeConnect from "@/pages/products/edge-connect";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +21,8 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/products/splash-announcements" component={SplashAnnouncements} />
       <Route path="/products/enhanced-files" component={EnhancedFiles} />
+      <Route path="/products/list-view-export" component={ListViewExport} />
+      <Route path="/products/edge-connect" component={EdgeConnect} />
       <Route component={NotFound} />
     </Switch>
   );

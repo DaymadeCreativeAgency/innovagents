@@ -1,0 +1,44 @@
+import { Plug, Code2, MousePointerClick, LayoutTemplate, ScrollText, ShieldCheck } from "lucide-react";
+import { ProductPage } from "@/components/product-page";
+import { EdgeFlowMockup } from "@/components/edge-flow-mockup";
+import { APPX } from "@/components/layout-v2";
+
+import edgeConnectIcon from "@assets/EdgeConnect-icon.png";
+
+export default function EdgeConnect() {
+  return (
+    <ProductPage
+      icon={edgeConnectIcon}
+      name="Edge Connect"
+      label="Low-Code Integration Platform"
+      headline={<>Develop integrations as easily as you create flows</>}
+      description="Edge Connect enables admins and developers to quickly design, build, test, and deploy integrations in Salesforce using little or no code — all with a drag-and-drop flow designer."
+      priceChip="From $499 / company / month"
+      trialNote="Free 30-day trial"
+      appxUrl={APPX.edgeConnect}
+      tint="indigo"
+      heroMockup={<EdgeFlowMockup />}
+      features={[
+        { icon: Plug, title: "200+ Prebuilt Connectors", desc: "Connect to the systems you already use with a library of over 200 prebuilt connectors." },
+        { icon: MousePointerClick, title: "Drag-and-Drop Designer", desc: "Design, build, and test integrations visually — as easy as building a Salesforce flow." },
+        { icon: Code2, title: "Custom JavaScript Connectors", desc: "Need something bespoke? Create your own connectors using JavaScript, right inside the platform." },
+        { icon: LayoutTemplate, title: "Templates", desc: "Start from proven integration templates instead of a blank canvas and ship faster." },
+        { icon: ScrollText, title: "Logs & Monitoring", desc: "Full request logs and error visibility so you always know what ran, when, and why." },
+        { icon: ShieldCheck, title: "Built in Salesforce", desc: "No middleware to host or secure. Everything runs natively inside your Salesforce org." },
+      ]}
+      benefits={[
+        "Eliminate expensive middleware platforms",
+        "Admins ship integrations without waiting on developers",
+        "Test and deploy from sandbox to production safely",
+        "Discounts available for nonprofits",
+      ]}
+      pricingTiers={[
+        { name: "Starter", price: "$499", unit: "/co/mo", desc: "10k requests per month with basic support." },
+        { name: "Professional", price: "$999", unit: "/co/mo", desc: "30k requests per month, priority support, and custom error handling.", featured: true },
+        { name: "Professional+", price: "$1,499", unit: "/co/mo", desc: "50k requests per month, premium support, and a dedicated success manager." },
+        { name: "Enterprise", price: "$5,000", unit: "/co/mo", desc: "Unlimited requests plus custom development for your org." },
+      ]}
+      ctaHeadline="Ready to connect everything?"
+    />
+  );
+}

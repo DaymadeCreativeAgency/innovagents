@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { Layout } from "@/components/layout";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,7 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { CheckCircle2, Mail, MapPin, Send } from "lucide-react";
+import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -35,59 +35,37 @@ export default function Contact() {
   }
 
   return (
-    <Layout>
-
-      {/* ── HERO — dark ── */}
-      <section className="relative py-28 lg:py-36 overflow-hidden bg-[#0f0e0b]">
-        <div className="absolute -top-24 right-0 w-[500px] h-[380px] rounded-full bg-accent/[0.09] blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 -left-20 w-[400px] h-[380px] rounded-full bg-primary/[0.08] blur-[110px] pointer-events-none" />
+    <LayoutV2>
+      {/* ── HERO — sky gradient ── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#dbe4f7] via-[#edeef5] to-white pt-40 pb-16">
+        <Cloud className="top-24 left-[5%] opacity-80" />
+        <Cloud className="top-36 right-[8%] opacity-60 scale-75" />
 
         <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-white/[0.07] border border-white/[0.10] rounded-full px-4 py-1.5 mb-10"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-            <span className="text-white/50 text-xs font-medium uppercase tracking-widest">Get in Touch</span>
-          </motion.div>
-
+          <SectionLabel>Get in Touch</SectionLabel>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.65 }}
-            className="text-5xl md:text-7xl text-white mb-6 leading-[0.92]"
+            transition={{ delay: 0.05, duration: 0.65 }}
+            className="text-[clamp(44px,7vw,80px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-6"
           >
-            Let's talk<br />
-            <span
-              style={{
-                background: "linear-gradient(135deg, #5555e6 0%, #8877f0 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Salesforce
-            </span>
+            Let's talk<br /><span className="text-primary">Salesforce</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-white/45 max-w-xl mx-auto"
+            className="text-base md:text-lg text-[#5d574f] max-w-xl mx-auto"
           >
             Have a question about our apps? Need help solving a workflow bottleneck? We're here to help you build a smarter Salesforce.
           </motion.p>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-[#faf8f4] to-transparent pointer-events-none" />
       </section>
 
-      {/* ── FORM + INFO — warm cream ── */}
-      <section className="py-20 bg-[#faf8f4] border-b border-black/[0.07]">
+      {/* ── FORM + INFO ── */}
+      <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto items-start">
-
             {/* Left info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -96,32 +74,31 @@ export default function Contact() {
               className="space-y-7"
             >
               <div>
-                <h2 className="text-3xl font-display font-medium text-[#1a1814] mb-2">Get in touch</h2>
-                <div className="w-10 h-px bg-black/[0.12] mb-6" />
+                <h2 className="text-3xl font-display font-medium text-[#1a1814] mb-4">Get in touch</h2>
                 <p className="text-[#6b6460] leading-relaxed">
                   We're a team of Salesforce veterans who have lived the same problems you're facing. Whether you need support, want to request a feature, or just want to chat about the ecosystem, drop us a line. A real person will get back to you.
                 </p>
               </div>
 
               <div className="space-y-3">
-                <div className="flex items-start gap-4 bg-white border border-black/[0.07] rounded-2xl p-5 shadow-sm hover:border-black/[0.13] transition-colors group">
-                  <div className="w-10 h-10 bg-primary/[0.08] border border-primary/[0.14] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/14 transition-colors">
+                <div className="flex items-start gap-4 bg-[#faf8f4] border border-black/[0.07] rounded-2xl p-5 hover:border-black/[0.13] transition-colors">
+                  <div className="w-10 h-10 bg-white border border-black/[0.07] rounded-full flex items-center justify-center shrink-0">
                     <Mail className="w-4 h-4 text-primary" />
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-[#1a1814] mb-1">Email</h3>
-                    <p className="text-[#6b6460] text-sm">hello@innovagents.com</p>
+                    <p className="text-[#6b6460] text-sm">support@innovagentsai.com</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 bg-white border border-black/[0.07] rounded-2xl p-5 shadow-sm hover:border-black/[0.13] transition-colors group">
-                  <div className="w-10 h-10 bg-accent/[0.10] border border-accent/[0.18] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-accent/16 transition-colors">
+                <div className="flex items-start gap-4 bg-[#faf8f4] border border-black/[0.07] rounded-2xl p-5 hover:border-black/[0.13] transition-colors">
+                  <div className="w-10 h-10 bg-white border border-black/[0.07] rounded-full flex items-center justify-center shrink-0">
                     <MapPin className="w-4 h-4 text-accent" />
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-[#1a1814] mb-1">Headquarters</h3>
                     <p className="text-[#6b6460] text-sm leading-relaxed">
-                      San Francisco, CA<br />Built for the global Salesforce community
+                      Morgantown, WV<br />Built for the global Salesforce community
                     </p>
                   </div>
                 </div>
@@ -133,7 +110,7 @@ export default function Contact() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="bg-white border border-black/[0.08] rounded-3xl p-8 md:p-10 shadow-sm"
+              className="bg-[#faf8f4] border border-black/[0.07] rounded-[28px] p-8 md:p-10"
             >
               {success ? (
                 <div className="flex flex-col items-center justify-center text-center py-12">
@@ -151,7 +128,7 @@ export default function Contact() {
                   </p>
                   <button
                     onClick={() => setSuccess(false)}
-                    className="px-6 py-2 text-sm font-medium bg-primary/[0.08] hover:bg-primary/14 text-primary border border-primary/[0.18] rounded-full transition-colors"
+                    className="px-6 py-2 text-sm font-semibold border border-black/[0.12] text-[#1a1814] rounded-full hover:bg-black/[0.04] transition-colors"
                   >
                     Send Another Message
                   </button>
@@ -167,7 +144,7 @@ export default function Contact() {
                           <FormItem>
                             <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="Jane Doe" {...field} className="h-11 bg-[#faf8f4] border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                              <Input placeholder="Jane Doe" {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -180,7 +157,7 @@ export default function Contact() {
                           <FormItem>
                             <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Email</FormLabel>
                             <FormControl>
-                              <Input placeholder="jane@company.com" {...field} className="h-11 bg-[#faf8f4] border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                              <Input placeholder="jane@company.com" {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -194,7 +171,7 @@ export default function Contact() {
                         <FormItem>
                           <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Subject</FormLabel>
                           <FormControl>
-                            <Input placeholder="How can we help?" {...field} className="h-11 bg-[#faf8f4] border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                            <Input placeholder="How can we help?" {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -207,24 +184,22 @@ export default function Contact() {
                         <FormItem>
                           <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Message</FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Tell us more about your Salesforce org..." className="min-h-[130px] bg-[#faf8f4] border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors resize-none rounded-xl" {...field} />
+                            <Textarea placeholder="Tell us more about your Salesforce org..." className="min-h-[130px] bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors resize-none rounded-xl" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    <Button type="submit" className="w-full h-11 text-sm font-semibold bg-primary hover:bg-primary/90 text-white transition-colors rounded-full shadow-sm">
+                    <Button type="submit" className="w-full h-11 text-sm font-semibold bg-[#1a1814] hover:bg-[#33302a] text-white transition-colors rounded-full shadow-sm">
                       <Send className="w-4 h-4 mr-2" /> Send Message
                     </Button>
                   </form>
                 </Form>
               )}
             </motion.div>
-
           </div>
         </div>
       </section>
-
-    </Layout>
+    </LayoutV2>
   );
 }

@@ -1,288 +1,49 @@
-import { useEffect } from "react";
-import { Layout } from "@/components/layout";
-import { motion, type Variants } from "framer-motion";
-import { Calendar, Users, Eye, Code, Zap, CheckCircle2, ArrowRight } from "lucide-react";
-import { Link } from "wouter";
+import { LogIn, Clock, Target, CheckCircle2, Bell, ShieldCheck } from "lucide-react";
+import { ProductPage } from "@/components/product-page";
+import { APPX } from "@/components/layout-v2";
+
 import splashIcon from "@assets/SpalshAnnouncements-500x500_1781206837930.png";
-
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const FEATURES = [
-  { icon: Users, title: "Audience Targeting", desc: "Target announcements by Profile, Role, or Public Group. Ensure users only see what's relevant to them." },
-  { icon: Calendar, title: "Advanced Scheduling", desc: "Set start and end dates for your messages. Plan your communications in advance and let the app handle the rest." },
-  { icon: Eye, title: "Acknowledgment Tracking", desc: "Require users to acknowledge important messages. Track exactly who has seen and accepted your announcements." },
-  { icon: Zap, title: "Dynamic Content", desc: "Build rich announcements using standard rich text editors. Include links, formatting, and images easily." },
-  { icon: Code, title: "No Coding Required", desc: "Fully configurable by Admins. Drop the component onto any Lightning page and start communicating immediately." },
-  { icon: CheckCircle2, title: "100% Salesforce Native", desc: "Your data never leaves Salesforce. Built on native platform architecture for maximum security and performance." },
-];
-
-const BENEFITS = [
-  "Eliminate ignored emails",
-  "Improve adoption of new processes",
-  "Ensure compliance with required reading",
-  "Keep remote teams aligned",
-];
+import shotAcknowledge from "@assets/appx-sa-acknowledge.png";
+import shotCreate from "@assets/appx-sa-create.png";
+import shotSchedule from "@assets/appx-sa-schedule.png";
+import shotRelease from "@assets/appx-sa-release.png";
 
 export default function SplashAnnouncements() {
-  useEffect(() => {
-    document.title = "Splash Announcements | InnovAgents";
-  }, []);
-
   return (
-    <Layout>
-
-      {/* ── HERO — dark ── */}
-      <section className="relative pt-24 pb-28 overflow-hidden bg-[#0f0e0b]">
-        <div className="absolute -top-32 -left-20 w-[600px] h-[500px] rounded-full bg-primary/[0.13] blur-[140px] pointer-events-none" />
-        <div className="absolute -bottom-20 -right-20 w-[400px] h-[400px] rounded-full bg-accent/[0.07] blur-[110px] pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 bg-primary/[0.14] border border-primary/[0.22] rounded-full px-4 py-1.5 mb-8"
-              >
-                <span className="text-primary/90 text-[11px] font-semibold uppercase tracking-widest">Salesforce-Native App</span>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.65 }}
-                className="text-5xl md:text-6xl text-white mb-6 leading-[0.92]"
-              >
-                Splash<br />
-                <span
-                  style={{
-                    background: "linear-gradient(135deg, #5555e6 0%, #8877f0 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  Announcements
-                </span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-lg text-white/45 leading-relaxed mb-10"
-              >
-                Send dynamic, targeted announcements across your Salesforce Org with scheduling, audience targeting, and acknowledgment tracking — no coding needed.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-3"
-              >
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-7 h-11 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-sm"
-                >
-                  View on AppExchange <ArrowRight className="w-4 h-4" />
-                </a>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center px-7 h-11 text-sm font-medium border border-white/[0.18] text-white/80 hover:text-white hover:bg-white/[0.06] rounded-full transition-colors"
-                >
-                  Contact Sales
-                </Link>
-              </motion.div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.88, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.7, type: "spring", stiffness: 120, damping: 18 }}
-              className="flex items-center justify-center"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 rounded-[36px] bg-primary/[0.25] blur-[55px] scale-90" />
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <img src={splashIcon} alt="Splash Announcements" className="relative w-56 h-56 md:w-72 md:h-72 rounded-[36px]" />
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-      </section>
-
-      {/* ── FEATURES — white ── */}
-      <section className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] mb-4">Powerful messaging, zero code</h2>
-            <div className="w-10 h-px bg-black/[0.12] mx-auto mb-5" />
-            <p className="text-[#6b6460] max-w-2xl mx-auto">
-              Get critical information to the right users at the right time without relying on endless emails or complex custom development.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-          >
-            {FEATURES.map((feature, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                className="bg-[#faf8f4] border border-black/[0.06] rounded-3xl p-7 hover:border-black/[0.12] hover:bg-[#f4f1eb] transition-all duration-300 group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-primary/[0.09] border border-primary/[0.15] flex items-center justify-center mb-5 group-hover:bg-primary/15 transition-colors">
-                  <feature.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="text-[#1a1814] font-display font-medium text-lg mb-2">{feature.title}</h3>
-                <p className="text-[#6b6460] text-sm leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── BENEFITS — warm cream ── */}
-      <section className="py-24 bg-[#faf8f4] border-y border-black/[0.07]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <h2 className="text-3xl md:text-4xl text-[#1a1814]">Cut through the noise.</h2>
-              <p className="text-[#6b6460] leading-relaxed">
-                Email announcements get lost. Chatter posts get buried. When you have a critical system update, a new process rollout, or an urgent company alert, you need to know your team will see it.
-              </p>
-              <p className="text-[#6b6460] leading-relaxed">
-                Splash Announcements puts your message front and center in the Salesforce UI. By requiring acknowledgment, you close the loop on compliance and training requirements without the hassle.
-              </p>
-              <ul className="space-y-3 mt-2">
-                {BENEFITS.map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-[#1a1814] text-sm">
-                    <div className="w-5 h-5 rounded-full bg-primary/[0.10] border border-primary/[0.20] flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="w-3 h-3 text-primary" />
-                    </div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* UI mockup */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white border border-black/[0.08] rounded-3xl p-6 shadow-sm"
-            >
-              <div className="bg-[#faf8f4] rounded-2xl border border-black/[0.07] overflow-hidden">
-                <div className="px-4 py-3 border-b border-black/[0.07] flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-300" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-300" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-300" />
-                  <div className="flex-1" />
-                  <div className="h-2 w-20 bg-black/[0.07] rounded-full" />
-                </div>
-                <div className="p-5 space-y-4">
-                  <div className="bg-primary/[0.09] border border-primary/[0.16] rounded-xl p-4">
-                    <div className="h-3.5 bg-primary/20 rounded-md w-2/5 mb-3" />
-                    <div className="h-2.5 bg-black/[0.07] rounded-md w-full mb-2" />
-                    <div className="h-2.5 bg-black/[0.05] rounded-md w-4/5 mb-2" />
-                    <div className="h-2.5 bg-black/[0.04] rounded-md w-3/5 mb-4" />
-                    <div className="flex justify-end">
-                      <div className="h-7 bg-primary/25 rounded-lg w-24" />
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    {[60, 80, 45].map((w, i) => (
-                      <div key={i} className="h-2.5 bg-black/[0.07] rounded-full" style={{ width: `${w}px` }} />
-                    ))}
-                  </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    {[1, 2, 3].map(i => (
-                      <div key={i} className="h-14 bg-white rounded-xl border border-black/[0.07]" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA — indigo ── */}
-      <section className="py-24 bg-primary">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl text-white mb-5"
-          >
-            Ready to improve your org's communication?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-lg text-white/65 mb-10 max-w-xl mx-auto"
-          >
-            Install Splash Announcements today and start sending smarter, targeted messages in minutes.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row justify-center gap-3"
-          >
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-7 h-11 text-sm font-semibold bg-white text-primary rounded-full hover:bg-white/90 transition-colors shadow-sm"
-            >
-              View on AppExchange
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-7 h-11 text-sm font-medium border border-white/[0.30] text-white hover:bg-white/[0.10] rounded-full transition-colors"
-            >
-              Contact Sales
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-    </Layout>
+    <ProductPage
+      icon={splashIcon}
+      name="Splash Announcements"
+      label="In-App Communication That Works"
+      headline={<>No more ugly banners or urgent emails</>}
+      description="Built to make communication simple and clear — schedule updates, target specific audiences, track acknowledgments, and send real-time alerts. No more guessing who saw what."
+      priceChip="$3 / user / month"
+      trialNote="Free 7-day trial"
+      appxUrl={APPX.splashAnnouncements}
+      tint="indigo"
+      heroScreenshot={{
+        src: shotAcknowledge,
+        caption: "Users see and acknowledge announcements right at login",
+      }}
+      screenshots={[
+        { src: shotCreate, caption: "Create a dynamic splash with start/end date, title, and rich-text message" },
+        { src: shotSchedule, caption: "Schedule announcements for a date range in the future" },
+        { src: shotRelease, caption: "Publish release notes so users see exactly what changed" },
+      ]}
+      features={[
+        { icon: LogIn, title: "Smart Redirect on Login", desc: "New announcements are displayed the moment users log in — front and center, impossible to miss." },
+        { icon: Clock, title: "Instant or Scheduled", desc: "Set start and end dates to ensure timely, relevant messaging for releases, rollouts, and maintenance windows." },
+        { icon: Target, title: "Target Audiences", desc: "Create and reuse audiences built from queues, public groups, profiles, and permission sets." },
+        { icon: CheckCircle2, title: "Acknowledgment Tracking", desc: "Track acknowledgments in real time for reporting and compliance. Know exactly who saw what, and when." },
+        { icon: Bell, title: "Announcement Alerts", desc: "Send emergency or urgent messages that demand immediate attention across your org." },
+        { icon: ShieldCheck, title: "100% Salesforce Native", desc: "No external services. Respects your org's security model, profiles, and permissions out of the box." },
+      ]}
+      benefits={[
+        "Release day clarity — everyone sees what changed at login",
+        "Targeted messages reach the right profiles, teams, and regions",
+        "Replace mass emails with visible, auditable communication",
+        "Real-time acknowledgment tracking for accountability",
+      ]}
+      ctaHeadline="Ready to be heard?"
+    />
   );
 }

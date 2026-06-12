@@ -1,27 +1,61 @@
 import { useEffect, useState } from "react";
-import { Layout } from "@/components/layout";
-import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { motion, type Variants } from "framer-motion";
-import { ArrowRight, Zap, Target, ShieldCheck, Rocket, CheckCircle2, Send } from "lucide-react";
+import {
+  ArrowRight,
+  Zap,
+  Target,
+  ShieldCheck,
+  Rocket,
+  CheckCircle2,
+  Send,
+  Search,
+  FileText,
+  Download,
+  Megaphone,
+  Clock,
+  Files,
+  Workflow,
+  Linkedin,
+  Store,
+  Upload,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { LayoutV2, SectionLabel, Cloud, Marquee, PillTag, APPX } from "@/components/layout-v2";
+import { HeroSection } from "@/components/hero-section";
+import { EdgeFlowMockup } from "@/components/edge-flow-mockup";
 
 import splashIcon from "@assets/SpalshAnnouncements-500x500_1781206837930.png";
 import enhancedFilesIcon from "@assets/EnhancedFiles-500x500_1781206837929.png";
+import edgeConnectIcon from "@assets/EdgeConnect-icon.png";
 import fundOpsIcon from "@assets/FundOps-500x500_1781206837929.png";
 import listViewIcon from "@assets/ListViewExport-500x500_1781206837929.png";
 import fieldTrackingIcon from "@assets/UnlimitedFieldTracking-500x500_1781206837930.png";
 
-const APPS = [
+/* ───────────────────────── content ───────────────────────── */
+
+interface AppCard {
+  icon: string;
+  name: string;
+  desc: string;
+  href: string | null;
+  appx: string | null;
+  site?: string;
+  available: boolean;
+}
+
+const APPS: AppCard[] = [
   {
     icon: splashIcon,
     name: "Splash Announcements",
     desc: "Targeted org-wide messaging with scheduling & acknowledgment tracking",
     href: "/products/splash-announcements",
+    appx: APPX.splashAnnouncements,
     available: true,
   },
   {
@@ -29,6 +63,31 @@ const APPS = [
     name: "Enhanced Files",
     desc: "Modern file management with bulk downloads, instant search & smart previews",
     href: "/products/enhanced-files",
+    appx: APPX.enhancedFiles,
+    available: true,
+  },
+  {
+    icon: listViewIcon,
+    name: "List View Export",
+    desc: "Export any Salesforce list view to CSV in a single click — no reports required",
+    href: "/products/list-view-export",
+    appx: APPX.listViewExport,
+    available: true,
+  },
+  {
+    icon: edgeConnectIcon,
+    name: "Edge Connect",
+    desc: "Low-code integration platform — build integrations as easily as you create flows",
+    href: "/products/edge-connect",
+    appx: APPX.edgeConnect,
+    available: true,
+  },
+  {
+    icon: fieldTrackingIcon,
+    name: "Unlimited Field Tracking",
+    desc: "Track unlimited field history without hitting native platform limits",
+    href: null,
+    appx: APPX.fieldHistoryTracking,
     available: true,
   },
   {
@@ -36,21 +95,9 @@ const APPS = [
     name: "FundOps",
     desc: "Streamlined fund operations built natively inside your Salesforce org",
     href: null,
-    available: false,
-  },
-  {
-    icon: listViewIcon,
-    name: "List View Export",
-    desc: "Export any Salesforce list view to CSV or Excel in a single click",
-    href: null,
-    available: false,
-  },
-  {
-    icon: fieldTrackingIcon,
-    name: "Unlimited Field Tracking",
-    desc: "Track unlimited field history without hitting native platform limits",
-    href: null,
-    available: false,
+    appx: null,
+    site: "https://fundopsai.com/",
+    available: true,
   },
 ];
 
@@ -68,6 +115,19 @@ const WHY_US = [
   { title: "Continuous Innovation", desc: "We continually build, improve, and respond to your needs with every update.", icon: ShieldCheck },
 ];
 
+const ECOSYSTEM = ["Sales Cloud", "Service Cloud", "Experience Cloud", "Nonprofit Cloud", "Lightning", "Flow", "AppExchange", "Slack", "Salesforce Mobile"];
+
+/* single brand tint for the ecosystem marquee pills */
+const PILL_CLASS = "bg-primary/[0.07] border-primary/[0.20] text-primary";
+
+/* randomuser.me portraits read as everyday professionals, not stock models */
+const TESTIMONIALS = [
+  { quote: "Enhanced Files saved our ops team hours every single week. It just works.", name: "Leah Daniels", title: "Salesforce Admin, Logistics", photo: "https://randomuser.me/api/portraits/women/68.jpg" },
+  { quote: "Splash Announcements finally got our users to actually read org updates.", name: "Sergio Walker", title: "RevOps Lead", photo: "https://randomuser.me/api/portraits/men/41.jpg" },
+  { quote: "Installed in minutes, zero config headaches. Exactly as advertised.", name: "Jane Park", title: "IT Director, Nonprofit", photo: "https://randomuser.me/api/portraits/women/79.jpg" },
+  { quote: "The cleanest AppExchange apps we've used. Our admins love them.", name: "Amos Chen", title: "CRM Architect", photo: "https://randomuser.me/api/portraits/men/86.jpg" },
+];
+
 const newsletterSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   email: z.string().email("Please enter a valid email address"),
@@ -81,6 +141,99 @@ const fadeUp: Variants = {
   hidden: { opacity: 0, y: 22 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
+
+/* ── Splash mockup — mirrors the real login announcement banner ── */
+
+function SplashMockup() {
+  return (
+    <div className="bg-white rounded-2xl border border-black/[0.07] overflow-hidden shadow-sm">
+      {/* Salesforce-style top bar */}
+      <div className="px-4 py-2.5 border-b-[3px] border-primary/70 flex items-center gap-4 bg-white">
+        <img src={splashIcon} alt="" className="w-6 h-6 rounded-md" />
+        <div className="flex items-center gap-3 text-[11px] text-[#6b6460] font-medium">
+          <span className="text-primary border-b-2 border-primary pb-0.5">Announcements</span>
+          <span>Home</span>
+          <span className="hidden sm:inline">Opportunities</span>
+          <span className="hidden sm:inline">Leads</span>
+          <span className="hidden sm:inline">Files</span>
+        </div>
+        <div className="ml-auto hidden sm:flex items-center gap-1.5 h-6 px-2.5 rounded-full bg-black/[0.04] border border-black/[0.07] text-[#9a9490] text-[10px]">
+          <Search className="w-3 h-3" /> Search…
+        </div>
+      </div>
+      <div className="p-4">
+        <div className="text-[12px] font-bold text-[#1a1814] mb-3">Hello Hannah, you have 1 new announcement.</div>
+        <div className="rounded-xl bg-[#faf8f4] border border-black/[0.06] p-4">
+          <div className="text-[13px] font-bold text-[#1a1814] mb-1.5">Release Version 1.3</div>
+          <p className="text-[11px] text-[#6b6460] leading-relaxed mb-1">
+            Release notes for version 1.3 released this Friday can be found here:
+          </p>
+          <ul className="text-[11px] text-[#6b6460] leading-relaxed list-decimal pl-4 space-y-0.5 mb-3">
+            <li>New package installed called "Splash Announcements" — improves company-wide communications.</li>
+            <li>Updated account page layout to no longer require 150 fields to save a record :)</li>
+          </ul>
+          <button className="px-4 h-7 rounded-lg border border-primary/40 text-primary text-[11px] font-semibold bg-white">
+            Acknowledge
+          </button>
+        </div>
+        <div className="flex items-center gap-2 mt-3 text-[10px] text-[#9a9490]">
+          <Clock className="w-3 h-3" /> Scheduled May 12 – May 30 · 87% acknowledged
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Files mockup — mirrors the real Enhanced Files related list ── */
+
+function FilesMockup() {
+  const files = [
+    { name: "Master_Service_Agreement_v4", meta: "Apr 2, 2026 · 11.7MB · pdf" },
+    { name: "Q4_Renewal_Quote_Final", meta: "Apr 2, 2026 · 9.4MB · xlsx" },
+    { name: "Implementation_Specs_SOW", meta: "Apr 1, 2026 · 6.0MB · docx" },
+    { name: "Brand_Logo_Assets", meta: "Mar 28, 2026 · 13.1MB · zip" },
+  ];
+  return (
+    <div className="bg-white rounded-2xl border border-black/[0.07] overflow-hidden shadow-sm">
+      <div className="px-4 py-3 border-b border-black/[0.07] flex items-center justify-between gap-2 bg-[#faf8f4]">
+        <div className="flex items-center gap-2 shrink-0">
+          <img src={enhancedFilesIcon} alt="" className="w-6 h-6 rounded-md" />
+          <span className="text-[13px] font-bold text-[#1a1814]">Files (10)</span>
+        </div>
+        <div className="flex items-center gap-1.5 h-7 px-2.5 rounded-lg bg-white border border-black/[0.08] text-[#9a9490] text-[10px] flex-1 max-w-32">
+          <Search className="w-3 h-3" /> Search Files
+        </div>
+        <div className="flex gap-1.5 shrink-0">
+          <span className="flex items-center gap-1 h-7 px-2.5 rounded-lg border border-primary/30 text-primary text-[10px] font-semibold bg-white">
+            <Download className="w-3 h-3" /> Download All
+          </span>
+          <span className="hidden sm:flex items-center gap-1 h-7 px-2.5 rounded-lg border border-black/[0.10] text-[#6b6460] text-[10px] font-semibold bg-white">
+            <Upload className="w-3 h-3" /> Upload
+          </span>
+        </div>
+      </div>
+      <div className="p-3 space-y-1.5">
+        {files.map((f) => (
+          <div key={f.name} className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-black/[0.05] hover:border-black/[0.10] transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-accent/[0.12] border border-accent/[0.18] flex items-center justify-center shrink-0">
+              <FileText className="w-4 h-4 text-accent" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[12px] font-medium text-primary truncate">{f.name}</div>
+              <div className="text-[10px] text-[#9a9490] mt-0.5">{f.meta}</div>
+            </div>
+            <div className="w-7 h-7 rounded-lg bg-[#faf8f4] border border-black/[0.08] flex items-center justify-center shrink-0">
+              <Download className="w-3.5 h-3.5 text-[#6b6460]" />
+            </div>
+          </div>
+        ))}
+        <div className="text-center text-[11px] font-medium text-primary pt-1.5 border-t border-black/[0.05]">View All</div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────────── page ───────────────────────── */
 
 export default function Home() {
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
@@ -100,272 +253,363 @@ export default function Home() {
   }
 
   return (
-    <Layout>
+    <LayoutV2>
+      <HeroSection />
 
-      {/* ── HERO — dark ── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0f0e0b]">
-        <div className="absolute -top-40 -left-20 w-[600px] h-[600px] rounded-full bg-primary/[0.14] blur-[130px] pointer-events-none" />
-        <div className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full bg-accent/[0.10] blur-[120px] pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-6 relative z-10 py-36 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2.5 bg-white/[0.07] backdrop-blur-sm border border-white/[0.10] rounded-full px-5 py-2 mb-10"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-white/55 text-sm font-medium tracking-wide">Salesforce-Native AppExchange Apps</span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.1, ease: "easeOut" }}
-            className="text-[clamp(56px,10vw,110px)] text-white leading-[0.88] mb-8 tracking-[-1px]"
-          >
-            Smarter<br />Salesforce
-            <span
-              className="block mt-2"
-              style={{
-                background: "linear-gradient(135deg, #5555e6 0%, #8877f0 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Starts Here
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.22 }}
-            className="text-lg md:text-xl text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            Powerful Salesforce-native apps that fill critical gaps, streamline workflows, and help your team move faster — without the heavy setup or high price.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.32 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3"
-          >
-            <Link
-              href="#apps"
-              className="inline-flex items-center gap-2 px-7 h-11 text-sm font-semibold bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-sm"
-            >
-              Explore Our Apps <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center px-7 h-11 text-sm font-medium border border-white/[0.18] text-white/80 hover:text-white hover:bg-white/[0.06] rounded-full transition-colors"
-            >
-              Contact Us
-            </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex items-center justify-center gap-3 mt-20 flex-wrap"
-          >
-            {APPS.map((app, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.1, y: -4 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                title={app.name}
-              >
-                <img
-                  src={app.icon}
-                  alt={app.name}
-                  className={`w-11 h-11 rounded-xl transition-all duration-300 ${
-                    app.available ? "opacity-80 hover:opacity-100" : "opacity-25 grayscale"
-                  }`}
-                />
-              </motion.div>
-            ))}
-            <span className="text-white/25 text-xs ml-1">& more coming soon</span>
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#faf8f4] to-transparent pointer-events-none" />
-      </section>
-
-      {/* ── STATS — warm cream ── */}
-      <section className="bg-[#faf8f4] border-b border-black/[0.07] py-12">
+      {/* ── STATS ── */}
+      <section className="bg-white pt-6 pb-14">
         <div className="max-w-6xl mx-auto px-6">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8"
-          >
-            {STATS.map((stat, i) => (
-              <motion.div key={i} variants={fadeUp} className="text-center">
-                <div className="text-4xl md:text-5xl font-display font-black text-primary mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-xs text-[#9a9490] font-medium uppercase tracking-widest">{stat.label}</div>
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-black/[0.07] py-12">
+            {STATS.map((stat) => (
+              <motion.div key={stat.label} variants={fadeUp}>
+                <div className="text-4xl md:text-5xl font-display font-black text-primary mb-1">{stat.value}</div>
+                <div className="text-[13px] text-[#6b6460] font-medium uppercase tracking-widest">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── PROBLEM — white ── */}
-      <section className="py-28 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* ── BENEFIT PANEL 1 — Splash Announcements ── */}
+      <section id="apps" className="bg-white pt-10 pb-20">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center space-y-6"
+            className="relative bg-gradient-to-br from-primary/[0.10] to-primary/[0.04] border border-primary/[0.10] rounded-[32px] p-6 md:p-10"
           >
-            <h2 className="text-4xl md:text-6xl text-[#1a1814] leading-[1.05]">
-              Salesforce gaps slowing you down?
-            </h2>
-            <p className="text-lg md:text-xl text-[#6b6460] max-w-3xl mx-auto leading-relaxed">
-              Salesforce is a powerful platform, but it doesn't always cover everything out of the box. When you're stuck building workarounds, managing costly customizations, or settling for less, your team loses valuable time.
+            <img
+              src={splashIcon}
+              alt="Splash Announcements"
+              className="absolute -top-6 -left-5 md:-left-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl border-[3px] border-white shadow-[0_12px_32px_rgba(26,24,20,0.18)] z-10"
+            />
+            <SplashMockup />
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <SectionLabel>Splash Announcements</SectionLabel>
+            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Reach every user, every time</h2>
+            <p className="text-[#6b6460] leading-relaxed mb-8">
+              <strong className="text-[#1a1814] font-semibold">Targeted org-wide messaging</strong> with scheduling & acknowledgment tracking. Make sure critical updates actually get seen — and prove it with acknowledgment reports.
             </p>
-            <p className="text-base text-[#9a9490] max-w-3xl mx-auto leading-relaxed">
-              Our apps address the most common Salesforce frustrations — quickly, efficiently, and without unnecessary overhead. No heavy implementation. No learning curve. Just smarter tools for more innovative Salesforce experiences.
-            </p>
+            <div className="flex flex-wrap gap-2 mb-8">
+              <PillTag icon={Megaphone} label="Smart redirect on login" />
+              <PillTag icon={Clock} label="Instant or scheduled" tone="coral" />
+              <PillTag icon={Target} label="Target audiences" />
+              <PillTag icon={CheckCircle2} label="Acknowledgment tracking" tone="coral" />
+            </div>
+            <Link href="/products/splash-announcements" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
+              Learn more <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* ── APPS SHOWCASE — warm cream ── */}
-      <section id="apps" className="py-28 bg-[#faf8f4] border-y border-black/[0.07]">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <div className="inline-flex items-center gap-2 bg-primary/[0.07] border border-primary/[0.15] rounded-full px-4 py-1.5 mb-5">
-              <span className="text-primary text-[11px] font-semibold uppercase tracking-widest">AppExchange Solutions</span>
+      {/* ── BENEFIT PANEL 2 — Enhanced Files ── */}
+      <section className="bg-white py-20">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
+            <SectionLabel>Enhanced Files</SectionLabel>
+            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Files that finally make sense</h2>
+            <p className="text-[#6b6460] leading-relaxed mb-8">
+              <strong className="text-[#1a1814] font-semibold">Modern file management</strong> with bulk downloads, instant search & smart previews. Treat Salesforce files like a real file system, right on the record page — completely free.
+            </p>
+            <div className="flex flex-wrap gap-2 mb-8">
+              <PillTag icon={Download} label="Download all in one click" tone="coral" />
+              <PillTag icon={Search} label="Search filter" />
+              <PillTag icon={Files} label="Total file count" tone="coral" />
+              <PillTag icon={ShieldCheck} label="Native security" />
             </div>
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] mb-4">Our featured products</h2>
-            <p className="text-[#6b6460] text-lg max-w-2xl mx-auto">
+            <Link href="/products/enhanced-files" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
+              Learn more <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative order-1 lg:order-2 bg-gradient-to-br from-accent/[0.14] to-accent/[0.05] border border-accent/[0.14] rounded-[32px] p-6 md:p-10"
+          >
+            <img
+              src={enhancedFilesIcon}
+              alt="Enhanced Files"
+              className="absolute -top-6 -right-5 md:-right-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl border-[3px] border-white shadow-[0_12px_32px_rgba(26,24,20,0.18)] z-10"
+            />
+            <FilesMockup />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── BENEFIT PANEL 3 — Edge Connect ── */}
+      <section className="bg-white py-20">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative bg-gradient-to-br from-primary/[0.10] to-accent/[0.06] border border-primary/[0.10] rounded-[32px] p-6 md:p-10"
+          >
+            <img
+              src={edgeConnectIcon}
+              alt="Edge Connect"
+              className="absolute -top-6 -left-5 md:-left-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl border-[3px] border-white shadow-[0_12px_32px_rgba(26,24,20,0.18)] z-10"
+            />
+            <EdgeFlowMockup />
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <SectionLabel>Edge Connect</SectionLabel>
+            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Integrations as easy as flows</h2>
+            <p className="text-[#6b6460] leading-relaxed mb-8">
+              <strong className="text-[#1a1814] font-semibold">A low-code integration platform</strong> that lets admins and developers design, build, test, and deploy integrations in Salesforce with a drag-and-drop flow designer — no middleware required.
+            </p>
+            <div className="flex flex-wrap gap-2 mb-8">
+              <PillTag icon={Workflow} label="200+ prebuilt connectors" />
+              <PillTag icon={Zap} label="Drag-and-drop designer" tone="coral" />
+              <PillTag icon={Rocket} label="Custom JS connectors" />
+              <PillTag icon={ShieldCheck} label="Built in Salesforce" tone="coral" />
+            </div>
+            <Link href="/products/edge-connect" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
+              Learn more <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── APPS GRID ── */}
+      <section className="bg-white pb-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-2xl">
+            <SectionLabel>AppExchange Solutions</SectionLabel>
+            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Our featured products</h2>
+            <p className="text-[#6b6460] text-lg">
               Built by Salesforce veterans for admins, IT leaders, and operations teams who need real solutions fast.
             </p>
           </motion.div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-          >
-            {APPS.map((app, i) => (
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {APPS.map((app) => (
               <motion.div
-                key={i}
+                key={app.name}
                 variants={fadeUp}
-                className={`group relative bg-white border rounded-3xl p-6 transition-all duration-300 ${
-                  app.available
-                    ? "border-black/[0.07] hover:border-black/[0.14] hover:shadow-md shadow-sm"
-                    : "border-black/[0.05] opacity-45"
+                className={`flex flex-col h-full bg-[#faf8f4] border rounded-3xl p-6 transition-all duration-300 ${
+                  app.available ? "border-black/[0.07] hover:border-black/[0.14] hover:shadow-md" : "border-black/[0.05] opacity-45"
                 }`}
               >
                 <div className="flex items-start justify-between mb-5">
-                  <img src={app.icon} alt={app.name} className="w-12 h-12 rounded-2xl" />
-                  {app.available ? (
-                    <span className="text-[10px] font-semibold bg-primary/[0.07] text-primary border border-primary/[0.15] px-3 py-1 rounded-full">
-                      Available
-                    </span>
+                  {app.site ? (
+                    <a href={app.site} target="_blank" rel="noopener noreferrer" aria-label={`Visit the ${app.name} website`}>
+                      <img src={app.icon} alt={app.name} className="w-12 h-12 rounded-2xl transition-transform duration-300 hover:scale-105" />
+                    </a>
                   ) : (
-                    <span className="text-[10px] font-semibold bg-black/[0.05] text-black/40 border border-black/[0.08] px-3 py-1 rounded-full">
-                      Coming Soon
-                    </span>
+                    <img src={app.icon} alt={app.name} className="w-12 h-12 rounded-2xl" />
+                  )}
+                  <span
+                    className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
+                      app.available
+                        ? "bg-primary/[0.07] text-primary border-primary/[0.15]"
+                        : "bg-black/[0.05] text-black/40 border-black/[0.08]"
+                    }`}
+                  >
+                    {app.available ? "Available" : "Coming Soon"}
+                  </span>
+                </div>
+                <h3 className="font-display font-medium text-xl text-[#1a1814] mb-2">{app.name}</h3>
+                <p className="text-[#6b6460] text-[15px] leading-relaxed mb-6">{app.desc}</p>
+
+                {/* action row — pinned to the bottom so it lines up across every card */}
+                <div className="mt-auto flex flex-wrap items-center gap-2">
+                  {app.href && (
+                    <Link
+                      href={app.href}
+                      className="cta-pill group inline-flex items-center gap-1.5 px-4 h-9 rounded-full bg-primary text-white text-[14px] font-semibold"
+                    >
+                      Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </Link>
+                  )}
+                  {app.site && (
+                    <a
+                      href={app.site}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cta-pill group inline-flex items-center gap-1.5 px-4 h-9 rounded-full bg-primary text-white text-[14px] font-semibold"
+                    >
+                      Visit site <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </a>
+                  )}
+                  {app.appx && (
+                    <a
+                      href={app.appx}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-4 h-9 rounded-full border border-black/[0.12] bg-white text-[14px] font-semibold text-[#1a1814] hover:border-primary/40 hover:text-primary transition-colors"
+                    >
+                      AppExchange
+                    </a>
                   )}
                 </div>
-                <h3 className="text-[#1a1814] font-display font-medium text-xl mb-2">{app.name}</h3>
-                <p className="text-[#6b6460] text-sm leading-relaxed mb-5">{app.desc}</p>
-                {app.available && app.href && (
-                  <div className="flex gap-2.5">
-                    <Button
-                      asChild
-                      size="sm"
-                      className="flex-1 text-xs h-8 bg-primary/[0.08] hover:bg-primary/15 text-primary border border-primary/[0.18] rounded-full transition-colors shadow-none"
-                    >
-                      <a href="#" target="_blank" rel="noopener noreferrer">AppExchange</a>
-                    </Button>
-                    <Button
-                      asChild
-                      size="sm"
-                      className="flex-1 text-xs h-8 bg-transparent text-[#6b6460] hover:text-[#1a1814] border border-black/[0.10] hover:bg-black/[0.04] rounded-full transition-colors shadow-none"
-                    >
-                      <Link href={app.href}>
-                        Learn more <ArrowRight className="ml-1 w-3 h-3" />
-                      </Link>
-                    </Button>
-                  </div>
-                )}
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── WHY US — white ── */}
-      <section className="py-28 bg-white">
+      {/* ── WHY US — cream bento ── */}
+      <section id="why-us" className="bg-[#f5f1ea] py-24">
         <div className="max-w-6xl mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
+            <SectionLabel>Why Us</SectionLabel>
+            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Why Salesforce teams choose us</h2>
+            <p className="text-[#6b6460] text-lg">Smart, native, and built around how your org actually works</p>
+          </motion.div>
+
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-14"
+            className="bg-white border border-black/[0.06] rounded-[28px] p-8 md:p-10 mb-4"
           >
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] mb-4">Why Salesforce teams choose us</h2>
-            <div className="w-10 h-px bg-black/[0.12] mx-auto" />
+            <h3 className="font-display font-medium text-2xl md:text-3xl text-[#1a1814] text-center mb-8">
+              Works seamlessly with the Salesforce you already use
+            </h3>
+            <div className="space-y-4 mb-8">
+              <Marquee duration="40s">
+                {ECOSYSTEM.map((name) => (
+                  <span key={name} className={`px-5 py-2.5 rounded-full border text-[15px] font-medium whitespace-nowrap ${PILL_CLASS}`}>
+                    {name}
+                  </span>
+                ))}
+              </Marquee>
+              <Marquee reverse duration="46s">
+                {[...ECOSYSTEM].reverse().map((name) => (
+                  <span key={name} className={`px-5 py-2.5 rounded-full border text-[15px] font-medium whitespace-nowrap ${PILL_CLASS}`}>
+                    {name}
+                  </span>
+                ))}
+              </Marquee>
+            </div>
+            <p className="text-center text-[15px] text-[#6b6460] max-w-xl mx-auto">
+              <strong className="text-[#1a1814] font-semibold">100% Salesforce native.</strong> No external servers, no API limits, no sync jobs. Our apps respect your permissions, sharing rules, and security model out of the box.
+            </p>
           </motion.div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto"
-          >
-            {WHY_US.map((f, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                className="flex items-start gap-5 bg-[#faf8f4] border border-black/[0.06] rounded-3xl p-7 hover:border-black/[0.12] hover:bg-[#f4f1eb] transition-all duration-300 group"
-              >
-                <div className="w-11 h-11 rounded-xl bg-primary/[0.09] border border-primary/[0.14] flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {WHY_US.map((f) => (
+              <motion.div key={f.title} variants={fadeUp} className="bg-white border border-black/[0.06] rounded-3xl p-7">
+                <div className="w-12 h-12 rounded-full bg-[#faf8f4] border border-black/[0.07] flex items-center justify-center mb-5">
                   <f.icon className="w-5 h-5 text-primary" />
                 </div>
-                <div>
-                  <h3 className="text-[#1a1814] font-display font-medium text-xl mb-2">{f.title}</h3>
-                  <p className="text-[#6b6460] leading-relaxed text-sm">{f.desc}</p>
-                </div>
+                <h3 className="font-display font-medium text-xl text-[#1a1814] mb-2">{f.title}</h3>
+                <p className="text-[#6b6460] text-sm leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── NEWSLETTER — indigo ── */}
-      <section className="py-28 bg-primary">
+      {/* ── TESTIMONIALS ── */}
+      <section className="bg-[#f5f1ea] pb-24">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-2xl mx-auto text-center"
+            transition={{ duration: 0.7 }}
+            className="text-center max-w-4xl mx-auto py-16"
           >
-            <h2 className="text-3xl md:text-4xl text-white mb-3">Be the first to know</h2>
-            <p className="text-white/65 mb-10 leading-relaxed">
+            <div className="font-display font-medium text-[clamp(32px,5vw,56px)] text-[#1a1814] leading-[1.1] mb-10">
+              "By far the most practical AppExchange apps our team has ever installed"
+            </div>
+            <div className="flex items-center justify-center gap-4">
+              <img
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                alt=""
+                className="w-14 h-14 rounded-full object-cover"
+              />
+              <div className="text-left">
+                <div className="font-semibold text-[15px] text-[#1a1814]">Martha Reyes</div>
+                <div className="text-[#9a9490] text-[13px]">VP Operations, Mid-Market SaaS</div>
+              </div>
+            </div>
+          </motion.div>
+
+          <Marquee duration="38s">
+            {TESTIMONIALS.map((t) => (
+              <div key={t.name} className="flex flex-col w-80 h-full bg-white border border-black/[0.06] rounded-3xl p-6 shrink-0">
+                <p className="text-[15px] text-[#1a1814] leading-relaxed mb-5">"{t.quote}"</p>
+                {/* author block pinned to the bottom so it lines up across every card */}
+                <div className="mt-auto flex items-center gap-3 pt-1 border-t border-black/[0.05]">
+                  <img src={t.photo} alt="" className="w-10 h-10 rounded-full object-cover mt-4" />
+                  <div className="mt-4">
+                    <div className="font-semibold text-[13px] text-[#1a1814]">{t.name}</div>
+                    <div className="text-[#9a9490] text-[12px]">{t.title}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Marquee>
+        </div>
+      </section>
+
+      {/* ── STAY IN THE LOOP + NEWSLETTER — sky bookend ── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#e8ecf8] to-[#d8e2f5] py-24">
+        <Cloud className="top-12 left-[6%] opacity-80" />
+        <Cloud className="bottom-12 right-[8%] opacity-70 scale-75" />
+
+        <div className="max-w-5xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+          {/* left — stay in the loop */}
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <SectionLabel>Community</SectionLabel>
+            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Stay in the loop</h2>
+            <p className="text-[#5d574f] leading-relaxed mb-8">
+              Follow along for new releases, betas, and ways teams are getting more out of Salesforce.
+            </p>
+            <div className="space-y-3">
+              <a href="#" className="group flex items-center gap-4 bg-white rounded-2xl p-4 border border-black/[0.06] hover:border-primary/[0.30] hover:shadow-md transition-all">
+                <div className="w-11 h-11 rounded-xl bg-primary/[0.09] border border-primary/[0.15] flex items-center justify-center shrink-0">
+                  <Linkedin className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <div className="font-display font-medium text-lg text-[#1a1814] leading-tight">Follow us on LinkedIn</div>
+                  <div className="text-[#9a9490] text-[13px]">Release news & Salesforce tips</div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-[#9a9490] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary" />
+              </a>
+              <a
+                href={APPX.edgeConnect}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 bg-white rounded-2xl p-4 border border-black/[0.06] hover:border-[#fe907f]/[0.50] hover:shadow-md transition-all"
+              >
+                <div className="w-11 h-11 rounded-xl bg-[#fe907f]/[0.14] border border-[#fe907f]/[0.30] flex items-center justify-center shrink-0">
+                  <Store className="w-5 h-5 text-[#d65a41]" />
+                </div>
+                <div className="flex-1">
+                  <div className="font-display font-medium text-lg text-[#1a1814] leading-tight">Browse the AppExchange</div>
+                  <div className="text-[#9a9490] text-[13px]">5+ apps · reviews · installs in minutes</div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-[#9a9490] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#d65a41]" />
+              </a>
+            </div>
+          </motion.div>
+
+          {/* right — newsletter signup */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-[28px] p-8 md:p-10 shadow-[0_20px_60px_rgba(26,24,20,0.10)]"
+          >
+            <h3 className="text-3xl md:text-4xl text-[#1a1814] font-display font-black mb-3">
+              Be the first <span className="text-primary">to know</span>
+            </h3>
+            <p className="text-[#5d574f] mb-7 leading-relaxed">
               Get updates when new apps go live, beta tests open, and fresh features drop. No noise — just the good stuff.
             </p>
 
@@ -373,27 +617,23 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white/[0.15] border border-white/[0.25] text-white p-4 rounded-2xl flex items-center justify-center gap-3"
+                className="bg-primary/[0.06] border border-primary/[0.15] text-[#1a1814] p-4 rounded-2xl flex items-center gap-3"
               >
-                <CheckCircle2 className="w-5 h-5" />
-                <span className="font-medium text-sm">Thanks for subscribing! We'll be in touch.</span>
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                <span className="font-medium text-[15px]">Thanks for subscribing! We'll be in touch.</span>
               </motion.div>
             ) : (
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col sm:flex-row gap-2.5">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
                   <FormField
                     control={form.control}
                     name="firstName"
                     render={({ field }) => (
-                      <FormItem className="flex-1">
+                      <FormItem>
                         <FormControl>
-                          <Input
-                            placeholder="First Name"
-                            {...field}
-                            className="h-11 bg-white/[0.14] border-white/[0.22] text-white placeholder:text-white/40 focus:border-white/50 transition-colors rounded-full px-5"
-                          />
+                          <Input placeholder="First Name" {...field} className="h-12 bg-[#faf8f4] border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] rounded-full px-5 text-base" />
                         </FormControl>
-                        <FormMessage className="text-white/80" />
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
@@ -401,22 +641,15 @@ export default function Home() {
                     control={form.control}
                     name="email"
                     render={({ field }) => (
-                      <FormItem className="flex-1">
+                      <FormItem>
                         <FormControl>
-                          <Input
-                            placeholder="Email Address"
-                            {...field}
-                            className="h-11 bg-white/[0.14] border-white/[0.22] text-white placeholder:text-white/40 focus:border-white/50 transition-colors rounded-full px-5"
-                          />
+                          <Input placeholder="Email Address" {...field} className="h-12 bg-[#faf8f4] border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] rounded-full px-5 text-base" />
                         </FormControl>
-                        <FormMessage className="text-white/80" />
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button
-                    type="submit"
-                    className="h-11 px-7 bg-white hover:bg-white/90 text-primary font-semibold rounded-full transition-colors shadow-sm shrink-0"
-                  >
+                  <Button type="submit" className="cta-pill h-12 px-7 bg-[#1a1814] text-white font-semibold rounded-full text-base">
                     <Send className="w-4 h-4 mr-2" /> Subscribe
                   </Button>
                 </form>
@@ -425,7 +658,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-    </Layout>
+    </LayoutV2>
   );
 }

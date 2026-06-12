@@ -158,17 +158,68 @@
   --radius: 0.5rem;
 }
 
+/* Infinite marquee (logo strips, testimonial rails).
+   The track holds two identical halves; -50% lands exactly on the seam. */
+@keyframes marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.animate-marquee-left {
+  animation: marquee-left 32s linear infinite;
+  will-change: transform;
+}
+.animate-marquee-right {
+  animation: marquee-right 36s linear infinite;
+  will-change: transform;
+}
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/* CTA pills: gradient sweep + lift on hover (use with a solid bg + rounded-full) */
+.cta-pill {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.cta-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, hsl(244 75% 61%), hsl(255 70% 65%) 45%, hsl(9 99% 75%));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cta-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(85, 85, 230, 0.35);
+}
+.cta-pill:hover::before {
+  opacity: 1;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
 
+  /* Type floor (industry standard): body copy ≥16px, secondary text ≥14px,
+     UI labels/captions ≥12px. Don't go below these outside of illustrative
+     product mockups. */
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    font-size: 16px;
+    line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-normal;
+    @apply font-display tracking-normal uppercase;
   }
 
   h1 {
