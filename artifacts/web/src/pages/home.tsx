@@ -296,7 +296,7 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-2 mb-8">
               <PillTag icon={Megaphone} label="Smart redirect on login" />
-              <PillTag icon={Clock} label="Instant or scheduled" tone="coral" />
+              <PillTag icon={Clock} label="Instant or scheduled" />
               <PillTag icon={Target} label="Target audiences" />
               <PillTag icon={CheckCircle2} label="Acknowledgment tracking" tone="coral" />
             </div>
@@ -319,7 +319,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-2 mb-8">
               <PillTag icon={Download} label="Download all in one click" tone="coral" />
               <PillTag icon={Search} label="Search filter" />
-              <PillTag icon={Files} label="Total file count" tone="coral" />
+              <PillTag icon={Files} label="Total file count" />
               <PillTag icon={ShieldCheck} label="Native security" />
             </div>
             <Link href="/products/enhanced-files" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
@@ -370,9 +370,9 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-2 mb-8">
               <PillTag icon={Workflow} label="200+ prebuilt connectors" />
-              <PillTag icon={Zap} label="Drag-and-drop designer" tone="coral" />
+              <PillTag icon={Zap} label="Drag-and-drop designer" />
               <PillTag icon={Rocket} label="Custom JS connectors" />
-              <PillTag icon={ShieldCheck} label="Built in Salesforce" tone="coral" />
+              <PillTag icon={ShieldCheck} label="Built in Salesforce" />
             </div>
             <Link href="/products/edge-connect" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
               Learn more <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
