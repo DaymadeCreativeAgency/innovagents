@@ -43,6 +43,16 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-router": ["wouter"],
+          "vendor-ui": ["lucide-react", "clsx", "tailwind-merge"],
+        },
+      },
+    },
   },
   server: {
     port,
