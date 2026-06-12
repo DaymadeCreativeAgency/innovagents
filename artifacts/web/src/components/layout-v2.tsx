@@ -34,7 +34,7 @@ export const PRODUCT_NAV = [
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#c87a5a] mb-4">
+    <div className="text-[13px] font-bold uppercase tracking-[0.18em] text-primary mb-4">
       {children}
     </div>
   );
