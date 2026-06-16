@@ -123,25 +123,9 @@ export function ProductPage({
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.22 }}
-            className="flex items-center justify-center mb-9"
-          >
-            <a
-              href={appxUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white border border-black/[0.08] text-sm font-semibold text-[#1a1814] hover:border-primary/40 hover:text-primary transition-colors"
-            >
-              View pricing on AppExchange <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-          </motion.div>
-
-          <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.22 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
           >
             <a
