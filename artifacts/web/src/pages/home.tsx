@@ -19,6 +19,7 @@ import {
   Linkedin,
   Store,
   Upload,
+  Star,
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -109,13 +110,52 @@ const ECOSYSTEM = ["Sales Cloud", "Service Cloud", "Experience Cloud", "Nonprofi
 /* single brand tint for the ecosystem marquee pills */
 const PILL_CLASS = "bg-primary/[0.07] border-primary/[0.20] text-primary";
 
-/* randomuser.me portraits read as everyday professionals, not stock models */
+/* Real verbatim reviews from our Salesforce AppExchange listings.
+   Avatars are rendered from initials — we don't have (and won't invent)
+   reviewer photos. */
 const TESTIMONIALS = [
-  { quote: "Enhanced Files saved our ops team hours every single week. It just works.", name: "Leah Daniels", title: "Salesforce Admin, Logistics", photo: "https://randomuser.me/api/portraits/women/68.jpg" },
-  { quote: "Splash Announcements finally got our users to actually read org updates.", name: "Sergio Walker", title: "RevOps Lead", photo: "https://randomuser.me/api/portraits/men/41.jpg" },
-  { quote: "Installed in minutes, zero config headaches. Exactly as advertised.", name: "Jane Park", title: "IT Director, Nonprofit", photo: "https://randomuser.me/api/portraits/women/79.jpg" },
-  { quote: "The cleanest AppExchange apps we've used. Our admins love them.", name: "Amos Chen", title: "CRM Architect", photo: "https://randomuser.me/api/portraits/men/86.jpg" },
+  {
+    quote: "Instead of hoping people read an inbox message, the info shows up directly in Salesforce where I'm already working, so it's hard to miss.",
+    name: "Jared Icenhower",
+    app: "Splash Announcements",
+  },
+  {
+    quote: "It gives you so much more relevant information than the standard \"Files\" feature. You can actually see the real number of files attached, and you can add multiple files at the same time — a great time saver.",
+    name: "Kevin Moore",
+    app: "Enhanced Files",
+  },
+  {
+    quote: "This app has been a game-changer for us. We were able to set up our QuickBooks integration quickly and efficiently, all without writing a single line of code.",
+    name: "Maddie McPhillips",
+    app: "Edge Connect",
+  },
+  {
+    quote: "Very robust with scheduling and managing announcements, and getting the \"read receipt\" acknowledgement is a big plus. It's free and super easy to set up!",
+    name: "Terry Good",
+    app: "Splash Announcements",
+  },
+  {
+    quote: "Being able to download all the files at once is my favorite feature from this app, and I also like that you can easily search for files.",
+    name: "Felipe Sozinho",
+    app: "Enhanced Files",
+  },
+  {
+    quote: "The messaging being persistent to all employees in another platform that they use every day made a big difference. Great communication tool!",
+    name: "Natalie Gerard",
+    app: "Splash Announcements",
+  },
 ];
+
+/* deterministic initials + tinted avatar from a name */
+const AVATAR_TONES = [
+  "bg-primary/[0.14] text-primary",
+  "bg-accent/[0.22] text-[#c2503a]",
+  "bg-[#22a06b]/[0.16] text-[#1c7d54]",
+  "bg-[#413c64]/[0.12] text-[#413c64]",
+];
+function initials(name: string) {
+  return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+}
 
 const newsletterSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -495,32 +535,42 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="text-center max-w-4xl mx-auto py-16"
           >
+            <div className="flex items-center justify-center gap-1 text-[#f5a623] mb-6">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="w-5 h-5 fill-current" />
+              ))}
+            </div>
             <div className="font-display font-medium text-[clamp(32px,5vw,56px)] text-[#1a1814] leading-[1.1] mb-10">
-              "By far the most practical AppExchange apps our team has ever installed"
+              "We now have our admin building integrations, without the need to hire a developer!"
             </div>
             <div className="flex items-center justify-center gap-4">
-              <img
-                src="https://randomuser.me/api/portraits/women/44.jpg"
-                alt=""
-                className="w-14 h-14 rounded-full object-cover"
-              />
+              <span className="w-14 h-14 rounded-full bg-primary/[0.14] text-primary flex items-center justify-center font-bold text-lg">
+                CS
+              </span>
               <div className="text-left">
-                <div className="font-semibold text-[15px] text-[#1a1814]">Martha Reyes</div>
-                <div className="text-[#9a9490] text-[13px]">VP Operations, Mid-Market SaaS</div>
+                <div className="font-semibold text-[15px] text-[#1a1814]">Chris Sommers</div>
+                <div className="text-[#9a9490] text-[13px]">Edge Connect · AppExchange review</div>
               </div>
             </div>
           </motion.div>
 
-          <Marquee duration="38s">
-            {TESTIMONIALS.map((t) => (
+          <Marquee duration="48s">
+            {TESTIMONIALS.map((t, i) => (
               <div key={t.name} className="flex flex-col w-80 h-full bg-white border border-black/[0.06] rounded-3xl p-6 shrink-0">
+                <div className="flex items-center gap-0.5 text-[#f5a623] mb-3">
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <Star key={s} className="w-3.5 h-3.5 fill-current" />
+                  ))}
+                </div>
                 <p className="text-[15px] text-[#1a1814] leading-relaxed mb-5">"{t.quote}"</p>
                 {/* author block pinned to the bottom so it lines up across every card */}
-                <div className="mt-auto flex items-center gap-3 pt-1 border-t border-black/[0.05]">
-                  <img src={t.photo} alt="" className="w-10 h-10 rounded-full object-cover mt-4" />
-                  <div className="mt-4">
+                <div className="mt-auto flex items-center gap-3 pt-4 border-t border-black/[0.05]">
+                  <span className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-[13px] shrink-0 ${AVATAR_TONES[i % AVATAR_TONES.length]}`}>
+                    {initials(t.name)}
+                  </span>
+                  <div>
                     <div className="font-semibold text-[13px] text-[#1a1814]">{t.name}</div>
-                    <div className="text-[#9a9490] text-[12px]">{t.title}</div>
+                    <div className="text-[#9a9490] text-[12px]">{t.app} · AppExchange review</div>
                   </div>
                 </div>
               </div>

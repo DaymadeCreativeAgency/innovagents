@@ -1,11 +1,9 @@
 import { FileSpreadsheet, Boxes, Hash, Database, ShieldCheck, MousePointerClick } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
 import { APPX } from "@/components/layout-v2";
+import { ListViewExportMockup, ListViewCsvMockup } from "@/components/mockups/list-view-mockup";
 
 import listViewIcon from "@assets/ListViewExport-500x500_1781206837929.png";
-import shotExport from "@assets/appx-lve-export.png";
-import shotNoReports from "@assets/appx-lve-no-reports.png";
-import shotFeatures from "@assets/appx-lve-features.png";
 
 export default function ListViewExport() {
   return (
@@ -17,13 +15,9 @@ export default function ListViewExport() {
       description="List View Export lets Salesforce admins export any list view directly to a CSV without rebuilding filters in reports. Save time, reduce errors, and get clean data exactly as it appears in Salesforce."
       appxUrl={APPX.listViewExport}
       tint="indigo"
-      heroScreenshot={{
-        src: shotExport,
-        caption: '"Export List View" right from any Salesforce list view',
-      }}
-      screenshots={[
-        { src: shotNoReports, caption: "No more copying list views into reports just to export a CSV" },
-        { src: shotFeatures, caption: "List View Export feature overview" },
+      mockups={[
+        { label: "Export", caption: "Export any list view straight from the toolbar — no report builder.", node: <ListViewExportMockup /> },
+        { label: "Clean CSV", caption: "A clean CSV drops out instantly, exactly as the data appears.", node: <ListViewCsvMockup /> },
       ]}
       features={[
         { icon: FileSpreadsheet, title: "Export Directly from List Views", desc: "Download a CSV from any Salesforce list view without creating or maintaining reports." },

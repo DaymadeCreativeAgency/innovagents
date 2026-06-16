@@ -1,12 +1,14 @@
 import { LogIn, Clock, Target, CheckCircle2, Bell, ShieldCheck } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
 import { APPX } from "@/components/layout-v2";
+import {
+  SplashLoginMockup,
+  SplashComposeMockup,
+  SplashScheduleMockup,
+  SplashAckMockup,
+} from "@/components/mockups/splash-mockup";
 
 import splashIcon from "@assets/SpalshAnnouncements-500x500_1781206837930.png";
-import shotAcknowledge from "@assets/appx-sa-acknowledge.png";
-import shotCreate from "@assets/appx-sa-create.png";
-import shotSchedule from "@assets/appx-sa-schedule.png";
-import shotRelease from "@assets/appx-sa-release.png";
 
 export default function SplashAnnouncements() {
   return (
@@ -18,14 +20,11 @@ export default function SplashAnnouncements() {
       description="Built to make communication simple and clear — schedule updates, target specific audiences, track acknowledgments, and send real-time alerts. No more guessing who saw what."
       appxUrl={APPX.splashAnnouncements}
       tint="indigo"
-      heroScreenshot={{
-        src: shotAcknowledge,
-        caption: "Users see and acknowledge announcements right at login",
-      }}
-      screenshots={[
-        { src: shotCreate, caption: "Create a dynamic splash with start/end date, title, and rich-text message" },
-        { src: shotSchedule, caption: "Schedule announcements for a date range in the future" },
-        { src: shotRelease, caption: "Publish release notes so users see exactly what changed" },
+      mockups={[
+        { label: "At login", caption: "Users see and acknowledge announcements the moment they log in.", node: <SplashLoginMockup /> },
+        { label: "Compose", caption: "Create a targeted announcement with rich text, run dates, and audiences.", node: <SplashComposeMockup /> },
+        { label: "Schedule", caption: "Plan announcements ahead with clear live, scheduled, and ended states.", node: <SplashScheduleMockup /> },
+        { label: "Acknowledgments", caption: "Track who has read what, in real time, down to each audience.", node: <SplashAckMockup /> },
       ]}
       features={[
         { icon: LogIn, title: "Smart Redirect on Login", desc: "New announcements are displayed the moment users log in — front and center, impossible to miss." },

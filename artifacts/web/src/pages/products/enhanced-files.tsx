@@ -1,13 +1,9 @@
 import { Download, ScrollText, Search, Files, Settings2, Lock } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
 import { APPX } from "@/components/layout-v2";
+import { FilesListMockup, FilesCompareMockup } from "@/components/mockups/files-mockup";
 
 import enhancedFilesIcon from "@assets/EnhancedFiles-500x500_1781206837929.png";
-import shotFeatures from "@assets/appx-ef-features.png";
-import shotDownload from "@assets/appx-ef-download.png";
-import shotSearch from "@assets/appx-ef-search.png";
-import shotCounter from "@assets/appx-ef-counter.png";
-import shotStandardVs from "@assets/appx-ef-standard-vs.jpg";
 
 export default function EnhancedFiles() {
   return (
@@ -19,15 +15,9 @@ export default function EnhancedFiles() {
       description="Enhanced Files takes the standard files related list and supercharges it for maximum efficiency — download multiple files at once, scroll easily, search instantly, and see everything at a glance."
       appxUrl={APPX.enhancedFiles}
       tint="coral"
-      heroScreenshot={{
-        src: shotFeatures,
-        caption: "Enhanced Files on a Lightning record page",
-      }}
-      screenshots={[
-        { src: shotDownload, caption: "Download all files with just one click" },
-        { src: shotSearch, caption: "Quick search filter for instant access to any file" },
-        { src: shotCounter, caption: "Indicator showing total number of files at a glance" },
-        { src: shotStandardVs, caption: "Standard files list vs Enhanced Files" },
+      mockups={[
+        { label: "Files list", caption: "Download all, search, and a live file count — right on the record page.", node: <FilesListMockup /> },
+        { label: "Before vs after", caption: "Standard Salesforce files versus the Enhanced Files experience.", node: <FilesCompareMockup /> },
       ]}
       features={[
         { icon: Download, title: "Download All in One Click", desc: "No more downloading one file at a time. Grab every file on a record with a single click." },

@@ -24,6 +24,14 @@ export interface ProductScreenshot {
   caption: string;
 }
 
+export interface ProductMockup {
+  /* short tab label shown under the viewer */
+  label: string;
+  /* descriptive caption shown above the tabs */
+  caption: string;
+  node: React.ReactNode;
+}
+
 interface ProductPageProps {
   icon: string;
   name: string;
@@ -33,7 +41,9 @@ interface ProductPageProps {
   appxUrl: string;
   /* tint for screenshot frames: "indigo" | "coral" */
   tint?: "indigo" | "coral";
-  /* either real screenshots or a hand-built JSX mockup for the hero visual */
+  /* preferred: hand-built JSX mockups (premium, on-brand) */
+  mockups?: ProductMockup[];
+  /* legacy: real screenshots or a single hand-built JSX mockup */
   heroScreenshot?: ProductScreenshot;
   heroMockup?: React.ReactNode;
   screenshots?: ProductScreenshot[];
@@ -50,6 +60,7 @@ export function ProductPage({
   description,
   appxUrl,
   tint = "indigo",
+  mockups,
   heroScreenshot,
   heroMockup,
   screenshots = [],
@@ -145,43 +156,75 @@ export function ProductPage({
             </Link>
           </motion.div>
 
-          {/* Screenshot viewer */}
+          {/* Product viewer */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="max-w-5xl mx-auto"
+            className="max-w-4xl mx-auto"
           >
-            <div className={`border rounded-[32px] p-4 md:p-8 ${frameClass}`}>
-              {heroMockup ? (
-                heroMockup
-              ) : (
-                <>
-                  <img
-                    src={allShots[activeShot].src}
-                    alt={allShots[activeShot].caption}
-                    className="w-full rounded-2xl border border-black/[0.07] bg-white shadow-[0_20px_60px_rgba(26,24,20,0.12)]"
-                  />
-                  <p className="text-sm text-[#5d574f] font-medium mt-4">{allShots[activeShot].caption}</p>
-                </>
-              )}
-            </div>
-            {!heroMockup && allShots.length > 1 && (
-              <div className="flex justify-center gap-2 mt-5 flex-wrap">
-                {allShots.map((s, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveShot(i)}
-                    className={`px-4 h-9 rounded-full text-xs font-semibold transition-colors ${
-                      activeShot === i
-                        ? "bg-[#1a1814] text-white"
-                        : "bg-white border border-black/[0.10] text-[#6b6460] hover:bg-black/[0.04]"
-                    }`}
-                  >
-                    {s.caption.length > 30 ? `${s.caption.slice(0, 28)}…` : s.caption}
-                  </button>
-                ))}
-              </div>
+            {mockups && mockups.length > 0 ? (
+              <>
+                <div className={`border rounded-[32px] p-4 sm:p-6 md:p-10 ${frameClass}`}>
+                  {mockups[Math.min(activeShot, mockups.length - 1)].node}
+                </div>
+                {mockups.length > 1 && (
+                  <>
+                    <p className="text-sm text-[#5d574f] font-medium mt-5">
+                      {mockups[Math.min(activeShot, mockups.length - 1)].caption}
+                    </p>
+                    <div className="flex justify-center gap-2 mt-4 flex-wrap">
+                      {mockups.map((m, i) => (
+                        <button
+                          key={m.label}
+                          onClick={() => setActiveShot(i)}
+                          className={`px-4 h-9 rounded-full text-xs font-semibold transition-colors ${
+                            activeShot === i
+                              ? "bg-[#1a1814] text-white"
+                              : "bg-white border border-black/[0.10] text-[#6b6460] hover:bg-black/[0.04]"
+                          }`}
+                        >
+                          {m.label}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <div className={`border rounded-[32px] p-4 md:p-8 ${frameClass}`}>
+                  {heroMockup ? (
+                    heroMockup
+                  ) : (
+                    <>
+                      <img
+                        src={allShots[activeShot].src}
+                        alt={allShots[activeShot].caption}
+                        className="w-full rounded-2xl border border-black/[0.07] bg-white shadow-[0_20px_60px_rgba(26,24,20,0.12)]"
+                      />
+                      <p className="text-sm text-[#5d574f] font-medium mt-4">{allShots[activeShot].caption}</p>
+                    </>
+                  )}
+                </div>
+                {!heroMockup && allShots.length > 1 && (
+                  <div className="flex justify-center gap-2 mt-5 flex-wrap">
+                    {allShots.map((s, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveShot(i)}
+                        className={`px-4 h-9 rounded-full text-xs font-semibold transition-colors ${
+                          activeShot === i
+                            ? "bg-[#1a1814] text-white"
+                            : "bg-white border border-black/[0.10] text-[#6b6460] hover:bg-black/[0.04]"
+                        }`}
+                      >
+                        {s.caption.length > 30 ? `${s.caption.slice(0, 28)}…` : s.caption}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </motion.div>
         </div>
@@ -230,7 +273,9 @@ export function ProductPage({
             viewport={{ once: true }}
             className={`border rounded-[32px] p-5 md:p-8 ${frameClass}`}
           >
-            {screenshots[0] || heroScreenshot ? (
+            {mockups && mockups.length > 0 ? (
+              (mockups[mockups.length > 1 ? 1 : 0].node)
+            ) : screenshots[0] || heroScreenshot ? (
               <img
                 src={(screenshots[0] ?? heroScreenshot)!.src}
                 alt={(screenshots[0] ?? heroScreenshot)!.caption}
