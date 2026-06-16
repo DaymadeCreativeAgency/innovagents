@@ -11,6 +11,8 @@ export const PAGE_DESCRIPTIONS = {
     "InnovAgents builds Salesforce-native apps from real consulting experience. Learn how we help admins and IT teams fill platform gaps without heavy setup or enterprise pricing.",
   contact:
     "Questions about InnovAgents apps or your Salesforce org? Contact our team — real people, fast replies. Email support@innovagentsai.com or send a message.",
+  privacy:
+    "InnovAgents privacy policy — how we collect, use, and protect your information when you visit our site, subscribe to updates, or contact us.",
   notFound: "The page you're looking for doesn't exist. Browse InnovAgents Salesforce apps on AppExchange.",
 } as const;
 

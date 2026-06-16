@@ -256,6 +256,7 @@ function FooterV2() {
             <ul className="space-y-3">
               <li><Link href="/about" className="text-[15px] text-[#1a1814]/70 hover:text-primary transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="text-[15px] text-[#1a1814]/70 hover:text-primary transition-colors">Contact Us</Link></li>
+              <li><Link href="/privacy-policy" className="text-[15px] text-[#1a1814]/70 hover:text-primary transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>

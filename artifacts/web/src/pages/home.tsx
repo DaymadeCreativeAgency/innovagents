@@ -704,6 +704,13 @@ export default function Home() {
                   >
                     <Send className="w-4 h-4 mr-2" /> {submitting ? "Subscribing…" : "Subscribe"}
                   </Button>
+                  <p className="text-[12px] text-[#9a9490] text-center leading-relaxed">
+                    By subscribing, you agree to our{" "}
+                    <Link href="/privacy-policy" className="text-primary hover:underline">
+                      Privacy Policy
+                    </Link>
+                    . Unsubscribe anytime.
+                  </p>
                 </form>
               </Form>
             )}

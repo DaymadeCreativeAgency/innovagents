@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
+import PrivacyPolicy from "@/pages/privacy-policy";
 import SplashAnnouncements from "@/pages/products/splash-announcements";
 import EnhancedFiles from "@/pages/products/enhanced-files";
 import ListViewExport from "@/pages/products/list-view-export";
@@ -30,6 +31,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/products/splash-announcements" component={SplashAnnouncements} />
         <Route path="/products/enhanced-files" component={EnhancedFiles} />
         <Route path="/products/list-view-export" component={ListViewExport} />

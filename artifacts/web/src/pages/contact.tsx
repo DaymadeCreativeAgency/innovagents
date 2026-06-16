@@ -11,6 +11,8 @@ import { CheckCircle2, Mail, MapPin, Send } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { PAGE_DESCRIPTIONS } from "@/lib/seo";
+import { submitContactForm } from "@/lib/contact";
+import { Link } from "wouter";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -27,15 +29,25 @@ export default function Contact() {
   });
 
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: { name: "", email: "", subject: "", message: "" },
   });
 
-  function onSubmit() {
-    setSuccess(true);
-    form.reset();
+  async function onSubmit(values: z.infer<typeof contactSchema>) {
+    setSubmitting(true);
+    setError(null);
+    const result = await submitContactForm(values);
+    setSubmitting(false);
+    if (result.ok) {
+      setSuccess(true);
+      form.reset();
+    } else {
+      setError(result.message);
+    }
   }
 
   return (
@@ -194,9 +206,23 @@ export default function Contact() {
                         </FormItem>
                       )}
                     />
-                    <Button type="submit" className="w-full h-11 text-sm font-semibold bg-[#1a1814] hover:bg-[#33302a] text-white transition-colors rounded-full shadow-sm">
-                      <Send className="w-4 h-4 mr-2" /> Send Message
+                    {error && (
+                      <p className="text-[13px] text-[#d65a41] px-1">{error}</p>
+                    )}
+                    <Button
+                      type="submit"
+                      disabled={submitting}
+                      className="w-full h-11 text-sm font-semibold bg-[#1a1814] hover:bg-[#33302a] text-white transition-colors rounded-full shadow-sm disabled:opacity-70"
+                    >
+                      <Send className="w-4 h-4 mr-2" /> {submitting ? "Sending…" : "Send Message"}
                     </Button>
+                    <p className="text-[12px] text-[#9a9490] text-center leading-relaxed">
+                      By submitting, you agree to our{" "}
+                      <Link href="/privacy-policy" className="text-primary hover:underline">
+                        Privacy Policy
+                      </Link>
+                      .
+                    </p>
                   </form>
                 </Form>
               )}
