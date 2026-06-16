@@ -303,28 +303,44 @@ export default function Home() {
       <HeroSection />
 
       {/* ── STATS ── */}
-      <section className="bg-white pt-6 pb-14">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-black/[0.07] py-12">
-            {STATS.map((stat) => (
-              <motion.div key={stat.label} variants={fadeUp}>
-                <div className="text-4xl md:text-5xl font-display font-black text-primary mb-1">{stat.value}</div>
-                <div className="text-[13px] text-[#6b6460] font-medium uppercase tracking-widest">{stat.label}</div>
-              </motion.div>
-            ))}
+      <section className="bg-white py-6 sm:py-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="border-y border-black/[0.07] py-8 sm:py-10 lg:py-12"
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4 lg:gap-x-0 lg:divide-x lg:divide-black/[0.07]">
+              {STATS.map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  variants={fadeUp}
+                  className="flex flex-col items-center text-center px-3 sm:px-5 lg:px-8 min-w-0"
+                >
+                  <div className="text-[clamp(2rem,5.5vw,3rem)] font-display font-black text-primary mb-1 tabular-nums leading-none">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] sm:text-[11px] md:text-[12px] text-[#6b6460] font-medium uppercase tracking-[0.14em] sm:tracking-widest leading-snug">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* ── BENEFIT PANEL 1 — Splash Announcements ── */}
-      <section id="apps" className="bg-white pt-10 pb-20">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <section id="apps" className="bg-white pt-6 sm:pt-10 pb-14 sm:pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-primary/[0.10] to-primary/[0.04] border border-primary/[0.10] rounded-[32px] p-6 md:p-10"
+            className="relative mt-8 sm:mt-0 bg-gradient-to-br from-primary/[0.10] to-primary/[0.04] border border-primary/[0.10] rounded-[24px] sm:rounded-[32px] p-5 sm:p-6 md:p-10"
           >
             <img
               src={splashIcon}
@@ -336,7 +352,7 @@ export default function Home() {
 
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <SectionLabel>Splash Announcements</SectionLabel>
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Reach every user, every time</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Reach every user, every time</h2>
             <p className="text-[#6b6460] leading-relaxed mb-8">
               <strong className="text-[#1a1814] font-semibold">Targeted org-wide messaging</strong> with scheduling & acknowledgment tracking. Make sure critical updates actually get seen — and prove it with acknowledgment reports.
             </p>
@@ -354,11 +370,11 @@ export default function Home() {
       </section>
 
       {/* ── BENEFIT PANEL 2 — Enhanced Files ── */}
-      <section className="bg-white py-20">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <section className="bg-white py-14 sm:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
             <SectionLabel>Enhanced Files</SectionLabel>
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Files that finally make sense</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Files that finally make sense</h2>
             <p className="text-[#6b6460] leading-relaxed mb-8">
               <strong className="text-[#1a1814] font-semibold">Modern file management</strong> with bulk downloads, instant search & smart previews. Treat Salesforce files like a real file system, right on the record page.
             </p>
@@ -378,7 +394,7 @@ export default function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative order-1 lg:order-2 bg-gradient-to-br from-accent/[0.14] to-accent/[0.05] border border-accent/[0.14] rounded-[32px] p-6 md:p-10"
+            className="relative order-1 lg:order-2 mt-8 sm:mt-0 bg-gradient-to-br from-accent/[0.14] to-accent/[0.05] border border-accent/[0.14] rounded-[24px] sm:rounded-[32px] p-5 sm:p-6 md:p-10"
           >
             <img
               src={enhancedFilesIcon}
@@ -391,14 +407,14 @@ export default function Home() {
       </section>
 
       {/* ── BENEFIT PANEL 3 — Edge Connect ── */}
-      <section className="bg-white py-20">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <section className="bg-white py-14 sm:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-primary/[0.10] to-accent/[0.06] border border-primary/[0.10] rounded-[32px] p-6 md:p-10"
+            className="relative mt-8 sm:mt-0 bg-gradient-to-br from-primary/[0.10] to-accent/[0.06] border border-primary/[0.10] rounded-[24px] sm:rounded-[32px] p-5 sm:p-6 md:p-10"
           >
             <img
               src={edgeConnectIcon}
@@ -410,7 +426,7 @@ export default function Home() {
 
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <SectionLabel>Edge Connect</SectionLabel>
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Integrations as easy as flows</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Integrations as easy as flows</h2>
             <p className="text-[#6b6460] leading-relaxed mb-8">
               <strong className="text-[#1a1814] font-semibold">A low-code integration platform</strong> that lets admins and developers design, build, test, and deploy integrations in Salesforce with a drag-and-drop flow designer — no middleware required.
             </p>
@@ -428,11 +444,11 @@ export default function Home() {
       </section>
 
       {/* ── APPS GRID ── */}
-      <section className="bg-white pb-24">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-2xl">
+      <section className="bg-white pb-16 sm:pb-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10 sm:mb-12 max-w-2xl">
             <SectionLabel>AppExchange Solutions</SectionLabel>
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Our featured products</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Our featured products</h2>
             <p className="text-[#6b6460] text-lg">
               Built by Salesforce veterans for admins, IT leaders, and operations teams who need real solutions fast.
             </p>
@@ -490,11 +506,11 @@ export default function Home() {
       </section>
 
       {/* ── WHY US — cream bento ── */}
-      <section id="why-us" className="bg-[#f5f1ea] py-24">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
+      <section id="why-us" className="bg-[#f5f1ea] py-16 sm:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-14">
             <SectionLabel>Why Us</SectionLabel>
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Why Salesforce teams choose us</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Why Salesforce teams choose us</h2>
             <p className="text-[#6b6460] text-lg">Smart, native, and built around how your org actually works</p>
           </motion.div>
 
@@ -543,21 +559,21 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="bg-[#f5f1ea] pb-24">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="bg-[#f5f1ea] pb-16 sm:pb-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center max-w-4xl mx-auto py-16"
+            className="text-center max-w-4xl mx-auto py-10 sm:py-16 px-2"
           >
             <div className="flex items-center justify-center gap-1 text-[#f5a623] mb-6">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} className="w-5 h-5 fill-current" />
               ))}
             </div>
-            <div className="font-display font-medium text-[clamp(32px,5vw,56px)] text-[#1a1814] leading-[1.1] mb-10">
+            <div className="font-display font-medium text-[clamp(1.5rem,4.5vw,3.5rem)] text-[#1a1814] leading-[1.15] mb-8 sm:mb-10">
               "We now have our admin building integrations, without the need to hire a developer!"
             </div>
             <div className="flex items-center justify-center gap-4">
@@ -597,15 +613,15 @@ export default function Home() {
       </section>
 
       {/* ── STAY IN THE LOOP + NEWSLETTER — sky bookend ── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#e8ecf8] to-[#d8e2f5] py-24">
-        <Cloud className="top-12 left-[6%] opacity-80" />
-        <Cloud className="bottom-12 right-[8%] opacity-70 scale-75" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#e8ecf8] to-[#d8e2f5] py-16 sm:py-24">
+        <Cloud className="top-12 left-[6%] opacity-80 hidden sm:block" />
+        <Cloud className="bottom-12 right-[8%] opacity-70 scale-75 hidden sm:block" />
 
-        <div className="max-w-5xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           {/* left — stay in the loop */}
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <SectionLabel>Community</SectionLabel>
-            <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Stay in the loop</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-4">Stay in the loop</h2>
             <p className="text-[#5d574f] leading-relaxed mb-8">
               Follow along for new releases, betas, and ways teams are getting more out of Salesforce.
             </p>
@@ -619,8 +635,8 @@ export default function Home() {
                 <div className="w-11 h-11 rounded-xl bg-primary/[0.09] border border-primary/[0.15] flex items-center justify-center shrink-0">
                   <Linkedin className="w-5 h-5 text-primary" />
                 </div>
-                <div className="flex-1">
-                  <div className="font-display font-medium text-lg text-[#1a1814] leading-tight">Follow us on LinkedIn</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-display font-medium text-base sm:text-lg text-[#1a1814] leading-tight">Follow us on LinkedIn</div>
                   <div className="text-[#9a9490] text-[13px]">Release news & Salesforce tips</div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[#9a9490] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary" />
@@ -634,8 +650,8 @@ export default function Home() {
                 <div className="w-11 h-11 rounded-xl bg-[#fe907f]/[0.14] border border-[#fe907f]/[0.30] flex items-center justify-center shrink-0">
                   <Store className="w-5 h-5 text-[#d65a41]" />
                 </div>
-                <div className="flex-1">
-                  <div className="font-display font-medium text-lg text-[#1a1814] leading-tight">Browse the AppExchange</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-display font-medium text-base sm:text-lg text-[#1a1814] leading-tight">Browse the AppExchange</div>
                   <div className="text-[#9a9490] text-[13px]">5+ apps · reviews · installs in minutes</div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[#9a9490] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#d65a41]" />
@@ -649,9 +665,9 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-[28px] p-8 md:p-10 shadow-[0_20px_60px_rgba(26,24,20,0.10)]"
+            className="bg-white rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(26,24,20,0.10)]"
           >
-            <h3 className="text-3xl md:text-4xl text-[#1a1814] font-display font-black mb-3">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl text-[#1a1814] font-display font-black mb-3">
               Be the first <span className="text-primary">to know</span>
             </h3>
             <p className="text-[#5d574f] mb-7 leading-relaxed">

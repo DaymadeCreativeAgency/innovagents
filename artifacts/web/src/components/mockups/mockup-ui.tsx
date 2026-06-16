@@ -20,7 +20,7 @@ export function MockupFrame({
 }) {
   return (
     <div
-      className={`text-left bg-white rounded-2xl border border-black/[0.07] overflow-hidden shadow-[0_30px_80px_-28px_rgba(26,24,20,0.45)] ${className ?? ""}`}
+      className={`text-left bg-white rounded-2xl border border-black/[0.07] overflow-hidden shadow-[0_30px_80px_-28px_rgba(26,24,20,0.45)] min-w-0 ${className ?? ""}`}
     >
       <div className="flex items-center gap-3 px-4 h-10 border-b border-black/[0.06] bg-gradient-to-b from-white to-[#faf8f4]">
         <span className="flex gap-1.5 shrink-0" aria-hidden>

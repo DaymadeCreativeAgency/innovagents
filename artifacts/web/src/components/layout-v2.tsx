@@ -199,7 +199,7 @@ function FloatingNav() {
       </div>
 
       {open && (
-        <div className="pointer-events-auto absolute top-16 w-[92%] max-w-md bg-white rounded-3xl shadow-xl border border-black/[0.06] p-4 flex flex-col gap-1 md:hidden">
+        <div className="pointer-events-auto absolute top-[calc(100%+0.75rem)] left-1/2 -translate-x-1/2 w-[min(92vw,28rem)] bg-white rounded-3xl shadow-xl border border-black/[0.06] p-4 flex flex-col gap-1 md:hidden max-h-[calc(100dvh-6rem)] overflow-y-auto">
           <div className="text-[12px] font-semibold text-[#9a9490] uppercase tracking-widest px-4 pt-1 pb-2">Solutions</div>
           {PRODUCT_NAV.map((p) => (
             <Link key={p.href} href={p.href} className="flex items-center gap-3 px-4 py-3 text-base font-medium text-[#1a1814]/75 rounded-2xl hover:bg-black/[0.04]">
@@ -260,9 +260,9 @@ function FooterV2() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-black/[0.07] pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="border-t border-black/[0.07] pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <p className="text-[13px] text-[#9a9490]">© {new Date().getFullYear()} InnovAgents. All rights reserved.</p>
-          <p className="text-[13px] text-[#9a9490]">Built natively for Salesforce · Available on AppExchange</p>
+          <p className="text-[13px] text-[#9a9490] max-w-xs md:max-w-none">Built natively for Salesforce · Available on AppExchange</p>
         </div>
       </div>
     </footer>
@@ -273,7 +273,7 @@ function FooterV2() {
 
 export function LayoutV2({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen font-sans bg-white text-[#1a1814]">
+    <div className="min-h-screen font-sans bg-white text-[#1a1814] overflow-x-hidden">
       <FloatingNav />
       <main>{children}</main>
       <FooterV2 />

@@ -88,11 +88,11 @@ export function ProductPage({
   return (
     <LayoutV2>
       {/* ── HERO — sky gradient ── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-36 pb-16">
-        <Cloud className="top-24 left-[4%] opacity-80" />
-        <Cloud className="top-40 right-[6%] opacity-60 scale-75" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-32 sm:pt-36 pb-12 sm:pb-16">
+        <Cloud className="top-24 left-[4%] opacity-80 hidden sm:block" />
+        <Cloud className="top-40 right-[6%] opacity-60 scale-75 hidden sm:block" />
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -169,7 +169,7 @@ export function ProductPage({
           >
             {mockups && mockups.length > 0 ? (
               <>
-                <div className={`border rounded-[32px] p-4 sm:p-6 md:p-10 ${frameClass}`}>
+                <div className={`border rounded-[24px] sm:rounded-[32px] p-3 sm:p-4 md:p-6 lg:p-10 min-w-0 overflow-x-auto ${frameClass}`}>
                   {mockups[Math.min(activeShot, mockups.length - 1)].node}
                 </div>
                 {mockups.length > 1 && (

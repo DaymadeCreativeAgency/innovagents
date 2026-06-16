@@ -15,11 +15,11 @@ export default function PrivacyPolicy() {
 
   return (
     <LayoutV2>
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-40 pb-16">
-        <Cloud className="top-24 left-[5%] opacity-80" />
-        <Cloud className="top-36 right-[8%] opacity-60 scale-75" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-32 sm:pt-40 pb-12 sm:pb-16">
+        <Cloud className="top-24 left-[5%] opacity-80 hidden sm:block" />
+        <Cloud className="top-36 right-[8%] opacity-60 scale-75 hidden sm:block" />
 
-        <div className="max-w-3xl mx-auto px-6 relative z-10 text-center">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <SectionLabel>Legal</SectionLabel>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
@@ -40,8 +40,8 @@ export default function PrivacyPolicy() {
         </div>
       </section>
 
-      <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-6 prose prose-neutral prose-headings:font-display prose-headings:font-medium prose-headings:text-[#1a1814] prose-p:text-[#5d574f] prose-li:text-[#5d574f] prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 prose prose-neutral prose-sm sm:prose-base prose-headings:font-display prose-headings:font-medium prose-headings:text-[#1a1814] prose-p:text-[#5d574f] prose-li:text-[#5d574f] prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
           <h2>Who we are</h2>
           <p>
             InnovAgents (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) builds Salesforce-native apps available on

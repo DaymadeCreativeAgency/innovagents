@@ -31,17 +31,17 @@ export default function About() {
   return (
     <LayoutV2>
       {/* ── HERO — sky gradient ── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-40 pb-20">
-        <Cloud className="top-24 left-[5%] opacity-80" />
-        <Cloud className="top-36 right-[8%] opacity-60 scale-75" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-32 sm:pt-40 pb-14 sm:pb-20">
+        <Cloud className="top-24 left-[5%] opacity-80 hidden sm:block" />
+        <Cloud className="top-36 right-[8%] opacity-60 scale-75 hidden sm:block" />
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <SectionLabel>Our Story</SectionLabel>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.05 }}
-            className="text-[clamp(44px,7vw,80px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-6"
+            className="text-[clamp(2.25rem,7vw,5rem)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-5 sm:mb-6"
           >
             We've lived<br /><span className="text-primary">the problems</span>
           </motion.h1>
@@ -57,8 +57,8 @@ export default function About() {
       </section>
 
       {/* ── OUR STORY — white ── */}
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="py-14 sm:py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mx-auto space-y-5">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

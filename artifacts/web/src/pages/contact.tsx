@@ -53,11 +53,11 @@ export default function Contact() {
   return (
     <LayoutV2>
       {/* ── HERO — sky gradient ── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-40 pb-16">
-        <Cloud className="top-24 left-[5%] opacity-80" />
-        <Cloud className="top-36 right-[8%] opacity-60 scale-75" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#9ec2e8] via-[#c9def2] to-[#edf3fa] pt-32 sm:pt-40 pb-12 sm:pb-16">
+        <Cloud className="top-24 left-[5%] opacity-80 hidden sm:block" />
+        <Cloud className="top-36 right-[8%] opacity-60 scale-75 hidden sm:block" />
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <SectionLabel>Get in Touch</SectionLabel>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
@@ -79,9 +79,9 @@ export default function Contact() {
       </section>
 
       {/* ── FORM + INFO ── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto items-start">
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 max-w-5xl mx-auto items-start">
             {/* Left info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -126,7 +126,7 @@ export default function Contact() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="bg-[#faf8f4] border border-black/[0.07] rounded-[28px] p-8 md:p-10"
+              className="bg-[#faf8f4] border border-black/[0.07] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 md:p-10"
             >
               {success ? (
                 <div className="flex flex-col items-center justify-center text-center py-12">
