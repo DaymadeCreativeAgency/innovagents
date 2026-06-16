@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import { motion, type Variants } from "framer-motion";
 import {
@@ -30,6 +30,9 @@ import { Button } from "@/components/ui/button";
 import { LayoutV2, SectionLabel, Cloud, Marquee, PillTag, APPX } from "@/components/layout-v2";
 import { HeroSection } from "@/components/hero-section";
 import { EdgeFlowMockup } from "@/components/edge-flow-mockup";
+import { subscribeToNewsletter } from "@/lib/newsletter";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 
 import splashIcon from "@assets/SpalshAnnouncements-500x500_1781206837930.png";
 import enhancedFilesIcon from "@assets/EnhancedFiles-500x500_1781206837929.png";
@@ -265,20 +268,34 @@ function FilesMockup() {
 /* ───────────────────────── page ───────────────────────── */
 
 export default function Home() {
-  const [newsletterSuccess, setNewsletterSuccess] = useState(false);
+  usePageMeta({
+    title: "InnovAgents | Smarter Salesforce Starts Here",
+    description: PAGE_DESCRIPTIONS.home,
+    path: "/",
+  });
 
-  useEffect(() => {
-    document.title = "InnovAgents | Smarter Salesforce Starts Here";
-  }, []);
+  const [newsletterSuccess, setNewsletterSuccess] = useState(false);
+  const [newsletterMessage, setNewsletterMessage] = useState("Thanks for subscribing! We'll be in touch.");
+  const [newsletterError, setNewsletterError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof newsletterSchema>>({
     resolver: zodResolver(newsletterSchema),
     defaultValues: { firstName: "", email: "" },
   });
 
-  function onSubmit() {
-    setNewsletterSuccess(true);
-    form.reset();
+  async function onSubmit(values: z.infer<typeof newsletterSchema>) {
+    setSubmitting(true);
+    setNewsletterError(null);
+    const result = await subscribeToNewsletter(values.email, values.firstName);
+    setSubmitting(false);
+    if (result.ok) {
+      setNewsletterMessage(result.message);
+      setNewsletterSuccess(true);
+      form.reset();
+    } else {
+      setNewsletterError(result.message);
+    }
   }
 
   return (
@@ -593,7 +610,12 @@ export default function Home() {
               Follow along for new releases, betas, and ways teams are getting more out of Salesforce.
             </p>
             <div className="space-y-3">
-              <a href="#" className="group flex items-center gap-4 bg-white rounded-2xl p-4 border border-black/[0.06] hover:border-primary/[0.30] hover:shadow-md transition-all">
+              <a
+                href="https://www.linkedin.com/company/innovagents-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 bg-white rounded-2xl p-4 border border-black/[0.06] hover:border-primary/[0.30] hover:shadow-md transition-all"
+              >
                 <div className="w-11 h-11 rounded-xl bg-primary/[0.09] border border-primary/[0.15] flex items-center justify-center shrink-0">
                   <Linkedin className="w-5 h-5 text-primary" />
                 </div>
@@ -604,7 +626,7 @@ export default function Home() {
                 <ArrowRight className="w-4 h-4 text-[#9a9490] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary" />
               </a>
               <a
-                href={APPX.edgeConnect}
+                href={APPX.splashAnnouncements}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 bg-white rounded-2xl p-4 border border-black/[0.06] hover:border-[#fe907f]/[0.50] hover:shadow-md transition-all"
@@ -643,7 +665,7 @@ export default function Home() {
                 className="bg-primary/[0.06] border border-primary/[0.15] text-[#1a1814] p-4 rounded-2xl flex items-center gap-3"
               >
                 <CheckCircle2 className="w-5 h-5 text-primary" />
-                <span className="font-medium text-[15px]">Thanks for subscribing! We'll be in touch.</span>
+                <span className="font-medium text-[15px]">{newsletterMessage}</span>
               </motion.div>
             ) : (
               <Form {...form}>
@@ -672,8 +694,15 @@ export default function Home() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="cta-pill h-12 px-7 bg-[#1a1814] text-white font-semibold rounded-full text-base">
-                    <Send className="w-4 h-4 mr-2" /> Subscribe
+                  {newsletterError && (
+                    <p className="text-[13px] text-[#d65a41] px-1 -mt-1">{newsletterError}</p>
+                  )}
+                  <Button
+                    type="submit"
+                    disabled={submitting}
+                    className="cta-pill h-12 px-7 bg-[#1a1814] text-white font-semibold rounded-full text-base disabled:opacity-70"
+                  >
+                    <Send className="w-4 h-4 mr-2" /> {submitting ? "Subscribing…" : "Subscribe"}
                   </Button>
                 </form>
               </Form>

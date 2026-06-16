@@ -1,8 +1,17 @@
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { LayoutV2, Cloud, SectionLabel } from "@/components/layout-v2";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 
 export default function NotFound() {
+  usePageMeta({
+    title: "Page Not Found",
+    description: PAGE_DESCRIPTIONS.notFound,
+    path: "/404",
+    noIndex: true,
+  });
+
   return (
     <LayoutV2>
       <section className="relative overflow-hidden bg-gradient-to-b from-[#dbe4f7] via-[#edeef5] to-white pt-44 pb-32 min-h-[70vh]">

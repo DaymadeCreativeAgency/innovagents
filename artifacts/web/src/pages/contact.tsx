@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Mail, MapPin, Send } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -18,11 +20,13 @@ const contactSchema = z.object({
 });
 
 export default function Contact() {
-  const [success, setSuccess] = useState(false);
+  usePageMeta({
+    title: "Contact Us",
+    description: PAGE_DESCRIPTIONS.contact,
+    path: "/contact",
+  });
 
-  useEffect(() => {
-    document.title = "Contact Us | InnovAgents";
-  }, []);
+  const [success, setSuccess] = useState(false);
 
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),

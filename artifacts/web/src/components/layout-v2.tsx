@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Linkedin } from "lucide-react";
 
 import logo2Color from "@assets/InnovAgents-Main-Lockup-2color_1781206479353.png";
 import logoWhite from "@assets/InnovAgents-Main-Lockup-white_1781206479352.png";
@@ -229,6 +229,15 @@ function FooterV2() {
             <p className="text-[#6b6460] text-[15px] leading-relaxed max-w-xs">
               Powerful Salesforce-native apps built by veterans. Streamline your workflows without the heavy setup.
             </p>
+            <a
+              href="https://www.linkedin.com/company/innovagents-ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="InnovAgents on LinkedIn"
+              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black/[0.08] text-[#1a1814]/70 hover:text-primary hover:border-primary/[0.30] transition-colors"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
           </div>
           <div>
             <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[#9a9490] mb-5">Products</h4>

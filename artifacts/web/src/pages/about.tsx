@@ -1,8 +1,9 @@
-import { useEffect } from "react";
 import { motion, type Variants } from "framer-motion";
 import { Zap, Target, ShieldCheck, Rocket, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 
 const stagger: Variants = {
   hidden: {},
@@ -21,9 +22,11 @@ const DIFFERENTIATORS = [
 ];
 
 export default function About() {
-  useEffect(() => {
-    document.title = "About Us | InnovAgents";
-  }, []);
+  usePageMeta({
+    title: "About Us",
+    description: PAGE_DESCRIPTIONS.about,
+    path: "/about",
+  });
 
   return (
     <LayoutV2>

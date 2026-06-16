@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
 import { motion, type Variants } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 const stagger: Variants = {
   hidden: {},
@@ -69,10 +70,13 @@ export function ProductPage({
   ctaHeadline,
 }: ProductPageProps) {
   const [activeShot, setActiveShot] = useState(0);
+  const [location] = useLocation();
 
-  useEffect(() => {
-    document.title = `${name} | InnovAgents`;
-  }, [name]);
+  usePageMeta({
+    title: name,
+    description,
+    path: location,
+  });
 
   const frameClass =
     tint === "indigo"
