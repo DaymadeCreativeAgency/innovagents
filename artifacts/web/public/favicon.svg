@@ -1,3 +1,9 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="180" height="180" rx="36" fill="#FF3C00"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
+  <rect width="800" height="800" fill="#ffffff"/>
+  <g transform="translate(0, 170)">
+    <!-- InnovAgents iA logomark -->
+    <path fill="#5555e6" d="M0 460V358L42 316V460H0Z"/>
+    <path fill="#5555e6" d="M42 460V42L58 26H206L222 42V460H42Z"/>
+    <path fill="#5555e6" d="M252 460V102L280 26H800V460H252Z"/>
+  </g>
 </svg>
