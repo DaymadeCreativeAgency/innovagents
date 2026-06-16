@@ -16,8 +16,6 @@ export default function SplashAnnouncements() {
       label="In-App Communication That Works"
       headline={<>No more ugly banners or urgent emails</>}
       description="Built to make communication simple and clear — schedule updates, target specific audiences, track acknowledgments, and send real-time alerts. No more guessing who saw what."
-      priceChip="$3 / user / month"
-      trialNote="Free 7-day trial"
       appxUrl={APPX.splashAnnouncements}
       tint="indigo"
       heroScreenshot={{

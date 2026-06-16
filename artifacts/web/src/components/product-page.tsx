@@ -24,22 +24,12 @@ export interface ProductScreenshot {
   caption: string;
 }
 
-export interface ProductPricingTier {
-  name: string;
-  price: string;
-  unit?: string;
-  desc: string;
-  featured?: boolean;
-}
-
 interface ProductPageProps {
   icon: string;
   name: string;
   label: string;
   headline: React.ReactNode;
   description: string;
-  priceChip: string;
-  trialNote?: string;
   appxUrl: string;
   /* tint for screenshot frames: "indigo" | "coral" */
   tint?: "indigo" | "coral";
@@ -49,7 +39,6 @@ interface ProductPageProps {
   screenshots?: ProductScreenshot[];
   features: ProductFeature[];
   benefits: string[];
-  pricingTiers?: ProductPricingTier[];
   ctaHeadline: string;
 }
 
@@ -59,8 +48,6 @@ export function ProductPage({
   label,
   headline,
   description,
-  priceChip,
-  trialNote,
   appxUrl,
   tint = "indigo",
   heroScreenshot,
@@ -68,7 +55,6 @@ export function ProductPage({
   screenshots = [],
   features,
   benefits,
-  pricingTiers,
   ctaHeadline,
 }: ProductPageProps) {
   const [activeShot, setActiveShot] = useState(0);
@@ -125,16 +111,16 @@ export function ProductPage({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.22 }}
-            className="flex items-center justify-center gap-2 mb-9 flex-wrap"
+            className="flex items-center justify-center mb-9"
           >
-            <span className="px-4 py-1.5 rounded-full bg-white border border-black/[0.08] text-sm font-semibold text-[#1a1814]">
-              {priceChip}
-            </span>
-            {trialNote && (
-              <span className="px-4 py-1.5 rounded-full bg-primary/[0.07] border border-primary/[0.15] text-sm font-medium text-primary">
-                {trialNote}
-              </span>
-            )}
+            <a
+              href={appxUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white border border-black/[0.08] text-sm font-semibold text-[#1a1814] hover:border-primary/40 hover:text-primary transition-colors"
+            >
+              View pricing on AppExchange <ArrowRight className="w-3.5 h-3.5" />
+            </a>
           </motion.div>
 
           <motion.div
@@ -155,7 +141,7 @@ export function ProductPage({
               href="/contact"
               className="inline-flex items-center px-7 h-11 text-sm font-medium bg-white/70 border border-black/[0.10] text-[#1a1814] hover:bg-white rounded-full transition-colors"
             >
-              Contact Sales
+              Contact us
             </Link>
           </motion.div>
 
@@ -273,57 +259,6 @@ export function ProductPage({
         </div>
       </section>
 
-      {/* ── PRICING (optional) ── */}
-      {pricingTiers && (
-        <section className="py-24 bg-[#e8ecf8]">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-              <SectionLabel>Pricing</SectionLabel>
-              <h2 className="text-4xl md:text-5xl font-display font-black text-[#1a1814]">Simple plans for serious work</h2>
-            </motion.div>
-
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-            >
-              {pricingTiers.map((tier) => (
-                <motion.div
-                  key={tier.name}
-                  variants={fadeUp}
-                  className={`rounded-[28px] p-7 ${
-                    tier.featured
-                      ? "bg-white border-2 border-primary shadow-[0_16px_50px_rgba(85,85,230,0.16)]"
-                      : "bg-white/80 border border-black/[0.06]"
-                  }`}
-                >
-                  <div className="font-display font-medium text-lg text-[#1a1814] mb-4">{tier.name}</div>
-                  <div className="mb-1">
-                    <span className="font-display font-black text-4xl text-[#1a1814]">{tier.price}</span>
-                    {tier.unit && <span className="text-sm text-[#9a9490] ml-1">{tier.unit}</span>}
-                  </div>
-                  <p className="text-[#6b6460] text-[15px] leading-relaxed mb-6">{tier.desc}</p>
-                  <a
-                    href={appxUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`block text-center px-5 h-10 leading-10 text-sm font-semibold rounded-full transition-colors ${
-                      tier.featured
-                        ? "bg-[#1a1814] text-white hover:bg-[#33302a]"
-                        : "border border-black/[0.12] text-[#1a1814] hover:bg-black/[0.04]"
-                    }`}
-                  >
-                    Get started
-                  </a>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-      )}
-
       {/* ── CTA — sky bookend ── */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#e8ecf8] to-[#d8e2f5] py-24">
         <Cloud className="top-10 left-[6%] opacity-80" />
@@ -332,7 +267,7 @@ export function ProductPage({
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-4xl md:text-5xl font-display font-black text-[#1a1814] mb-4">{ctaHeadline}</h2>
             <p className="text-[#5d574f] mb-9">
-              Install from the AppExchange in minutes. {trialNote ? `${trialNote}.` : "No credit card required."}
+              Install from the AppExchange in minutes. See current pricing and trial options on the listing.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3">
               <a
@@ -347,7 +282,7 @@ export function ProductPage({
                 href="/contact"
                 className="inline-flex items-center justify-center px-7 h-11 text-sm font-medium bg-white/70 border border-black/[0.10] text-[#1a1814] hover:bg-white rounded-full transition-colors"
               >
-                Contact Sales
+                Contact us
               </Link>
             </div>
           </motion.div>

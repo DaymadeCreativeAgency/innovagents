@@ -33,7 +33,6 @@ import { EdgeFlowMockup } from "@/components/edge-flow-mockup";
 import splashIcon from "@assets/SpalshAnnouncements-500x500_1781206837930.png";
 import enhancedFilesIcon from "@assets/EnhancedFiles-500x500_1781206837929.png";
 import edgeConnectIcon from "@assets/EdgeConnect-icon.png";
-import fundOpsIcon from "@assets/FundOps-500x500_1781206837929.png";
 import listViewIcon from "@assets/ListViewExport-500x500_1781206837929.png";
 import fieldTrackingIcon from "@assets/UnlimitedFieldTracking-500x500_1781206837930.png";
 
@@ -45,7 +44,6 @@ interface AppCard {
   desc: string;
   href: string | null;
   appx: string | null;
-  site?: string;
   available: boolean;
 }
 
@@ -88,15 +86,6 @@ const APPS: AppCard[] = [
     desc: "Track unlimited field history without hitting native platform limits",
     href: null,
     appx: APPX.fieldHistoryTracking,
-    available: true,
-  },
-  {
-    icon: fundOpsIcon,
-    name: "FundOps",
-    desc: "Streamlined fund operations built natively inside your Salesforce org",
-    href: null,
-    appx: null,
-    site: "https://fundopsai.com/",
     available: true,
   },
 ];
@@ -314,7 +303,7 @@ export default function Home() {
             <SectionLabel>Enhanced Files</SectionLabel>
             <h2 className="text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Files that finally make sense</h2>
             <p className="text-[#6b6460] leading-relaxed mb-8">
-              <strong className="text-[#1a1814] font-semibold">Modern file management</strong> with bulk downloads, instant search & smart previews. Treat Salesforce files like a real file system, right on the record page — completely free.
+              <strong className="text-[#1a1814] font-semibold">Modern file management</strong> with bulk downloads, instant search & smart previews. Treat Salesforce files like a real file system, right on the record page.
             </p>
             <div className="flex flex-wrap gap-2 mb-8">
               <PillTag icon={Download} label="Download all in one click" tone="coral" />
@@ -402,13 +391,7 @@ export default function Home() {
                 }`}
               >
                 <div className="flex items-start justify-between mb-5">
-                  {app.site ? (
-                    <a href={app.site} target="_blank" rel="noopener noreferrer" aria-label={`Visit the ${app.name} website`}>
-                      <img src={app.icon} alt={app.name} className="w-12 h-12 rounded-2xl transition-transform duration-300 hover:scale-105" />
-                    </a>
-                  ) : (
-                    <img src={app.icon} alt={app.name} className="w-12 h-12 rounded-2xl" />
-                  )}
+                  <img src={app.icon} alt={app.name} className="w-12 h-12 rounded-2xl" />
                   <span
                     className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
                       app.available
@@ -431,16 +414,6 @@ export default function Home() {
                     >
                       Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
                     </Link>
-                  )}
-                  {app.site && (
-                    <a
-                      href={app.site}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="cta-pill group inline-flex items-center gap-1.5 px-4 h-9 rounded-full bg-primary text-white text-[14px] font-semibold"
-                    >
-                      Visit site <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-                    </a>
                   )}
                   {app.appx && (
                     <a

@@ -15,8 +15,6 @@ export default function ListViewExport() {
       label="Any List View to CSV"
       headline={<>Export list views in one click. No reports required.</>}
       description="List View Export lets Salesforce admins export any list view directly to a CSV without rebuilding filters in reports. Save time, reduce errors, and get clean data exactly as it appears in Salesforce."
-      priceChip="$20 / user / month"
-      trialNote="Free 7-day trial"
       appxUrl={APPX.listViewExport}
       tint="indigo"
       heroScreenshot={{

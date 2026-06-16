@@ -17,8 +17,6 @@ export default function EnhancedFiles() {
       label="File Management, Upgraded"
       headline={<>Your files related list, supercharged</>}
       description="Enhanced Files takes the standard files related list and supercharges it for maximum efficiency — download multiple files at once, scroll easily, search instantly, and see everything at a glance."
-      priceChip="Free"
-      trialNote="Never requires payment"
       appxUrl={APPX.enhancedFiles}
       tint="coral"
       heroScreenshot={{
@@ -43,7 +41,7 @@ export default function EnhancedFiles() {
         "Download a complete record's files in one click",
         "Find the exact document you need in seconds",
         "See total file counts without opening the list",
-        "Completely free — never requires payment",
+        "Respects native Salesforce file permissions and sharing rules",
       ]}
       ctaHeadline="Ready to upgrade your file experience?"
     />

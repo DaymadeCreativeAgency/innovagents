@@ -13,8 +13,6 @@ export default function EdgeConnect() {
       label="Low-Code Integration Platform"
       headline={<>Develop integrations as easily as you create flows</>}
       description="Edge Connect enables admins and developers to quickly design, build, test, and deploy integrations in Salesforce using little or no code — all with a drag-and-drop flow designer."
-      priceChip="From $499 / company / month"
-      trialNote="Free 30-day trial"
       appxUrl={APPX.edgeConnect}
       tint="indigo"
       heroMockup={<EdgeFlowMockup />}
@@ -30,13 +28,6 @@ export default function EdgeConnect() {
         "Eliminate expensive middleware platforms",
         "Admins ship integrations without waiting on developers",
         "Test and deploy from sandbox to production safely",
-        "Discounts available for nonprofits",
-      ]}
-      pricingTiers={[
-        { name: "Starter", price: "$499", unit: "/co/mo", desc: "10k requests per month with basic support." },
-        { name: "Professional", price: "$999", unit: "/co/mo", desc: "30k requests per month, priority support, and custom error handling.", featured: true },
-        { name: "Professional+", price: "$1,499", unit: "/co/mo", desc: "50k requests per month, premium support, and a dedicated success manager." },
-        { name: "Enterprise", price: "$5,000", unit: "/co/mo", desc: "Unlimited requests plus custom development for your org." },
       ]}
       ctaHeadline="Ready to connect everything?"
     />
