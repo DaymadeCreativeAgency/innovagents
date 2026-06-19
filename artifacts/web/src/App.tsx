@@ -12,6 +12,7 @@ import SplashAnnouncements from "@/pages/products/splash-announcements";
 import EnhancedFiles from "@/pages/products/enhanced-files";
 import ListViewExport from "@/pages/products/list-view-export";
 import EdgeConnect from "@/pages/products/edge-connect";
+import UnlimitedFieldTracking from "@/pages/products/unlimited-field-tracking";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function Router() {
         <Route path="/products/enhanced-files" component={EnhancedFiles} />
         <Route path="/products/list-view-export" component={ListViewExport} />
         <Route path="/products/edge-connect" component={EdgeConnect} />
+        <Route path="/products/unlimited-field-tracking" component={UnlimitedFieldTracking} />
         <Route component={NotFound} />
       </Switch>
     </>

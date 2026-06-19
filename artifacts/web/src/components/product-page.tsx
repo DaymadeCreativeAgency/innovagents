@@ -99,7 +99,7 @@ export function ProductPage({
             transition={{ duration: 0.5 }}
             className="inline-block mb-8"
           >
-            <img src={icon} alt={name} className="w-20 h-20 rounded-3xl shadow-[0_12px_40px_rgba(26,24,20,0.18)]" />
+            <img src={icon} alt={name} className="w-20 h-20 rounded-3xl" />
           </motion.div>
 
           <SectionLabel>{label}</SectionLabel>

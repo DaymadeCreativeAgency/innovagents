@@ -87,8 +87,8 @@ const APPS: AppCard[] = [
   {
     icon: fieldTrackingIcon,
     name: "Unlimited Field Tracking",
-    desc: "Track unlimited field history without hitting native platform limits",
-    href: null,
+    desc: "Track critical Salesforce field changes beyond native history limits",
+    href: "/products/unlimited-field-tracking",
     appx: APPX.fieldHistoryTracking,
     available: true,
   },
@@ -345,7 +345,7 @@ export default function Home() {
             <img
               src={splashIcon}
               alt="Splash Announcements"
-              className="absolute -top-6 -left-5 md:-left-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl border-[3px] border-white shadow-[0_12px_32px_rgba(26,24,20,0.18)] z-10"
+              className="absolute -top-6 -left-5 md:-left-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl z-10"
             />
             <SplashMockup />
           </motion.div>
@@ -399,7 +399,7 @@ export default function Home() {
             <img
               src={enhancedFilesIcon}
               alt="Enhanced Files"
-              className="absolute -top-6 -right-5 md:-right-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl border-[3px] border-white shadow-[0_12px_32px_rgba(26,24,20,0.18)] z-10"
+              className="absolute -top-6 -right-5 md:-right-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl z-10"
             />
             <FilesMockup />
           </motion.div>
@@ -419,7 +419,7 @@ export default function Home() {
             <img
               src={edgeConnectIcon}
               alt="Edge Connect"
-              className="absolute -top-6 -left-5 md:-left-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl border-[3px] border-white shadow-[0_12px_32px_rgba(26,24,20,0.18)] z-10"
+              className="absolute -top-6 -left-5 md:-left-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl z-10"
             />
             <EdgeFlowMockup />
           </motion.div>

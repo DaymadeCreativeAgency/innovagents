@@ -8,6 +8,7 @@ import splashIcon from "@assets/SpalshAnnouncements-500x500_1781206837930.png";
 import enhancedFilesIcon from "@assets/EnhancedFiles-500x500_1781206837929.png";
 import edgeConnectIcon from "@assets/EdgeConnect-icon.png";
 import listViewIcon from "@assets/ListViewExport-500x500_1781206837929.png";
+import fieldTrackingIcon from "@assets/UnlimitedFieldTracking-500x500_1781206837930.png";
 
 /* Real AppExchange listing URLs */
 export const APPX = {
@@ -28,6 +29,7 @@ export const PRODUCT_NAV = [
   { icon: enhancedFilesIcon, name: "Enhanced Files", desc: "File management, upgraded", href: "/products/enhanced-files" },
   { icon: listViewIcon, name: "List View Export", desc: "Any list view to CSV in one click", href: "/products/list-view-export" },
   { icon: edgeConnectIcon, name: "Edge Connect", desc: "Low-code integration platform", href: "/products/edge-connect" },
+  { icon: fieldTrackingIcon, name: "Unlimited Field Tracking", desc: "Field history without the ceiling", href: "/products/unlimited-field-tracking" },
 ];
 
 /* ── small building blocks shared across pages ── */
