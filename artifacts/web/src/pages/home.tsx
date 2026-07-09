@@ -321,7 +321,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── BENEFIT PANEL 1 — Splash Announcements ── */}
+      {/* ── BENEFIT PANEL 1 — Enhanced Files ── */}
       <section id="apps" className="bg-white pt-6 sm:pt-10 pb-14 sm:pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div
@@ -329,37 +329,17 @@ export default function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative mt-8 sm:mt-0 bg-gradient-to-br from-primary/[0.10] to-primary/[0.04] border border-primary/[0.10] rounded-[24px] sm:rounded-[32px] p-5 sm:p-6 md:p-10"
+            className="relative mt-8 sm:mt-0 bg-gradient-to-br from-accent/[0.14] to-accent/[0.05] border border-accent/[0.14] rounded-[24px] sm:rounded-[32px] p-5 sm:p-6 md:p-10"
           >
             <img
-              src={splashIcon}
-              alt="Splash Announcements"
+              src={enhancedFilesIcon}
+              alt="Enhanced Files"
               className="absolute -top-6 -left-5 md:-left-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl z-10"
             />
-            <SplashMockup />
+            <FilesMockup />
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <SectionLabel>Splash Announcements</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Reach every user, every time</h2>
-            <p className="text-[#6b6460] leading-relaxed mb-8">
-              <strong className="text-[#1a1814] font-semibold">Targeted org-wide messaging</strong> with scheduling & acknowledgment tracking. Make sure critical updates actually get seen — and prove it with acknowledgment reports.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
-              <PillTag icon={Megaphone} label="Smart redirect on login" />
-              <PillTag icon={Clock} label="Instant or scheduled" />
-              <PillTag icon={Target} label="Target audiences" />
-              <PillTag icon={CheckCircle2} label="Acknowledgment tracking" tone="coral" />
-            </div>
-            <ProductCtas product={PRODUCTS.splashAnnouncements} page="homepage" />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── BENEFIT PANEL 2 — Enhanced Files ── */}
-      <section className="bg-white py-14 sm:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
             <SectionLabel>Enhanced Files</SectionLabel>
             <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Files that finally make sense</h2>
             <p className="text-[#6b6460] leading-relaxed mb-8">
@@ -373,20 +353,40 @@ export default function Home() {
             </div>
             <ProductCtas product={PRODUCTS.enhancedFiles} page="homepage" />
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── BENEFIT PANEL 2 — Splash Announcements ── */}
+      <section className="bg-white py-14 sm:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
+            <SectionLabel>Splash Announcements</SectionLabel>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Reach every user, every time</h2>
+            <p className="text-[#6b6460] leading-relaxed mb-8">
+              <strong className="text-[#1a1814] font-semibold">Targeted org-wide messaging</strong> with scheduling & acknowledgment tracking. Make sure critical updates actually get seen — and prove it with acknowledgment reports.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
+              <PillTag icon={Megaphone} label="Smart redirect on login" />
+              <PillTag icon={Clock} label="Instant or scheduled" />
+              <PillTag icon={Target} label="Target audiences" />
+              <PillTag icon={CheckCircle2} label="Acknowledgment tracking" tone="coral" />
+            </div>
+            <ProductCtas product={PRODUCTS.splashAnnouncements} page="homepage" />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative order-1 lg:order-2 mt-8 sm:mt-0 bg-gradient-to-br from-accent/[0.14] to-accent/[0.05] border border-accent/[0.14] rounded-[24px] sm:rounded-[32px] p-5 sm:p-6 md:p-10"
+            className="relative order-1 lg:order-2 mt-8 sm:mt-0 bg-gradient-to-br from-primary/[0.10] to-primary/[0.04] border border-primary/[0.10] rounded-[24px] sm:rounded-[32px] p-5 sm:p-6 md:p-10"
           >
             <img
-              src={enhancedFilesIcon}
-              alt="Enhanced Files"
+              src={splashIcon}
+              alt="Splash Announcements"
               className="absolute -top-6 -right-5 md:-right-6 w-16 h-16 md:w-20 md:h-20 rounded-2xl z-10"
             />
-            <FilesMockup />
+            <SplashMockup />
           </motion.div>
         </div>
       </section>

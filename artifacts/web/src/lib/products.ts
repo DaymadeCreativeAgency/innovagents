@@ -80,8 +80,9 @@ export const PRODUCTS = {
     path: "/products/enhanced-files",
     appxUrl: APPX.enhancedFiles,
     trialUrl: TRIAL.enhancedFiles,
-    // Enhanced Files is genuinely free — never call it a "trial".
-    primary: { kind: "trial", label: "Get It Free", href: TRIAL.enhancedFiles, verb: "get_free" },
+    // Enhanced Files is genuinely free — send straight to the AppExchange
+    // listing to install, no separate sandbox trial signup needed.
+    primary: { kind: "appexchange", label: "Get It Free", href: APPX.enhancedFiles, verb: "get_free" },
     secondary: appExchangeCta(APPX.enhancedFiles),
   },
   splashAnnouncements: {
