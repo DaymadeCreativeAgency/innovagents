@@ -352,9 +352,6 @@ export default function Home() {
               <PillTag icon={CheckCircle2} label="Acknowledgment tracking" tone="coral" />
             </div>
             <ProductCtas product={PRODUCTS.splashAnnouncements} page="homepage" />
-            <Link href="/products/splash-announcements" className="group mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#6b6460] hover:text-primary transition-colors">
-              Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
           </motion.div>
         </div>
       </section>
@@ -375,9 +372,6 @@ export default function Home() {
               <PillTag icon={ShieldCheck} label="Native security" />
             </div>
             <ProductCtas product={PRODUCTS.enhancedFiles} page="homepage" />
-            <Link href="/products/enhanced-files" className="group mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#6b6460] hover:text-primary transition-colors">
-              Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
           </motion.div>
 
           <motion.div
@@ -428,9 +422,6 @@ export default function Home() {
               <PillTag icon={ShieldCheck} label="Built in Salesforce" />
             </div>
             <ProductCtas product={PRODUCTS.edgeConnect} page="homepage" />
-            <Link href="/products/edge-connect" className="group mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#6b6460] hover:text-primary transition-colors">
-              Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
           </motion.div>
         </div>
       </section>
