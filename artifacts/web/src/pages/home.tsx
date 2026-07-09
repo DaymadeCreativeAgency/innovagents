@@ -33,6 +33,10 @@ import { EdgeFlowMockup } from "@/components/edge-flow-mockup";
 import { subscribeToNewsletter } from "@/lib/newsletter";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { PAGE_DESCRIPTIONS } from "@/lib/seo";
+import { ProductCtas } from "@/components/cta";
+import { PRODUCTS, CALENDLY_URL, type ProductConfig } from "@/lib/products";
+import { track } from "@/lib/track";
+import { CalendarDays } from "lucide-react";
 
 import splashIcon from "@assets/SpalshAnnouncements-500x500_1781206837930.png";
 import enhancedFilesIcon from "@assets/EnhancedFiles-500x500_1781206837929.png";
@@ -44,53 +48,37 @@ import fieldTrackingIcon from "@assets/UnlimitedFieldTracking-500x500_1781206837
 
 interface AppCard {
   icon: string;
-  name: string;
   desc: string;
-  href: string | null;
-  appx: string | null;
-  available: boolean;
+  product: ProductConfig;
 }
 
+/* "Choose your next step" grid — ordered with the free app first, then by
+   conversion priority. Each card carries one primary + one secondary CTA. */
 const APPS: AppCard[] = [
   {
-    icon: splashIcon,
-    name: "Splash Announcements",
-    desc: "Targeted org-wide messaging with scheduling & acknowledgment tracking",
-    href: "/products/splash-announcements",
-    appx: APPX.splashAnnouncements,
-    available: true,
-  },
-  {
     icon: enhancedFilesIcon,
-    name: "Enhanced Files",
     desc: "Modern file management with bulk downloads, instant search & smart previews",
-    href: "/products/enhanced-files",
-    appx: APPX.enhancedFiles,
-    available: true,
+    product: PRODUCTS.enhancedFiles,
   },
   {
-    icon: listViewIcon,
-    name: "List View Export",
-    desc: "Export any Salesforce list view to CSV in a single click — no reports required",
-    href: "/products/list-view-export",
-    appx: APPX.listViewExport,
-    available: true,
+    icon: splashIcon,
+    desc: "Targeted org-wide messaging with scheduling & acknowledgment tracking",
+    product: PRODUCTS.splashAnnouncements,
   },
   {
     icon: edgeConnectIcon,
-    name: "Edge Connect",
     desc: "Low-code integration platform — build integrations as easily as you create flows",
-    href: "/products/edge-connect",
-    appx: APPX.edgeConnect,
-    available: true,
+    product: PRODUCTS.edgeConnect,
   },
   {
     icon: fieldTrackingIcon,
-    name: "Unlimited Field Tracking",
     desc: "Track critical Salesforce field changes beyond native history limits",
-    href: "/products/unlimited-field-tracking",
-    appx: APPX.fieldHistoryTracking,
-    available: true,
+    product: PRODUCTS.unlimitedFieldTracking,
+  },
+  {
+    icon: listViewIcon,
+    desc: "Export any Salesforce list view to CSV in a single click — no reports required",
+    product: PRODUCTS.listViewExport,
   },
 ];
 
@@ -290,6 +278,7 @@ export default function Home() {
     const result = await subscribeToNewsletter(values.email, values.firstName);
     setSubmitting(false);
     if (result.ok) {
+      track("footer_newsletter_signup", { email: values.email });
       setNewsletterMessage(result.message);
       setNewsletterSuccess(true);
       form.reset();
@@ -362,8 +351,9 @@ export default function Home() {
               <PillTag icon={Target} label="Target audiences" />
               <PillTag icon={CheckCircle2} label="Acknowledgment tracking" tone="coral" />
             </div>
-            <Link href="/products/splash-announcements" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
-              Learn more <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <ProductCtas product={PRODUCTS.splashAnnouncements} page="homepage" />
+            <Link href="/products/splash-announcements" className="group mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#6b6460] hover:text-primary transition-colors">
+              Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>
@@ -384,8 +374,9 @@ export default function Home() {
               <PillTag icon={Files} label="Total file count" />
               <PillTag icon={ShieldCheck} label="Native security" />
             </div>
-            <Link href="/products/enhanced-files" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
-              Learn more <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <ProductCtas product={PRODUCTS.enhancedFiles} page="homepage" />
+            <Link href="/products/enhanced-files" className="group mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#6b6460] hover:text-primary transition-colors">
+              Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
 
@@ -436,8 +427,9 @@ export default function Home() {
               <PillTag icon={Rocket} label="Custom JS connectors" />
               <PillTag icon={ShieldCheck} label="Built in Salesforce" />
             </div>
-            <Link href="/products/edge-connect" className="cta-pill group inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full">
-              Learn more <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <ProductCtas product={PRODUCTS.edgeConnect} page="homepage" />
+            <Link href="/products/edge-connect" className="group mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#6b6460] hover:text-primary transition-colors">
+              Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>
@@ -457,47 +449,24 @@ export default function Home() {
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {APPS.map((app) => (
               <motion.div
-                key={app.name}
+                key={app.product.slug}
                 variants={fadeUp}
-                className={`flex flex-col h-full bg-[#faf8f4] border rounded-3xl p-6 transition-all duration-300 ${
-                  app.available ? "border-black/[0.07] hover:border-black/[0.14] hover:shadow-md" : "border-black/[0.05] opacity-45"
-                }`}
+                className="flex flex-col h-full bg-[#faf8f4] border border-black/[0.07] rounded-3xl p-6 transition-all duration-300 hover:border-black/[0.14] hover:shadow-md"
               >
                 <div className="flex items-start justify-between mb-5">
-                  <img src={app.icon} alt={app.name} className="w-12 h-12 rounded-2xl" />
-                  <span
-                    className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
-                      app.available
-                        ? "bg-primary/[0.07] text-primary border-primary/[0.15]"
-                        : "bg-black/[0.05] text-black/40 border-black/[0.08]"
-                    }`}
-                  >
-                    {app.available ? "Available" : "Coming Soon"}
+                  <img src={app.icon} alt={app.product.name} className="w-12 h-12 rounded-2xl" />
+                  <span className="text-[11px] font-semibold px-3 py-1 rounded-full border bg-primary/[0.07] text-primary border-primary/[0.15]">
+                    Available
                   </span>
                 </div>
-                <h3 className="font-display font-medium text-xl text-[#1a1814] mb-2">{app.name}</h3>
+                <Link href={app.product.path} className="font-display font-medium text-xl text-[#1a1814] mb-2 hover:text-primary transition-colors">
+                  {app.product.name}
+                </Link>
                 <p className="text-[#6b6460] text-[15px] leading-relaxed mb-6">{app.desc}</p>
 
-                {/* action row — pinned to the bottom so it lines up across every card */}
-                <div className="mt-auto flex flex-wrap items-center gap-2">
-                  {app.href && (
-                    <Link
-                      href={app.href}
-                      className="cta-pill group inline-flex items-center gap-1.5 px-4 h-9 rounded-full bg-primary text-white text-[14px] font-semibold"
-                    >
-                      Learn more <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-                    </Link>
-                  )}
-                  {app.appx && (
-                    <a
-                      href={app.appx}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 h-9 rounded-full border border-black/[0.12] bg-white text-[14px] font-semibold text-[#1a1814] hover:border-primary/40 hover:text-primary transition-colors"
-                    >
-                      AppExchange
-                    </a>
-                  )}
+                {/* one primary + one secondary CTA, pinned to the bottom so they line up */}
+                <div className="mt-auto">
+                  <ProductCtas product={app.product} page="homepage" size="sm" />
                 </div>
               </motion.div>
             ))}
@@ -655,6 +624,22 @@ export default function Home() {
                   <div className="text-[#9a9490] text-[13px]">5+ apps · reviews · installs in minutes</div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[#9a9490] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#d65a41]" />
+              </a>
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => track("homepage_demo_click", { cta: "demo" })}
+                className="group flex items-center gap-4 bg-white rounded-2xl p-4 border border-black/[0.06] hover:border-primary/[0.30] hover:shadow-md transition-all"
+              >
+                <div className="w-11 h-11 rounded-xl bg-primary/[0.09] border border-primary/[0.15] flex items-center justify-center shrink-0">
+                  <CalendarDays className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-display font-medium text-base sm:text-lg text-[#1a1814] leading-tight">Schedule a demo</div>
+                  <div className="text-[#9a9490] text-[13px]">Not sure which app fits? Talk it through with our team</div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-[#9a9490] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary" />
               </a>
             </div>
           </motion.div>

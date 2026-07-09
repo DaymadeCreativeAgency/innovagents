@@ -1,7 +1,7 @@
 import { Plug, Code2, MousePointerClick, LayoutTemplate, ScrollText, ShieldCheck } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
 import { EdgeFlowMockup } from "@/components/edge-flow-mockup";
-import { APPX } from "@/components/layout-v2";
+import { PRODUCTS } from "@/lib/products";
 
 import edgeConnectIcon from "@assets/EdgeConnect-icon.png";
 
@@ -13,7 +13,7 @@ export default function EdgeConnect() {
       label="Low-Code Integration Platform"
       headline={<>Develop integrations as easily as you create flows</>}
       description="Edge Connect enables admins and developers to quickly design, build, test, and deploy integrations in Salesforce using little or no code — all with a drag-and-drop flow designer."
-      appxUrl={APPX.edgeConnect}
+      product={PRODUCTS.edgeConnect}
       tint="indigo"
       heroMockup={<EdgeFlowMockup />}
       features={[

@@ -136,60 +136,64 @@ export function SplashLoginMockup() {
 export function SplashComposeMockup() {
   return (
     <MockupFrame title="Splash Announcements · New announcement">
-      <div className="grid grid-cols-1 md:grid-cols-[1.35fr_1fr]">
+      <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr]">
         {/* editor */}
-        <div className="p-5 md:border-r border-black/[0.06]">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
+        <div className="p-6 md:p-7 md:border-r border-black/[0.06] space-y-5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
               <Megaphone className="w-4 h-4 text-primary" />
               <span className="text-[13px] font-bold text-[#1a1814]">New announcement</span>
             </div>
             <StatusPill status="draft" label="Draft" />
           </div>
 
-          <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-1">Title</label>
-          <div className="h-9 rounded-lg border border-primary/40 ring-2 ring-primary/10 bg-white px-3 flex items-center text-[12px] font-medium text-[#1a1814] mb-4">
-            Release 1.3 is live this Friday
-          </div>
-
-          <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-1">Message</label>
-          <div className="rounded-lg border border-black/[0.10] overflow-hidden mb-4">
-            <div className="flex items-center gap-1 px-2 h-8 border-b border-black/[0.07] bg-[#faf8f4] text-[#9a9490]">
-              <Bold className="w-3.5 h-3.5" />
-              <Italic className="w-3.5 h-3.5" />
-              <span className="w-px h-4 bg-black/[0.10] mx-1" />
-              <List className="w-3.5 h-3.5" />
-              <Link2 className="w-3.5 h-3.5" />
-            </div>
-            <div className="p-3 text-[12px] text-[#1a1814] leading-relaxed">
-              Here's what's shipping this release —
-              <span className="text-[#9a9490]"> please review before Friday's rollout.</span>
+          <div>
+            <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-2">Title</label>
+            <div className="h-10 rounded-lg border border-primary/40 ring-2 ring-primary/10 bg-white px-3.5 flex items-center text-[12px] font-medium text-[#1a1814]">
+              Release 1.3 is live this Friday
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-2">Message</label>
+            <div className="rounded-lg border border-black/[0.10] overflow-hidden">
+              <div className="flex items-center gap-1.5 px-3 h-9 border-b border-black/[0.07] bg-[#faf8f4] text-[#9a9490]">
+                <Bold className="w-3.5 h-3.5" />
+                <Italic className="w-3.5 h-3.5" />
+                <span className="w-px h-4 bg-black/[0.10] mx-1" />
+                <List className="w-3.5 h-3.5" />
+                <Link2 className="w-3.5 h-3.5" />
+              </div>
+              <div className="p-4 min-h-[4.5rem] text-[12px] text-[#1a1814] leading-relaxed">
+                Here's what's shipping this release —
+                <span className="text-[#9a9490]"> please review before Friday's rollout.</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4 pt-1">
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-1">Platform</label>
-              <div className="flex gap-1 p-1 rounded-lg bg-[#faf8f4] border border-black/[0.06]">
-                <span className="flex-1 inline-flex items-center justify-center gap-1 h-7 rounded-md bg-white shadow-sm text-[11px] font-semibold text-[#1a1814]">
+              <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-2">Platform</label>
+              <div className="flex gap-1.5 p-1.5 rounded-lg bg-[#faf8f4] border border-black/[0.06]">
+                <span className="flex-1 inline-flex items-center justify-center gap-1.5 h-8 rounded-md bg-white shadow-sm text-[11px] font-semibold text-[#1a1814]">
                   <Monitor className="w-3.5 h-3.5" /> Desktop
                 </span>
-                <span className="flex-1 inline-flex items-center justify-center gap-1 h-7 rounded-md text-[11px] font-medium text-[#9a9490]">
+                <span className="flex-1 inline-flex items-center justify-center gap-1.5 h-8 rounded-md text-[11px] font-medium text-[#9a9490]">
                   <Smartphone className="w-3.5 h-3.5" /> Mobile
                 </span>
               </div>
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-1">Run dates</label>
-              <div className="h-[34px] rounded-lg border border-black/[0.10] bg-white px-3 flex items-center gap-2 text-[11px] text-[#1a1814]">
-                <Calendar className="w-3.5 h-3.5 text-primary" /> May 12 – May 30
+              <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#9a9490] mb-2">Run dates</label>
+              <div className="h-10 rounded-lg border border-black/[0.10] bg-white px-3.5 flex items-center gap-2 text-[11px] text-[#1a1814]">
+                <Calendar className="w-3.5 h-3.5 text-primary shrink-0" /> May 12 – May 30
               </div>
             </div>
           </div>
         </div>
 
         {/* audience + acknowledgment toggle */}
-        <div className="p-5 bg-[#faf8f4]">
+        <div className="p-6 md:p-7 bg-[#faf8f4]">
           <div className="flex items-center gap-2 mb-3">
             <Users className="w-4 h-4 text-primary" />
             <span className="text-[12px] font-bold text-[#1a1814]">Audience</span>

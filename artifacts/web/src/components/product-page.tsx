@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { motion, type Variants } from "framer-motion";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import { ProductCtas, CtaTextLink } from "@/components/cta";
+import { DEMO_CTA, ctaEvent, type ProductConfig } from "@/lib/products";
 
 const stagger: Variants = {
   hidden: {},
@@ -39,7 +41,8 @@ interface ProductPageProps {
   label: string;
   headline: React.ReactNode;
   description: string;
-  appxUrl: string;
+  /** Conversion-path config: trial + AppExchange + demo links and CTA copy. */
+  product: ProductConfig;
   /* tint for screenshot frames: "indigo" | "coral" */
   tint?: "indigo" | "coral";
   /* preferred: hand-built JSX mockups (premium, on-brand) */
@@ -59,7 +62,7 @@ export function ProductPage({
   label,
   headline,
   description,
-  appxUrl,
+  product,
   tint = "indigo",
   mockups,
   heroScreenshot,
@@ -71,6 +74,7 @@ export function ProductPage({
 }: ProductPageProps) {
   const [activeShot, setActiveShot] = useState(0);
   const [location] = useLocation();
+  const isEdgeConnect = product.slug === "edge_connect";
 
   usePageMeta({
     title: name,
@@ -126,22 +130,12 @@ export function ProductPage({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.22 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
+            className="flex flex-col items-center gap-3 mb-16"
           >
-            <a
-              href={appxUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-pill inline-flex items-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full shadow-sm"
-            >
-              Get It on AppExchange <ArrowRight className="w-4 h-4" />
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex items-center px-7 h-11 text-sm font-medium bg-white/70 border border-black/[0.10] text-[#1a1814] hover:bg-white rounded-full transition-colors"
-            >
-              Contact us
-            </Link>
+            <ProductCtas product={product} page="product" align="center" />
+            {!isEdgeConnect && (
+              <CtaTextLink cta={DEMO_CTA} event={ctaEvent("product", product.slug, "demo")} />
+            )}
           </motion.div>
 
           {/* Product viewer */}
@@ -254,12 +248,12 @@ export function ProductPage({
 
       {/* ── BENEFITS ── */}
       <section className="py-24 bg-[#f5f1ea]">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-14 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className={`border rounded-[32px] p-5 md:p-8 ${frameClass}`}
+            className={`border rounded-[32px] p-3 sm:p-4 md:p-5 min-w-0 ${frameClass}`}
           >
             {mockups && mockups.length > 0 ? (
               (mockups[mockups.length > 1 ? 1 : 0].node)
@@ -292,6 +286,35 @@ export function ProductPage({
         </div>
       </section>
 
+      {/* ── EDGE CONNECT — mid-page discovery / demo CTA ── */}
+      {isEdgeConnect && (
+        <section className="bg-white py-16 sm:py-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className={`border rounded-[28px] p-8 sm:p-12 text-center ${frameClass}`}
+            >
+              <h2 className="text-3xl md:text-4xl font-display font-black text-[#1a1814] mb-4">
+                Want to see how Edge Connect fits your Salesforce environment?
+              </h2>
+              <p className="text-[#5d574f] max-w-2xl mx-auto mb-8 leading-relaxed">
+                Book a short discovery call to walk through your integration needs, technical
+                requirements, and best-fit setup path.
+              </p>
+              <div className="flex justify-center">
+                <CtaTextLink
+                  cta={DEMO_CTA}
+                  event={ctaEvent("product", product.slug, "demo")}
+                  className="!text-[15px] !text-white bg-[#1a1814] rounded-full px-7 h-11 inline-flex items-center hover:!no-underline hover:!text-white shadow-sm cta-pill"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
       {/* ── CTA — sky bookend ── */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#e8ecf8] to-[#d8e2f5] py-24">
         <Cloud className="top-10 left-[6%] opacity-80" />
@@ -300,23 +323,15 @@ export function ProductPage({
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-4xl md:text-5xl font-display font-black text-[#1a1814] mb-4">{ctaHeadline}</h2>
             <p className="text-[#5d574f] mb-9">
-              Install from the AppExchange in minutes. See current pricing and trial options on the listing.
+              {isEdgeConnect
+                ? "Start your 30-day free trial, or book a demo to see it in your own org first."
+                : "Start a free trial from the AppExchange in minutes — see current pricing on the listing."}
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <a
-                href={appxUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-pill inline-flex items-center justify-center gap-2 px-7 h-11 text-[15px] font-semibold bg-[#1a1814] text-white rounded-full shadow-sm"
-              >
-                Get It on AppExchange <ArrowRight className="w-4 h-4" />
-              </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center px-7 h-11 text-sm font-medium bg-white/70 border border-black/[0.10] text-[#1a1814] hover:bg-white rounded-full transition-colors"
-              >
-                Contact us
-              </Link>
+            <div className="flex flex-col items-center gap-3">
+              <ProductCtas product={product} page="product" align="center" />
+              {!isEdgeConnect && (
+                <CtaTextLink cta={DEMO_CTA} event={ctaEvent("product", product.slug, "demo")} />
+              )}
             </div>
           </motion.div>
         </div>

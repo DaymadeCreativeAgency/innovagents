@@ -1,6 +1,6 @@
 import { LogIn, Clock, Target, CheckCircle2, Bell, ShieldCheck } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
-import { APPX } from "@/components/layout-v2";
+import { PRODUCTS } from "@/lib/products";
 import {
   SplashLoginMockup,
   SplashComposeMockup,
@@ -18,7 +18,7 @@ export default function SplashAnnouncements() {
       label="In-App Communication That Works"
       headline={<>No more ugly banners or urgent emails</>}
       description="Built to make communication simple and clear — schedule updates, target specific audiences, track acknowledgments, and send real-time alerts. No more guessing who saw what."
-      appxUrl={APPX.splashAnnouncements}
+      product={PRODUCTS.splashAnnouncements}
       tint="indigo"
       mockups={[
         { label: "At login", caption: "Users see and acknowledge announcements the moment they log in.", node: <SplashLoginMockup /> },

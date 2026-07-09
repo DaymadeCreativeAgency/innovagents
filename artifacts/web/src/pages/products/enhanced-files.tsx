@@ -1,6 +1,6 @@
 import { Download, ScrollText, Search, Files, Settings2, Lock } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
-import { APPX } from "@/components/layout-v2";
+import { PRODUCTS } from "@/lib/products";
 import { FilesListMockup, FilesCompareMockup } from "@/components/mockups/files-mockup";
 
 import enhancedFilesIcon from "@assets/EnhancedFiles-500x500_1781206837929.png";
@@ -13,7 +13,7 @@ export default function EnhancedFiles() {
       label="File Management, Upgraded"
       headline={<>Your files related list, supercharged</>}
       description="Enhanced Files takes the standard files related list and supercharges it for maximum efficiency — download multiple files at once, scroll easily, search instantly, and see everything at a glance."
-      appxUrl={APPX.enhancedFiles}
+      product={PRODUCTS.enhancedFiles}
       tint="coral"
       mockups={[
         { label: "Files list", caption: "Download all, search, and a live file count — right on the record page.", node: <FilesListMockup /> },

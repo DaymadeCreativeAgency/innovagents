@@ -7,16 +7,22 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Mail, MapPin, Send } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CheckCircle2, Mail, MapPin, Send, CalendarDays } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 import { submitContactForm } from "@/lib/contact";
+import { PRODUCT_INTEREST_OPTIONS } from "@/lib/products";
+import { track } from "@/lib/track";
+import { CalendlyEmbed, DemoButton } from "@/components/calendly";
 import { Link } from "wouter";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Please enter a valid email address"),
+  company: z.string().min(1, "Company is required"),
+  productInterest: z.string().min(1, "Please choose a product interest"),
   subject: z.string().min(1, "Subject is required"),
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
@@ -34,7 +40,7 @@ export default function Contact() {
 
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", subject: "", message: "" },
+    defaultValues: { name: "", email: "", company: "", productInterest: "", subject: "", message: "" },
   });
 
   async function onSubmit(values: z.infer<typeof contactSchema>) {
@@ -43,6 +49,7 @@ export default function Contact() {
     const result = await submitContactForm(values);
     setSubmitting(false);
     if (result.ok) {
+      track("get_started_contact_submit", { productInterest: values.productInterest });
       setSuccess(true);
       form.reset();
     } else {
@@ -180,6 +187,45 @@ export default function Contact() {
                         )}
                       />
                     </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="company"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Company</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Acme Inc." {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="productInterest"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Product Interest</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="h-11 bg-white border-black/[0.10] text-[#1a1814] focus:border-primary/40 transition-colors rounded-xl data-[placeholder]:text-[#9a9490]">
+                                  <SelectValue placeholder="Select a product" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {PRODUCT_INTEREST_OPTIONS.map((option) => (
+                                  <SelectItem key={option} value={option}>
+                                    {option}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                     <FormField
                       control={form.control}
                       name="subject"
@@ -227,6 +273,32 @@ export default function Contact() {
                 </Form>
               )}
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SCHEDULE A DEMO — Calendly ── */}
+      <section className="py-16 sm:py-20 bg-[#f5f1ea]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <SectionLabel>Book a Demo</SectionLabel>
+            <h2 className="text-3xl sm:text-4xl font-display font-black text-[#1a1814] mb-4">
+              Want help finding the right Salesforce app?
+            </h2>
+            <p className="text-[#6b6460] leading-relaxed mb-7">
+              Schedule a quick demo with our team. We'll walk through your workflow, answer questions,
+              and help you decide whether a free trial or direct install is the best next step.
+            </p>
+            <div className="flex justify-center">
+              <DemoButton event="get_started_demo_click" />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-[24px] sm:rounded-[28px] border border-black/[0.07] p-2 sm:p-3 shadow-sm">
+            <div className="flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-[#6b6460]">
+              <CalendarDays className="w-4 h-4 text-primary" /> Pick a time that works for you
+            </div>
+            <CalendlyEmbed bookedEvent="get_started_demo_booked" />
           </div>
         </div>
       </section>

@@ -15,6 +15,8 @@ const FORMSPREE_URL: string = (() => {
 export type ContactPayload = {
   name: string;
   email: string;
+  company: string;
+  productInterest: string;
   subject: string;
   message: string;
 };
@@ -43,6 +45,8 @@ export async function submitContactForm(payload: ContactPayload): Promise<Contac
         name: payload.name,
         email: payload.email,
         _replyto: payload.email,
+        company: payload.company,
+        productInterest: payload.productInterest,
         subject: payload.subject,
         message: payload.message,
       }),

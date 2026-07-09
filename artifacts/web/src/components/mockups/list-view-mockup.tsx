@@ -11,11 +11,11 @@ import { MockupFrame } from "./mockup-ui";
 import listViewIcon from "@assets/ListViewExport-500x500_1781206837929.png";
 
 const ACCOUNTS = [
-  { name: "Sample Account for Entitlements", phone: "313-202-2854", owner: "autoproc" },
-  { name: "sForce", phone: "(415) 901-7000", owner: "UUser" },
-  { name: "Pyramid Construction Inc.", phone: "(014) 427-4427", owner: "UUser" },
-  { name: "United Oil & Gas Corp.", phone: "(212) 842-5500", owner: "UUser" },
-  { name: "Express Logistics and Transport", phone: "(503) 421-7800", owner: "UUser" },
+  { name: "Meridian Health Systems", phone: "313-202-2854", owner: "Hannah Lewis", industry: "Healthcare" },
+  { name: "Brightline Software", phone: "(415) 901-7000", owner: "Marcus Chen", industry: "Software" },
+  { name: "Summit Ridge Construction", phone: "(503) 427-4427", owner: "Sarah Rogers", industry: "Construction" },
+  { name: "Northstar Energy Partners", phone: "(212) 842-5500", owner: "Marcus Chen", industry: "Energy" },
+  { name: "Cascade Freight Solutions", phone: "(503) 421-7800", owner: "Sarah Rogers", industry: "Transportation" },
 ];
 
 /* 1 — export directly from any list view (the core action). */
@@ -71,10 +71,7 @@ export function ListViewExportMockup() {
 export function ListViewCsvMockup() {
   const rows = [
     ["Account Name", "Phone", "Owner", "Industry"],
-    ["Sample Account", "313-202-2854", "autoproc", "Technology"],
-    ["sForce", "(415) 901-7000", "UUser", "Software"],
-    ["Pyramid Construction", "(014) 427-4427", "UUser", "Construction"],
-    ["United Oil & Gas", "(212) 842-5500", "UUser", "Energy"],
+    ...ACCOUNTS.slice(0, 4).map((a) => [a.name, a.phone, a.owner, a.industry]),
   ];
   return (
     <MockupFrame title="Export complete">

@@ -1,6 +1,6 @@
 import { FileSpreadsheet, Boxes, Hash, Database, ShieldCheck, MousePointerClick } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
-import { APPX } from "@/components/layout-v2";
+import { PRODUCTS } from "@/lib/products";
 import { ListViewExportMockup, ListViewCsvMockup } from "@/components/mockups/list-view-mockup";
 
 import listViewIcon from "@assets/ListViewExport-500x500_1781206837929.png";
@@ -13,7 +13,7 @@ export default function ListViewExport() {
       label="Any List View to CSV"
       headline={<>Export list views in one click. No reports required.</>}
       description="List View Export lets Salesforce admins export any list view directly to a CSV without rebuilding filters in reports. Save time, reduce errors, and get clean data exactly as it appears in Salesforce."
-      appxUrl={APPX.listViewExport}
+      product={PRODUCTS.listViewExport}
       tint="indigo"
       mockups={[
         { label: "Export", caption: "Export any list view straight from the toolbar — no report builder.", node: <ListViewExportMockup /> },

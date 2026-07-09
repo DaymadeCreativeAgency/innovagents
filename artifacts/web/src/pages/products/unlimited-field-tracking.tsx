@@ -1,6 +1,6 @@
 import { Activity, Clock, Database, FileClock, Gauge, Search, Settings2, ShieldCheck } from "lucide-react";
 import { ProductPage } from "@/components/product-page";
-import { APPX } from "@/components/layout-v2";
+import { PRODUCTS } from "@/lib/products";
 import {
   FieldTrackingSetupMockup,
   FieldTrackingTimelineMockup,
@@ -16,7 +16,7 @@ export default function UnlimitedFieldTracking() {
       label="Field History Without the Ceiling"
       headline={<>Track the field changes Salesforce stops remembering</>}
       description="Unlimited Field Tracking gives admins a Salesforce-native way to monitor critical field changes beyond standard history limits, with searchable audit history, flexible configuration, and clear visibility into who changed what."
-      appxUrl={APPX.fieldHistoryTracking}
+      product={PRODUCTS.unlimitedFieldTracking}
       tint="indigo"
       mockups={[
         { label: "Timeline", caption: "See every important field change in a clean, searchable history timeline.", node: <FieldTrackingTimelineMockup /> },
