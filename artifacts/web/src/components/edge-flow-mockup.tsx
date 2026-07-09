@@ -5,15 +5,11 @@ import edgeConnectIcon from "@assets/EdgeConnect-icon.png";
 /* Hand-built Edge Connect flow-designer mockup — replaces the sparse
    ultra-wide product screenshots with a focused, on-brand illustration. */
 
-function FlowNode({
+function FlowNodeIcon({
   icon: Icon,
-  label,
-  sub,
   tone,
 }: {
   icon: React.ElementType;
-  label: string;
-  sub: string;
   tone: "indigo" | "coral" | "deep";
 }) {
   const tones = {
@@ -22,21 +18,24 @@ function FlowNode({
     deep: "bg-[#413c64]/[0.08] border-[#413c64]/[0.25] text-[#413c64]",
   } as const;
   return (
-    <div className="flex flex-col items-center gap-2 min-w-0">
-      <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl border-2 flex items-center justify-center bg-white shadow-sm ${tones[tone]}`}>
-        <Icon className="w-6 h-6" />
-      </div>
-      <div className="text-center">
-        <div className="text-[12px] font-semibold text-[#1a1814] leading-tight">{label}</div>
-        <div className="text-[10px] text-[#9a9490]">{sub}</div>
-      </div>
+    <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl border-2 flex items-center justify-center bg-white shadow-sm shrink-0 ${tones[tone]}`}>
+      <Icon className="w-6 h-6" />
+    </div>
+  );
+}
+
+function FlowNodeCaption({ label, sub }: { label: string; sub: string }) {
+  return (
+    <div className="text-center w-14 md:w-16 shrink-0">
+      <div className="text-[12px] font-semibold text-[#1a1814] leading-tight">{label}</div>
+      <div className="text-[10px] text-[#9a9490]">{sub}</div>
     </div>
   );
 }
 
 function Connector() {
   return (
-    <div className="flex items-center gap-1 flex-1 min-w-4 -mt-8" aria-hidden>
+    <div className="flex items-center gap-1 flex-1 min-w-4" aria-hidden>
       <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
       <span className="flex-1 border-t-2 border-dashed border-primary/40" />
       <ArrowRight className="w-3.5 h-3.5 text-primary shrink-0" />
@@ -67,12 +66,21 @@ export function EdgeFlowMockup() {
         className="px-5 py-7 md:px-7 md:py-9"
         style={{ backgroundImage: "radial-gradient(rgba(26,24,20,0.07) 1px, transparent 1px)", backgroundSize: "16px 16px" }}
       >
-        <div className="flex items-start justify-between gap-1">
-          <FlowNode icon={Globe} label="NetSuite" sub="New order" tone="deep" />
-          <Connector />
-          <FlowNode icon={Zap} label="Transform" sub="Map 14 fields" tone="coral" />
-          <Connector />
-          <FlowNode icon={Cloud} label="Salesforce" sub="Upsert record" tone="indigo" />
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between gap-1">
+            <FlowNodeIcon icon={Globe} tone="deep" />
+            <Connector />
+            <FlowNodeIcon icon={Zap} tone="coral" />
+            <Connector />
+            <FlowNodeIcon icon={Cloud} tone="indigo" />
+          </div>
+          <div className="flex justify-between gap-1">
+            <FlowNodeCaption label="NetSuite" sub="New order" />
+            <div className="flex-1 min-w-4" aria-hidden />
+            <FlowNodeCaption label="Transform" sub="Map 14 fields" />
+            <div className="flex-1 min-w-4" aria-hidden />
+            <FlowNodeCaption label="Salesforce" sub="Upsert record" />
+          </div>
         </div>
       </div>
 

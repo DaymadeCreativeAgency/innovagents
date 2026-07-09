@@ -53,9 +53,9 @@ export interface ProductConfig {
   trialUrl: string;
   /** Primary conversion action (free trial / get it free). */
   primary: Cta;
-  /** Secondary action (view on AppExchange, or demo for Edge Connect). Omit for a single-CTA product. */
+  /** Secondary action (view on AppExchange). Omit for a single-CTA product. */
   secondary?: Cta;
-  /** Optional tertiary text link (Edge Connect gets an extra AppExchange link). */
+  /** Optional tertiary text link. */
   tertiary?: Cta;
 }
 
@@ -99,10 +99,8 @@ export const PRODUCTS = {
     path: "/products/edge-connect",
     appxUrl: APPX.edgeConnect,
     trialUrl: TRIAL.edgeConnect,
-    // Higher-consideration, technical product: trial + guided demo path.
     primary: { kind: "trial", label: "Start 30-Day Free Trial", href: TRIAL.edgeConnect, verb: "trial" },
-    secondary: DEMO_CTA,
-    tertiary: appExchangeCta(APPX.edgeConnect),
+    secondary: appExchangeCta(APPX.edgeConnect),
   },
   unlimitedFieldTracking: {
     slug: "unlimited_field_history",

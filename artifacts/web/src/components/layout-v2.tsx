@@ -229,7 +229,7 @@ function FooterV2() {
           <div className="md:col-span-2 space-y-5">
             <img src={logo2Color} alt="InnovAgents" className="h-7 w-auto" />
             <p className="text-[#6b6460] text-[15px] leading-relaxed max-w-xs">
-              Powerful Salesforce-native apps built by veterans. Streamline your workflows without the heavy setup.
+              Powerful Salesforce-native apps built by experienced Salesforce developers. Streamline your workflows without the heavy setup.
             </p>
             <a
               href="https://www.linkedin.com/company/innovagents-ai"
