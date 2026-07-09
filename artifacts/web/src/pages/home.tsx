@@ -361,7 +361,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
             <SectionLabel>Splash Announcements</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98] text-balance">Reach every user, every time</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#1a1814] font-display font-black mb-5 leading-[0.98]">Reach every user,<br />every time</h2>
             <p className="text-[#6b6460] leading-relaxed mb-8">
               <strong className="text-[#1a1814] font-semibold">Targeted org-wide messaging</strong> with scheduling & acknowledgment tracking. Make sure critical updates actually get seen — and prove it with acknowledgment reports.
             </p>
