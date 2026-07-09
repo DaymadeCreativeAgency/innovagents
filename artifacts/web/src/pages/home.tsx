@@ -345,7 +345,7 @@ export default function Home() {
             <p className="text-[#6b6460] leading-relaxed mb-8">
               <strong className="text-[#1a1814] font-semibold">Targeted org-wide messaging</strong> with scheduling & acknowledgment tracking. Make sure critical updates actually get seen — and prove it with acknowledgment reports.
             </p>
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
               <PillTag icon={Megaphone} label="Smart redirect on login" />
               <PillTag icon={Clock} label="Instant or scheduled" />
               <PillTag icon={Target} label="Target audiences" />
@@ -365,7 +365,7 @@ export default function Home() {
             <p className="text-[#6b6460] leading-relaxed mb-8">
               <strong className="text-[#1a1814] font-semibold">Modern file management</strong> with bulk downloads, instant search & smart previews. Treat Salesforce files like a real file system, right on the record page.
             </p>
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
               <PillTag icon={Download} label="Download all in one click" tone="coral" />
               <PillTag icon={Search} label="Search filter" />
               <PillTag icon={Files} label="Total file count" />
@@ -415,7 +415,7 @@ export default function Home() {
             <p className="text-[#6b6460] leading-relaxed mb-8">
               <strong className="text-[#1a1814] font-semibold">A low-code integration platform</strong> that lets admins and developers design, build, test, and deploy integrations in Salesforce with a drag-and-drop flow designer — no middleware required.
             </p>
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
               <PillTag icon={Workflow} label="200+ prebuilt connectors" />
               <PillTag icon={Zap} label="Drag-and-drop designer" />
               <PillTag icon={Rocket} label="Custom JS connectors" />

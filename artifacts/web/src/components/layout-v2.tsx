@@ -57,8 +57,8 @@ export function Cloud({ className }: { className?: string }) {
 export function PillTag({ icon: Icon, label, tone = "indigo" }: { icon: React.ElementType; label: string; tone?: "indigo" | "coral" }) {
   const iconColor = tone === "coral" ? "text-[#e0644b]" : "text-primary";
   return (
-    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/[0.10] bg-white text-[#1a1814] text-[13px] font-medium">
-      <Icon className={`w-3.5 h-3.5 ${iconColor}`} />
+    <div className="inline-flex items-center gap-2 text-[#1a1814] text-[13px] font-medium">
+      <Icon className={`w-3.5 h-3.5 shrink-0 ${iconColor}`} />
       {label}
     </div>
   );
