@@ -102,7 +102,9 @@ export function ProductCtas({
     <div className={`flex flex-col gap-3 ${align === "center" ? "items-center" : "items-start"}`}>
       <div className={`flex flex-wrap items-center gap-2.5 ${alignRow}`}>
         <CtaLink cta={product.primary} event={ctaEvent(page, product.slug, product.primary.verb)} variant="primary" size={size} />
-        <CtaLink cta={product.secondary} event={ctaEvent(page, product.slug, product.secondary.verb)} variant="secondary" size={size} />
+        {product.secondary && (
+          <CtaLink cta={product.secondary} event={ctaEvent(page, product.slug, product.secondary.verb)} variant="secondary" size={size} />
+        )}
       </div>
       {product.tertiary && (
         <CtaTextLink cta={product.tertiary} event={ctaEvent(page, product.slug, product.tertiary.verb)} />

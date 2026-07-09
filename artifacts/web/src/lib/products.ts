@@ -53,8 +53,8 @@ export interface ProductConfig {
   trialUrl: string;
   /** Primary conversion action (free trial / get it free). */
   primary: Cta;
-  /** Secondary action (view on AppExchange, or demo for Edge Connect). */
-  secondary: Cta;
+  /** Secondary action (view on AppExchange, or demo for Edge Connect). Omit for a single-CTA product. */
+  secondary?: Cta;
   /** Optional tertiary text link (Edge Connect gets an extra AppExchange link). */
   tertiary?: Cta;
 }
@@ -80,10 +80,9 @@ export const PRODUCTS = {
     path: "/products/enhanced-files",
     appxUrl: APPX.enhancedFiles,
     trialUrl: TRIAL.enhancedFiles,
-    // Enhanced Files is genuinely free — send straight to the AppExchange
-    // listing to install, no separate sandbox trial signup needed.
+    // Enhanced Files is genuinely free — a single button straight to the
+    // AppExchange listing to install, no separate trial or second CTA needed.
     primary: { kind: "appexchange", label: "Get It Free", href: APPX.enhancedFiles, verb: "get_free" },
-    secondary: appExchangeCta(APPX.enhancedFiles),
   },
   splashAnnouncements: {
     slug: "splash",
