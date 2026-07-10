@@ -15,7 +15,7 @@ import { APPX } from "@/components/layout-v2";
 
 /** Andre's Calendly discovery / demo link — the demo path for the whole site. */
 export const CALENDLY_URL =
-  "https://calendly.com/andre-fernandes-innovagentsai/edge-connect-discovery-clone";
+  "https://calendly.com/andre-fernandes-innovagentsai/innovagents-discovery";
 
 /** "Try It Now" sandbox install forms (collect the lead + start the trial). */
 export const TRIAL = {
