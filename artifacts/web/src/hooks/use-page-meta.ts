@@ -1,13 +1,23 @@
 import { useEffect } from "react";
-import { DEFAULT_DESCRIPTION, DEFAULT_OG_IMAGE, SITE_NAME, pageUrl } from "@/lib/seo";
+import {
+  DEFAULT_OG_IMAGE,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
+  SITE_NAME,
+  getRouteMeta,
+  jsonLdForRoute,
+  pageUrl,
+} from "@/lib/seo";
 
-type PageMetaOptions = {
-  title: string;
-  description?: string;
-  path?: string;
-  image?: string;
-  noIndex?: boolean;
-};
+/**
+ * Keeps <head> in sync during client-side navigation.
+ *
+ * The first paint of every route is already correct — `scripts/prerender.mjs`
+ * bakes the same tags into the static HTML from the same `ROUTE_META` registry.
+ * This only matters once wouter takes over routing, but it must stay in step
+ * with `renderHead` in `lib/head.ts` or SPA navigation will drift from the
+ * prerendered truth.
+ */
 
 function upsertMeta(attr: "name" | "property", key: string, content: string) {
   let el = document.querySelector(`meta[${attr}="${key}"]`);
@@ -29,34 +39,45 @@ function upsertLink(rel: string, href: string) {
   el.href = href;
 }
 
-export function usePageMeta({
-  title,
-  description = DEFAULT_DESCRIPTION,
-  path = "/",
-  image = DEFAULT_OG_IMAGE,
-  noIndex = false,
-}: PageMetaOptions) {
+/** Replaces the JSON-LD block rather than appending a second, stale one. */
+function upsertJsonLd(json: string) {
+  let el = document.querySelector('script[type="application/ld+json"]');
+  if (!el) {
+    el = document.createElement("script");
+    el.setAttribute("type", "application/ld+json");
+    document.head.appendChild(el);
+  }
+  el.textContent = json;
+}
+
+export function usePageMeta(path: string) {
   useEffect(() => {
-    const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
-    const url = pageUrl(path);
+    const meta = getRouteMeta(path);
+    const url = pageUrl(meta.path);
+    const image = meta.image || DEFAULT_OG_IMAGE;
 
-    document.title = fullTitle;
+    document.title = meta.title;
 
-    upsertMeta("name", "description", description);
-    upsertMeta("name", "robots", noIndex ? "noindex, follow" : "index, follow");
+    upsertMeta("name", "description", meta.description);
+    upsertMeta("name", "robots", meta.noIndex ? "noindex, follow" : "index, follow");
 
     upsertMeta("property", "og:site_name", SITE_NAME);
-    upsertMeta("property", "og:title", fullTitle);
-    upsertMeta("property", "og:description", description);
+    upsertMeta("property", "og:title", meta.title);
+    upsertMeta("property", "og:description", meta.description);
     upsertMeta("property", "og:url", url);
     upsertMeta("property", "og:type", "website");
+    upsertMeta("property", "og:locale", "en_US");
     upsertMeta("property", "og:image", image);
+    upsertMeta("property", "og:image:width", OG_IMAGE_WIDTH);
+    upsertMeta("property", "og:image:height", OG_IMAGE_HEIGHT);
+    upsertMeta("property", "og:image:alt", `${SITE_NAME} — ${meta.title}`);
 
     upsertMeta("name", "twitter:card", "summary_large_image");
-    upsertMeta("name", "twitter:title", fullTitle);
-    upsertMeta("name", "twitter:description", description);
+    upsertMeta("name", "twitter:title", meta.title);
+    upsertMeta("name", "twitter:description", meta.description);
     upsertMeta("name", "twitter:image", image);
 
     upsertLink("canonical", url);
-  }, [title, description, path, image, noIndex]);
+    upsertJsonLd(jsonLdForRoute(meta.path));
+  }, [path]);
 }

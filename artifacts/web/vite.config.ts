@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+import { markdownPlugin } from "./vite-plugin-markdown";
 
 const rawPort = process.env.PORT ?? "3000";
 const port = Number(rawPort);
@@ -12,9 +13,10 @@ if (Number.isNaN(port) || port <= 0) {
 
 const basePath = process.env.BASE_PATH ?? "/";
 
-export default defineConfig({
+export default defineConfig(async ({ isSsrBuild }) => ({
   base: basePath,
   plugins: [
+    markdownPlugin(),
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
@@ -44,14 +46,18 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
-      output: {
-        manualChunks: {
-          "vendor-react": ["react", "react-dom"],
-          "vendor-motion": ["framer-motion"],
-          "vendor-router": ["wouter"],
-          "vendor-ui": ["lucide-react", "clsx", "tailwind-merge"],
-        },
-      },
+      // The SSR bundle (src/entry-server.tsx, used only by scripts/prerender.mjs)
+      // externalizes react et al., so vendor chunking applies to the client only.
+      output: isSsrBuild
+        ? {}
+        : {
+            manualChunks: {
+              "vendor-react": ["react", "react-dom"],
+              "vendor-motion": ["framer-motion"],
+              "vendor-router": ["wouter"],
+              "vendor-ui": ["lucide-react", "clsx", "tailwind-merge"],
+            },
+          },
     },
   },
   server: {
@@ -68,4 +74,4 @@ export default defineConfig({
     host: "0.0.0.0",
     allowedHosts: true,
   },
-});
+}));

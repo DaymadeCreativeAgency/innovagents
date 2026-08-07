@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { motion } from "framer-motion";
 
 /* ── photographic-feel cloud (layered soft puffs, hugs the frame edges) ── */
 
@@ -33,29 +32,16 @@ export function HeroSection() {
 
       <div className="relative min-h-[100svh] flex items-center justify-center px-4 sm:px-6">
         <div className="relative z-10 max-w-[720px] text-center pt-28 sm:pt-24 pb-12 sm:pb-16">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="font-display font-black uppercase text-[clamp(2rem,7vw,5.5rem)] leading-[0.95] tracking-[0.01em] text-[#1a1814] mb-5 sm:mb-6"
-          >
+          {/* CSS-driven (see .ia-rise in index.css) so the LCP heading paints
+              with the stylesheet rather than waiting for hydration. */}
+          <h1 className="ia-rise font-display font-black uppercase text-[clamp(2rem,7vw,5.5rem)] leading-[0.95] tracking-[0.01em] text-[#1a1814] mb-5 sm:mb-6">
             What if Salesforce actually worked <span className="text-primary">the way you wanted it to?</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.12 }}
-            className="text-base sm:text-lg md:text-xl text-[#3f4654] leading-relaxed mb-7 sm:mb-8 max-w-[580px] mx-auto"
-          >
+          </h1>
+          <p className="ia-rise ia-delay-1 text-base sm:text-lg md:text-xl text-[#3f4654] leading-relaxed mb-7 sm:mb-8 max-w-[580px] mx-auto">
             Native apps that consolidate release comms, file chaos, and deployment busywork — so admins spend less time
             juggling tools and more time shipping what matters.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.22 }}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
-          >
+          </p>
+          <div className="ia-rise ia-delay-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
             <a
               href="#apps"
               className="cta-pill inline-flex items-center justify-center px-7 h-12 text-base font-semibold bg-[#1a1814] text-white rounded-full"
@@ -68,7 +54,7 @@ export function HeroSection() {
             >
               Contact us
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

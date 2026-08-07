@@ -32,7 +32,6 @@ import { HeroSection } from "@/components/hero-section";
 import { EdgeFlowMockup } from "@/components/edge-flow-mockup";
 import { subscribeToNewsletter } from "@/lib/newsletter";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 import { ProductCtas } from "@/components/cta";
 import { PRODUCTS, CALENDLY_URL, type ProductConfig } from "@/lib/products";
 import { track } from "@/lib/track";
@@ -256,11 +255,7 @@ function FilesMockup() {
 /* ───────────────────────── page ───────────────────────── */
 
 export default function Home() {
-  usePageMeta({
-    title: "InnovAgents | Smarter Salesforce Starts Here",
-    description: PAGE_DESCRIPTIONS.home,
-    path: "/",
-  });
+  usePageMeta("/");
 
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
   const [newsletterMessage, setNewsletterMessage] = useState("Thanks for subscribing! We'll be in touch.");

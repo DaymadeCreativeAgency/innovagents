@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CheckCircle2, Mail, MapPin, Send, CalendarDays } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 import { submitContactForm } from "@/lib/contact";
 import { PRODUCT_INTEREST_OPTIONS } from "@/lib/products";
 import { track } from "@/lib/track";
@@ -28,11 +27,7 @@ const contactSchema = z.object({
 });
 
 export default function Contact() {
-  usePageMeta({
-    title: "Contact Us",
-    description: PAGE_DESCRIPTIONS.contact,
-    path: "/contact",
-  });
+  usePageMeta("/contact");
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -66,22 +61,12 @@ export default function Contact() {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <SectionLabel>Get in Touch</SectionLabel>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05, duration: 0.65 }}
-            className="text-[clamp(44px,7vw,80px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-6"
-          >
+          <h1 className="ia-rise text-[clamp(44px,7vw,80px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-6">
             Let's talk<br /><span className="text-primary">Salesforce</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base md:text-lg text-[#5d574f] max-w-xl mx-auto"
-          >
+          </h1>
+          <p className="ia-rise ia-delay-1 text-base md:text-lg text-[#5d574f] max-w-xl mx-auto">
             Have a question about our apps? Need help solving a workflow bottleneck? We're here to help you build a smarter Salesforce.
-          </motion.p>
+          </p>
         </div>
       </section>
 

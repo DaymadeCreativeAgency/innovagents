@@ -10,19 +10,9 @@ import edgeConnectIcon from "@assets/EdgeConnect-icon.png";
 import listViewIcon from "@assets/ListViewExport-500x500_1781206837929.png";
 import fieldTrackingIcon from "@assets/UnlimitedFieldTracking-500x500_1781206837930.png";
 
-/* Real AppExchange listing URLs */
-export const APPX = {
-  splashAnnouncements:
-    "https://appexchange.salesforce.com/appxListingDetail?listingId=670c3b7a-5a42-465e-8916-47289d357392",
-  enhancedFiles:
-    "https://appexchange.salesforce.com/appxListingDetail?listingId=bae07232-1a00-4d9e-9f24-2ac1da068062",
-  listViewExport:
-    "https://appexchange.salesforce.com/appxListingDetail?listingId=2993f924-33e0-4ce5-9463-8ea3f149ab8c",
-  edgeConnect:
-    "https://appexchange.salesforce.com/appxListingDetail?listingId=d87ee483-c7b5-4eb4-bac3-802c9b24b70a",
-  fieldHistoryTracking:
-    "https://appexchange.salesforce.com/appxListingDetail?listingId=585cc05c-d49e-4ab7-8583-e4e3b2b85d25",
-} as const;
+/* Real AppExchange listing URLs — defined in a React-free module so the
+   build-time SEO layer can import them too. Re-exported here for convenience. */
+export { APPX } from "@/lib/appexchange";
 
 export const PRODUCT_NAV = [
   { icon: splashIcon, name: "Splash Announcements", desc: "In-app communication that works", href: "/products/splash-announcements" },
@@ -176,6 +166,9 @@ function FloatingNav() {
               </div>
             </div>
           </div>
+          <Link href="/blog" className={`px-4 py-2 text-base font-medium rounded-full transition-colors ${linkClass}`}>
+            Guides
+          </Link>
           <Link href="/about" className={`px-4 py-2 text-base font-medium rounded-full transition-colors ${linkClass}`}>
             About
           </Link>
@@ -210,6 +203,7 @@ function FloatingNav() {
             </Link>
           ))}
           <div className="h-px bg-black/[0.06] my-1" />
+          <Link href="/blog" className="px-4 py-3 text-base font-medium text-[#1a1814]/75 rounded-2xl hover:bg-black/[0.04]">Guides</Link>
           <Link href="/about" className="px-4 py-3 text-base font-medium text-[#1a1814]/75 rounded-2xl hover:bg-black/[0.04]">About</Link>
           <Link href="/contact" className="px-4 py-3 text-base font-medium text-[#1a1814]/75 rounded-2xl hover:bg-black/[0.04]">Contact</Link>
           <Link href="/contact" className="mt-1 text-center px-4 py-3 text-base font-semibold bg-[#1a1814] text-white rounded-full">Get Started</Link>
@@ -256,6 +250,7 @@ function FooterV2() {
           <div>
             <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[#9a9490] mb-5">Company</h4>
             <ul className="space-y-3">
+              <li><Link href="/blog" className="text-[15px] text-[#1a1814]/70 hover:text-primary transition-colors">Guides</Link></li>
               <li><Link href="/about" className="text-[15px] text-[#1a1814]/70 hover:text-primary transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="text-[15px] text-[#1a1814]/70 hover:text-primary transition-colors">Contact Us</Link></li>
               <li><Link href="/privacy-policy" className="text-[15px] text-[#1a1814]/70 hover:text-primary transition-colors">Privacy Policy</Link></li>

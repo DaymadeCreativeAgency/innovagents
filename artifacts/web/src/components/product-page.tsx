@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import { getProductSeo } from "@/lib/seo";
 import { ProductCtas, CtaTextLink } from "@/components/cta";
 import { DEMO_CTA, ctaEvent, type ProductConfig } from "@/lib/products";
 
@@ -76,11 +77,11 @@ export function ProductPage({
   const [location] = useLocation();
   const isEdgeConnect = product.slug === "edge_connect";
 
-  usePageMeta({
-    title: name,
-    description,
-    path: location,
-  });
+  usePageMeta(location);
+
+  // FAQ copy lives in the SEO registry so the visible Q&A and the FAQPage
+  // JSON-LD can never drift apart — Google requires them to match.
+  const faq = getProductSeo(location)?.faq ?? [];
 
   const frameClass =
     tint === "indigo"
@@ -97,54 +98,39 @@ export function ProductPage({
         <Cloud className="top-40 right-[6%] opacity-60 scale-75 hidden sm:block" />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block mb-8"
-          >
-            <img src={icon} alt={name} className="w-20 h-20 rounded-3xl" />
-          </motion.div>
+          {/* Above the fold: CSS-driven entrance (.ia-rise in index.css) so the
+              prerendered hero paints with the stylesheet instead of waiting for
+              hydration. Sections below the fold keep framer-motion. */}
+          <div className="ia-rise inline-block mb-8">
+            <img
+              src={icon}
+              alt={`${name} app icon`}
+              width={80}
+              height={80}
+              fetchPriority="high"
+              className="w-20 h-20 rounded-3xl"
+            />
+          </div>
 
           <SectionLabel>{label}</SectionLabel>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.05 }}
-            className="text-[clamp(40px,6.5vw,72px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-6 max-w-3xl mx-auto"
-          >
+          <h1 className="ia-rise text-[clamp(40px,6.5vw,72px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-6 max-w-3xl mx-auto">
             {headline}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-base md:text-lg text-[#5d574f] max-w-xl mx-auto mb-7 leading-relaxed"
-          >
+          <p className="ia-rise ia-delay-1 text-base md:text-lg text-[#5d574f] max-w-xl mx-auto mb-7 leading-relaxed">
             {description}
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.22 }}
-            className="flex flex-col items-center gap-3 mb-16"
-          >
+          <div className="ia-rise ia-delay-2 flex flex-col items-center gap-3 mb-16">
             <ProductCtas product={product} page="product" align="center" />
             {!isEdgeConnect && (
               <CtaTextLink cta={DEMO_CTA} event={ctaEvent("product", product.slug, "demo")} />
             )}
-          </motion.div>
+          </div>
 
           {/* Product viewer */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="max-w-4xl mx-auto"
-          >
+          <div className="ia-rise ia-delay-3 max-w-4xl mx-auto">
             {mockups && mockups.length > 0 ? (
               <>
                 <div className={`border rounded-[24px] sm:rounded-[32px] p-3 sm:p-4 md:p-6 lg:p-10 min-w-0 overflow-x-auto ${frameClass}`}>
@@ -208,7 +194,7 @@ export function ProductPage({
                 )}
               </>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -311,6 +297,37 @@ export function ProductPage({
                 />
               </div>
             </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* ── FAQ — question headings + short answers (AEO / GEO surface) ── */}
+      {faq.length > 0 && (
+        <section className="py-24 bg-white">
+          <div className="max-w-3xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <SectionLabel>FAQ</SectionLabel>
+              <h2 className="text-4xl md:text-5xl font-display font-black text-[#1a1814]">
+                Common questions about {name}
+              </h2>
+            </motion.div>
+
+            <div className="space-y-4">
+              {faq.map((item) => (
+                <div
+                  key={item.q}
+                  className="bg-[#faf8f4] border border-black/[0.06] rounded-3xl p-7"
+                >
+                  <h3 className="font-display font-medium text-xl text-[#1a1814] mb-2">{item.q}</h3>
+                  <p className="text-[#6b6460] text-[15px] leading-relaxed">{item.a}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}

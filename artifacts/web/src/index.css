@@ -235,3 +235,54 @@
     @apply font-medium;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Above-the-fold entrance animations.
+
+   These run in CSS rather than through framer-motion so that prerendered hero
+   content is painted as soon as the stylesheet lands, instead of sitting at
+   `opacity: 0` until the JS bundle hydrates. framer-motion writes its `initial`
+   values as inline styles during SSR, which pushed LCP out to the JS load.
+
+   Below-the-fold `whileInView` animations stay on framer-motion — they are
+   scroll-triggered and can't paint early anyway.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@keyframes ia-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ia-rise {
+  animation: ia-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+.ia-delay-1 { animation-delay: 0.10s; }
+.ia-delay-2 { animation-delay: 0.20s; }
+.ia-delay-3 { animation-delay: 0.34s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ia-rise {
+    animation: none;
+  }
+}
+
+/* Post tables can be wider than a phone viewport. `html` has overflow-x hidden,
+   so without this wrapper the overflowing columns are clipped and unreachable. */
+.md-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5rem 0;
+}
+
+.md-table-scroll > table {
+  margin: 0;
+  min-width: 34rem;
+}

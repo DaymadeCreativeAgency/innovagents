@@ -3,7 +3,6 @@ import { Zap, Target, ShieldCheck, Rocket, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 
 const stagger: Variants = {
   hidden: {},
@@ -22,11 +21,7 @@ const DIFFERENTIATORS = [
 ];
 
 export default function About() {
-  usePageMeta({
-    title: "About Us",
-    description: PAGE_DESCRIPTIONS.about,
-    path: "/about",
-  });
+  usePageMeta("/about");
 
   return (
     <LayoutV2>
@@ -37,22 +32,12 @@ export default function About() {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <SectionLabel>Our Story</SectionLabel>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.05 }}
-            className="text-[clamp(2.25rem,7vw,5rem)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-5 sm:mb-6"
-          >
+          <h1 className="ia-rise text-[clamp(2.25rem,7vw,5rem)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-5 sm:mb-6">
             We've lived<br /><span className="text-primary">the problems</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base md:text-lg text-[#5d574f] leading-relaxed max-w-2xl mx-auto"
-          >
+          </h1>
+          <p className="ia-rise ia-delay-1 text-base md:text-lg text-[#5d574f] leading-relaxed max-w-2xl mx-auto">
             At InnovAgents, we turn real-world consulting experience into powerful, Salesforce-native apps that fill critical gaps without the heavy setup.
-          </motion.p>
+          </p>
         </div>
       </section>
 

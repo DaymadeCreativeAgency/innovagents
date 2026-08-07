@@ -1,5 +1,5 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,12 +13,21 @@ import EnhancedFiles from "@/pages/products/enhanced-files";
 import ListViewExport from "@/pages/products/list-view-export";
 import EdgeConnect from "@/pages/products/edge-connect";
 import UnlimitedFieldTracking from "@/pages/products/unlimited-field-tracking";
+import BlogIndex from "@/pages/blog";
+import BlogPost from "@/pages/blog/post";
 
 const queryClient = new QueryClient();
 
 function ScrollToTop() {
   const [location] = useLocation();
+  const first = useRef(true);
   useEffect(() => {
+    // Skip the initial mount so a deep link (or a restored scroll position on
+    // a prerendered page) isn't yanked back to the top during hydration.
+    if (first.current) {
+      first.current = false;
+      return;
+    }
     window.scrollTo(0, 0);
   }, [location]);
   return null;
@@ -38,17 +47,24 @@ function Router() {
         <Route path="/products/list-view-export" component={ListViewExport} />
         <Route path="/products/edge-connect" component={EdgeConnect} />
         <Route path="/products/unlimited-field-tracking" component={UnlimitedFieldTracking} />
+        <Route path="/blog" component={BlogIndex} />
+        <Route path="/blog/:slug" component={BlogPost} />
         <Route component={NotFound} />
       </Switch>
     </>
   );
 }
 
-function App() {
+/**
+ * `ssrPath` is set only by the build-time prerenderer (`scripts/prerender.mjs`)
+ * so wouter resolves the right route without a browser location. In the
+ * browser it stays undefined and wouter reads `window.location` as usual.
+ */
+function App({ ssrPath }: { ssrPath?: string }) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={ssrPath}>
           <Router />
         </WouterRouter>
         <Toaster />

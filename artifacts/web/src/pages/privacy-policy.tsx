@@ -1,17 +1,11 @@
 import { Link } from "wouter";
-import { motion } from "framer-motion";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { PAGE_DESCRIPTIONS } from "@/lib/seo";
 
 const LAST_UPDATED = "February 20, 2026";
 
 export default function PrivacyPolicy() {
-  usePageMeta({
-    title: "Privacy Policy",
-    description: PAGE_DESCRIPTIONS.privacy,
-    path: "/privacy-policy",
-  });
+  usePageMeta("/privacy-policy");
 
   return (
     <LayoutV2>
@@ -21,22 +15,12 @@ export default function PrivacyPolicy() {
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <SectionLabel>Legal</SectionLabel>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65 }}
-            className="text-[clamp(36px,6vw,56px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-4"
-          >
+          <h1 className="ia-rise text-[clamp(36px,6vw,56px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-4">
             Privacy Policy
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="text-[#5d574f]"
-          >
+          </h1>
+          <p className="ia-rise ia-delay-1 text-[#5d574f]">
             Last updated: {LAST_UPDATED}
-          </motion.p>
+          </p>
         </div>
       </section>
 

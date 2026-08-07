@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -9,45 +12,35 @@
     })(window,document,'script','dataLayer','GTM-M4BVKT83');</script>
     <!-- End Google Tag Manager -->
     <script src="https://t.contentsquare.net/uxa/60e216b363bb2.js" defer></script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>InnovAgents | Smarter Salesforce Starts Here</title>
-    <meta name="description" content="Powerful Salesforce-native apps built by veterans. Streamline release comms, file management, list exports, and integrations — install in minutes on AppExchange." />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://innovagentsai.com/" />
-    <meta property="og:site_name" content="InnovAgents" />
-    <meta property="og:title" content="InnovAgents | Smarter Salesforce Starts Here" />
-    <meta property="og:description" content="Powerful Salesforce-native apps built by veterans. Streamline release comms, file management, list exports, and integrations — install in minutes on AppExchange." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://innovagentsai.com/" />
-    <meta property="og:image" content="https://innovagentsai.com/og-image.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="InnovAgents | Smarter Salesforce Starts Here" />
-    <meta name="twitter:description" content="Powerful Salesforce-native apps built by veterans. Streamline release comms, file management, list exports, and integrations — install in minutes on AppExchange." />
-    <meta name="twitter:image" content="https://innovagentsai.com/og-image.png" />
+
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "InnovAgents",
-        "url": "https://innovagentsai.com",
-        "logo": "https://innovagentsai.com/og-image.png",
-        "email": "support@innovagentsai.com",
-        "sameAs": ["https://www.linkedin.com/company/innovagents-ai"],
-        "description": "Salesforce-native apps built by veterans — available on AppExchange."
-      }
-    </script>
+
+    <!--
+      Everything between the markers below is replaced per route at build time by
+      scripts/prerender.mjs, which reads the ROUTE_META registry in src/lib/seo.ts.
+      The homepage values here are the fallback that ships if the prerender step
+      is ever skipped, so keep them valid for "/".
+    -->
+    <!--seo-head-start-->
+    <title>Salesforce-Native AppExchange Apps for Admins | InnovAgents</title>
+    <meta name="description" content="Salesforce-native AppExchange apps for admins and ops teams: announcements, file management, CSV list view exports, field history, and integrations." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://innovagentsai.com/" />
+    <!--seo-head-end-->
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M4BVKT83"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div id="root"></div>
+
+    <!-- Without JS, framer-motion's prerendered `initial` styles never animate
+         away, so scroll-triggered sections would stay invisible. Reveal them. -->
+    <noscript><style>[style*="opacity:0"]{opacity:1!important;transform:none!important}</style></noscript>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

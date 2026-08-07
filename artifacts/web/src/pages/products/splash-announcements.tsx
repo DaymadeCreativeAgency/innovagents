@@ -17,7 +17,7 @@ export default function SplashAnnouncements() {
       name="Splash Announcements"
       label="In-App Communication That Works"
       headline={<>No more ugly banners or urgent emails</>}
-      description="Built to make communication simple and clear — schedule updates, target specific audiences, track acknowledgments, and send real-time alerts. No more guessing who saw what."
+      description="Splash Announcements is a 100% Salesforce-native app for org-wide in-app communication. Schedule updates, target specific audiences, track acknowledgments, and send real-time alerts — no more guessing who saw what."
       product={PRODUCTS.splashAnnouncements}
       tint="indigo"
       mockups={[
