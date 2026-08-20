@@ -1,29 +1,72 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CheckCircle2, Mail, MapPin, Send, CalendarDays } from "lucide-react";
 import { LayoutV2, SectionLabel, Cloud } from "@/components/layout-v2";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { submitContactForm } from "@/lib/contact";
+import {
+  SALESFORCE_CAPTCHA_SETTINGS,
+  SALESFORCE_ORG_ID,
+  SALESFORCE_PRODUCT_INTEREST_FIELD,
+  SALESFORCE_RECAPTCHA_SITE_KEY,
+  SALESFORCE_RETURN_URL,
+  SALESFORCE_WEB_TO_LEAD_URL,
+  salesforceDescription,
+  salesforceProductValue,
+} from "@/lib/contact";
 import { PRODUCT_INTEREST_OPTIONS } from "@/lib/products";
 import { track } from "@/lib/track";
 import { CalendlyEmbed, DemoButton } from "@/components/calendly";
+import { SalesforceRecaptcha } from "@/components/salesforce-recaptcha";
 import { Link } from "wouter";
 
 const contactSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Please enter a valid email address"),
-  company: z.string().min(1, "Company is required"),
+  firstName: z
+    .string()
+    .min(1, "First name is required")
+    .max(40, "First name is too long"),
+  lastName: z
+    .string()
+    .min(1, "Last name is required")
+    .max(80, "Last name is too long"),
+  email: z
+    .string()
+    .email("Please enter a valid email address")
+    .max(80, "Email is too long"),
+  company: z
+    .string()
+    .min(1, "Company is required")
+    .max(40, "Company name is too long"),
   productInterest: z.string().min(1, "Please choose a product interest"),
-  subject: z.string().min(1, "Subject is required"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  subject: z
+    .string()
+    .min(1, "Subject is required")
+    .max(255, "Subject is too long"),
+  message: z
+    .string()
+    .min(10, "Message must be at least 10 characters")
+    .max(30000, "Message is too long"),
 });
 
 export default function Contact() {
@@ -32,24 +75,82 @@ export default function Contact() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const captchaSettingsRef = useRef<HTMLInputElement>(null);
+  const productInterestRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", company: "", productInterest: "", subject: "", message: "" },
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      company: "",
+      productInterest: "",
+      subject: "",
+      message: "",
+    },
   });
 
-  async function onSubmit(values: z.infer<typeof contactSchema>) {
-    setSubmitting(true);
-    setError(null);
-    const result = await submitContactForm(values);
-    setSubmitting(false);
-    if (result.ok) {
-      track("get_started_contact_submit", { productInterest: values.productInterest });
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("submitted") === "true") {
       setSuccess(true);
-      form.reset();
-    } else {
-      setError(result.message);
+      window.history.replaceState({}, "", "/contact");
     }
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const response = document.getElementById(
+        "g-recaptcha-response",
+      ) as HTMLTextAreaElement | null;
+      if (response?.value.trim() || !captchaSettingsRef.current) return;
+
+      const settings = JSON.parse(captchaSettingsRef.current.value) as Record<
+        string,
+        string
+      >;
+      settings.ts = JSON.stringify(Date.now());
+      captchaSettingsRef.current.value = JSON.stringify(settings);
+    }, 500);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (submitting) return;
+
+    const nativeForm = event.currentTarget;
+    setError(null);
+    const valid = await form.trigger(undefined, { shouldFocus: true });
+    if (!valid) return;
+
+    if (!captchaToken) {
+      setError("Please complete the reCAPTCHA before sending your message.");
+      return;
+    }
+
+    const values = form.getValues();
+    if (productInterestRef.current) {
+      productInterestRef.current.value = salesforceProductValue(
+        values.productInterest,
+      );
+    }
+    if (descriptionRef.current) {
+      descriptionRef.current.value = salesforceDescription(
+        values.subject,
+        values.message,
+      );
+    }
+
+    setSubmitting(true);
+    track("get_started_contact_submit", {
+      productInterest: values.productInterest,
+    });
+    nativeForm.submit();
   }
 
   return (
@@ -62,10 +163,13 @@ export default function Contact() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <SectionLabel>Get in Touch</SectionLabel>
           <h1 className="ia-rise text-[clamp(44px,7vw,80px)] leading-[0.95] tracking-[-0.5px] text-[#1a1814] mb-6">
-            Let's talk<br /><span className="text-primary">Salesforce</span>
+            Let's talk
+            <br />
+            <span className="text-primary">Salesforce</span>
           </h1>
           <p className="ia-rise ia-delay-1 text-base md:text-lg text-[#5d574f] max-w-xl mx-auto">
-            Have a question about our apps? Need help solving a workflow bottleneck? We're here to help you build a smarter Salesforce.
+            Have a question about our apps? Need help solving a workflow
+            bottleneck? We're here to help you build a smarter Salesforce.
           </p>
         </div>
       </section>
@@ -82,9 +186,14 @@ export default function Contact() {
               className="space-y-7"
             >
               <div>
-                <h2 className="text-3xl font-display font-medium text-[#1a1814] mb-4">Get in touch</h2>
+                <h2 className="text-3xl font-display font-medium text-[#1a1814] mb-4">
+                  Get in touch
+                </h2>
                 <p className="text-[#6b6460] leading-relaxed">
-                  We're a team of Salesforce veterans who have lived the same problems you're facing. Whether you need support, want to request a feature, or just want to chat about the ecosystem, drop us a line. A real person will get back to you.
+                  We're a team of Salesforce veterans who have lived the same
+                  problems you're facing. Whether you need support, want to
+                  request a feature, or just want to chat about the ecosystem,
+                  drop us a line. A real person will get back to you.
                 </p>
               </div>
 
@@ -94,8 +203,12 @@ export default function Contact() {
                     <Mail className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-medium text-[#1a1814] mb-1">Email</h3>
-                    <p className="text-[#6b6460] text-sm">support@innovagentsai.com</p>
+                    <h3 className="text-sm font-medium text-[#1a1814] mb-1">
+                      Email
+                    </h3>
+                    <p className="text-[#6b6460] text-sm">
+                      support@innovagentsai.com
+                    </p>
                   </div>
                 </div>
 
@@ -104,9 +217,13 @@ export default function Contact() {
                     <MapPin className="w-4 h-4 text-accent" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-medium text-[#1a1814] mb-1">Headquarters</h3>
+                    <h3 className="text-sm font-medium text-[#1a1814] mb-1">
+                      Headquarters
+                    </h3>
                     <p className="text-[#6b6460] text-sm leading-relaxed">
-                      Morgantown, WV<br />Built for the global Salesforce community
+                      Morgantown, WV
+                      <br />
+                      Built for the global Salesforce community
                     </p>
                   </div>
                 </div>
@@ -130,9 +247,12 @@ export default function Contact() {
                   >
                     <CheckCircle2 className="w-8 h-8 text-primary" />
                   </motion.div>
-                  <h3 className="text-2xl font-display font-medium text-[#1a1814] mb-3">Message sent!</h3>
+                  <h3 className="text-2xl font-display font-medium text-[#1a1814] mb-3">
+                    Message sent!
+                  </h3>
                   <p className="text-[#6b6460] mb-8 text-sm leading-relaxed">
-                    Thanks for reaching out. A member of our team will get back to you shortly.
+                    Thanks for reaching out. A member of our team will get back
+                    to you shortly.
                   </p>
                   <button
                     onClick={() => setSuccess(false)}
@@ -143,16 +263,58 @@ export default function Contact() {
                 </div>
               ) : (
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                  <form
+                    action={SALESFORCE_WEB_TO_LEAD_URL}
+                    method="POST"
+                    acceptCharset="UTF-8"
+                    onSubmit={onSubmit}
+                    className="space-y-5"
+                  >
+                    <input
+                      ref={captchaSettingsRef}
+                      type="hidden"
+                      name="captcha_settings"
+                      defaultValue={SALESFORCE_CAPTCHA_SETTINGS}
+                    />
+                    <input type="hidden" name="oid" value={SALESFORCE_ORG_ID} />
+                    <input
+                      type="hidden"
+                      name="retURL"
+                      value={SALESFORCE_RETURN_URL}
+                    />
+                    <input
+                      type="hidden"
+                      name="lead_source"
+                      value="Contact us"
+                    />
+                    <input
+                      ref={productInterestRef}
+                      type="hidden"
+                      name={SALESFORCE_PRODUCT_INTEREST_FIELD}
+                    />
+                    <textarea
+                      ref={descriptionRef}
+                      name="description"
+                      hidden
+                      readOnly
+                    />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
-                        name="name"
+                        name="firstName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Name</FormLabel>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                              First Name
+                            </FormLabel>
                             <FormControl>
-                              <Input placeholder="Jane Doe" {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                              <Input
+                                {...field}
+                                name="first_name"
+                                autoComplete="given-name"
+                                placeholder="Jane"
+                                className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -160,12 +322,20 @@ export default function Contact() {
                       />
                       <FormField
                         control={form.control}
-                        name="email"
+                        name="lastName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Email</FormLabel>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                              Last Name
+                            </FormLabel>
                             <FormControl>
-                              <Input placeholder="jane@company.com" {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                              <Input
+                                {...field}
+                                name="last_name"
+                                autoComplete="family-name"
+                                placeholder="Doe"
+                                className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -175,12 +345,21 @@ export default function Contact() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
-                        name="company"
+                        name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Company</FormLabel>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                              Email
+                            </FormLabel>
                             <FormControl>
-                              <Input placeholder="Acme Inc." {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                              <Input
+                                {...field}
+                                name="email"
+                                type="email"
+                                autoComplete="email"
+                                placeholder="jane@company.com"
+                                className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -188,24 +367,21 @@ export default function Contact() {
                       />
                       <FormField
                         control={form.control}
-                        name="productInterest"
+                        name="company"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Product Interest</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger className="h-11 bg-white border-black/[0.10] text-[#1a1814] focus:border-primary/40 transition-colors rounded-xl data-[placeholder]:text-[#9a9490]">
-                                  <SelectValue placeholder="Select a product" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {PRODUCT_INTEREST_OPTIONS.map((option) => (
-                                  <SelectItem key={option} value={option}>
-                                    {option}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                              Company
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                name="company"
+                                autoComplete="organization"
+                                placeholder="Acme Inc."
+                                className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl"
+                              />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -213,12 +389,47 @@ export default function Contact() {
                     </div>
                     <FormField
                       control={form.control}
+                      name="productInterest"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                            Product Interest
+                          </FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="h-11 bg-white border-black/[0.10] text-[#1a1814] focus:border-primary/40 transition-colors rounded-xl data-[placeholder]:text-[#9a9490]">
+                                <SelectValue placeholder="Select a product" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {PRODUCT_INTEREST_OPTIONS.map((option) => (
+                                <SelectItem key={option} value={option}>
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Subject</FormLabel>
+                          <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                            Subject
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="How can we help?" {...field} className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl" />
+                            <Input
+                              placeholder="How can we help?"
+                              {...field}
+                              className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -229,27 +440,57 @@ export default function Contact() {
                       name="message"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">Message</FormLabel>
+                          <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                            Message
+                          </FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Tell us more about your Salesforce org..." className="min-h-[130px] bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors resize-none rounded-xl" {...field} />
+                            <Textarea
+                              placeholder="Tell us more about your Salesforce org..."
+                              className="min-h-[130px] bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors resize-none rounded-xl"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+                    <div className="flex justify-center sm:justify-start">
+                      <SalesforceRecaptcha
+                        siteKey={SALESFORCE_RECAPTCHA_SITE_KEY}
+                        onChange={(token) => {
+                          setCaptchaToken(token);
+                          if (token) setError(null);
+                        }}
+                        onError={() => {
+                          setCaptchaToken("");
+                          setError(
+                            "reCAPTCHA could not be loaded. Please refresh the page or email support@innovagentsai.com.",
+                          );
+                        }}
+                      />
+                    </div>
                     {error && (
-                      <p className="text-[13px] text-[#d65a41] px-1">{error}</p>
+                      <p
+                        role="alert"
+                        className="text-[13px] text-[#d65a41] px-1"
+                      >
+                        {error}
+                      </p>
                     )}
                     <Button
                       type="submit"
                       disabled={submitting}
                       className="w-full h-11 text-sm font-semibold bg-[#1a1814] hover:bg-[#33302a] text-white transition-colors rounded-full shadow-sm disabled:opacity-70"
                     >
-                      <Send className="w-4 h-4 mr-2" /> {submitting ? "Sending…" : "Send Message"}
+                      <Send className="w-4 h-4 mr-2" />{" "}
+                      {submitting ? "Sending…" : "Send Message"}
                     </Button>
                     <p className="text-[12px] text-[#9a9490] text-center leading-relaxed">
                       By submitting, you agree to our{" "}
-                      <Link href="/privacy-policy" className="text-primary hover:underline">
+                      <Link
+                        href="/privacy-policy"
+                        className="text-primary hover:underline"
+                      >
                         Privacy Policy
                       </Link>
                       .
@@ -271,8 +512,9 @@ export default function Contact() {
               Want help finding the right Salesforce app?
             </h2>
             <p className="text-[#6b6460] leading-relaxed mb-7">
-              Schedule a quick demo with our team. We'll walk through your workflow, answer questions,
-              and help you decide whether a free trial or direct install is the best next step.
+              Schedule a quick demo with our team. We'll walk through your
+              workflow, answer questions, and help you decide whether a free
+              trial or direct install is the best next step.
             </p>
             <div className="flex justify-center">
               <DemoButton event="get_started_demo_click" />
@@ -281,7 +523,8 @@ export default function Contact() {
 
           <div className="bg-white rounded-[24px] sm:rounded-[28px] border border-black/[0.07] p-2 sm:p-3 shadow-sm">
             <div className="flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-[#6b6460]">
-              <CalendarDays className="w-4 h-4 text-primary" /> Pick a time that works for you
+              <CalendarDays className="w-4 h-4 text-primary" /> Pick a time that
+              works for you
             </div>
             <CalendlyEmbed bookedEvent="get_started_demo_booked" />
           </div>

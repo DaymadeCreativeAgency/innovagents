@@ -25,7 +25,7 @@ Marketing website for InnovAgents — a company that builds affordable, Salesfor
 - `artifacts/web/` — the InnovAgents marketing site (React + Vite, wouter routing). This is the only product artifact.
 - `artifacts/web/src/index.css` — theme tokens (brand colors as HSL) and `@font-face` declarations for Barlow Condensed.
 - `artifacts/web/public/fonts/` — Barlow Condensed `.ttf` weights served at `/fonts/*`.
-- `artifacts/web/src/lib/seo.ts` — **the SEO source of truth.** Per-route title, description, canonical, OG image, and JSON-LD graph, plus the product FAQ copy. Adding a page means adding an entry here *and* a `<Route>` in `App.tsx`, or it won't be prerendered, sitemapped, or listed in `llms.txt`.
+- `artifacts/web/src/lib/seo.ts` — **the SEO source of truth.** Per-route title, description, canonical, OG image, and JSON-LD graph, plus the product FAQ copy. Adding a page means adding an entry here _and_ a `<Route>` in `App.tsx`, or it won't be prerendered, sitemapped, or listed in `llms.txt`.
 - `artifacts/web/src/lib/head.ts` — renders that registry to `<head>` HTML at build time; `src/hooks/use-page-meta.ts` is the client-side twin for SPA navigation. Keep the two in step.
 - `artifacts/web/scripts/prerender.mjs` — post-build step that writes one static HTML file per route plus `sitemap.xml`, `llms.txt`, and `llms-full.txt`.
 - `artifacts/web/src/content/blog/*.md` — blog posts. Dropping a markdown file here is the only step needed to publish: `src/lib/blog.ts` picks it up, and routes, sitemap, `llms.txt`, and `BlogPosting` JSON-LD all follow automatically.
@@ -64,7 +64,7 @@ _Populate as you build — explicit user instructions worth remembering across s
 - Product FAQ copy lives in `PRODUCT_SEO` in `src/lib/seo.ts`, not in the page components. The visible Q&A and the `FAQPage` JSON-LD both read from it; Google requires them to match.
 - `vite.config.ts` skips `manualChunks` for the SSR build — Rollup errors out if you try to chunk modules it externalizes.
 - Above-the-fold hero entrances use the `.ia-rise` CSS class (`index.css`), **not** framer-motion. framer-motion writes its `initial` values as inline styles during prerender, which left the LCP heading at `opacity: 0` until hydration. Keep heroes on `.ia-rise`; scroll-triggered sections below the fold can stay on framer-motion.
-- The CSP in `vercel.json` is deliberately permissive on `script-src`/`connect-src`/`frame-src` (`https:`). GTM fires Google Ads conversion beacons to regional Google TLDs, so a tight allowlist silently breaks conversion tracking — this was verified, not assumed. The strict parts that *do* carry weight are `object-src 'none'`, `base-uri 'self'`, `frame-ancestors 'self'`, and `form-action` (locked to Formspree + Mailchimp). If you tighten `script-src`, re-test with the Calendly embed on `/contact` and the Mailchimp newsletter, which loads over **JSONP** (a script tag, not fetch).
+- The CSP in `vercel.json` is deliberately permissive on `script-src`/`connect-src`/`frame-src` (`https:`). GTM fires Google Ads conversion beacons to regional Google TLDs, so a tight allowlist silently breaks conversion tracking — this was verified, not assumed. The strict parts that _do_ carry weight are `object-src 'none'`, `base-uri 'self'`, `frame-ancestors 'self'`, and `form-action` (locked to Salesforce Web-to-Lead + Mailchimp). If you tighten `script-src`, re-test with Google reCAPTCHA and the Calendly embed on `/contact`, plus the Mailchimp newsletter, which loads over **JSONP** (a script tag, not fetch).
 
 ## Pointers
 

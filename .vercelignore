@@ -1,0 +1,5 @@
+node_modules
+artifacts/*/node_modules
+artifacts/web/dist
+artifacts/web/dist-ssr
+*.tsbuildinfo
