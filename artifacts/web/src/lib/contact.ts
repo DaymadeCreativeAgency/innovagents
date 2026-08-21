@@ -9,12 +9,22 @@ export const SALESFORCE_RECAPTCHA_SITE_KEY =
 export const SALESFORCE_RETURN_URL =
   "https://innovagentsai.com/contact?submitted=true";
 
-export const SALESFORCE_CAPTCHA_SETTINGS = JSON.stringify({
-  keyname: "InnovAgents",
-  fallback: "true",
-  orgId: SALESFORCE_ORG_ID,
-  ts: "",
-});
+/**
+ * Salesforce validates `ts` as a freshness token; an empty or stale value makes
+ * it silently discard the lead while still honouring retURL. Build this at
+ * submit time rather than mutating the DOM on a timer -- React re-renders
+ * (e.g. the reCAPTCHA callback setting state) clobber imperative writes.
+ */
+export function salesforceCaptchaSettings(now: number = Date.now()): string {
+  return JSON.stringify({
+    keyname: "InnovAgents",
+    fallback: "true",
+    orgId: SALESFORCE_ORG_ID,
+    ts: JSON.stringify(now),
+  });
+}
+
+export const SALESFORCE_CAPTCHA_SETTINGS = salesforceCaptchaSettings();
 
 /** Submit the exact picklist values configured in Salesforce. */
 const SALESFORCE_PRODUCT_VALUES: Record<string, string> = {

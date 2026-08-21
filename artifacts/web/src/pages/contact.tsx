@@ -32,6 +32,7 @@ import {
   SALESFORCE_RECAPTCHA_SITE_KEY,
   SALESFORCE_RETURN_URL,
   SALESFORCE_WEB_TO_LEAD_URL,
+  salesforceCaptchaSettings,
   salesforceDescription,
   salesforceProductValue,
 } from "@/lib/contact";
@@ -77,7 +78,6 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState("");
   const [debugEmail, setDebugEmail] = useState<string | null>(null);
-  const captchaSettingsRef = useRef<HTMLInputElement>(null);
   const productInterestRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
@@ -104,24 +104,6 @@ export default function Contact() {
       setSuccess(true);
       window.history.replaceState({}, "", "/contact");
     }
-  }, []);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      const response = document.getElementById(
-        "g-recaptcha-response",
-      ) as HTMLTextAreaElement | null;
-      if (response?.value.trim() || !captchaSettingsRef.current) return;
-
-      const settings = JSON.parse(captchaSettingsRef.current.value) as Record<
-        string,
-        string
-      >;
-      settings.ts = JSON.stringify(Date.now());
-      captchaSettingsRef.current.value = JSON.stringify(settings);
-    }, 500);
-
-    return () => window.clearInterval(timer);
   }, []);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -155,6 +137,14 @@ export default function Contact() {
     track("get_started_contact_submit", {
       productInterest: values.productInterest,
     });
+
+    // Read off the form being submitted, not a ref: this must be the node the
+    // browser is about to serialise.
+    const captchaSettings = nativeForm.elements.namedItem(
+      "captcha_settings",
+    ) as HTMLInputElement | null;
+    if (captchaSettings) captchaSettings.value = salesforceCaptchaSettings();
+
     nativeForm.submit();
   }
 
@@ -276,7 +266,6 @@ export default function Contact() {
                     className="space-y-5"
                   >
                     <input
-                      ref={captchaSettingsRef}
                       type="hidden"
                       name="captcha_settings"
                       defaultValue={SALESFORCE_CAPTCHA_SETTINGS}
