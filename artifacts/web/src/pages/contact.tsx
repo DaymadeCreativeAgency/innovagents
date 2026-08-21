@@ -76,6 +76,7 @@ export default function Contact() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState("");
+  const [debugEmail, setDebugEmail] = useState<string | null>(null);
   const captchaSettingsRef = useRef<HTMLInputElement>(null);
   const productInterestRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -95,6 +96,10 @@ export default function Contact() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    // ?sfdebug=you@example.com makes Salesforce return its Web-to-Lead debug
+    // page (and email the same report) instead of silently dropping the lead.
+    const debugParam = params.get("sfdebug");
+    if (debugParam && debugParam.includes("@")) setDebugEmail(debugParam);
     if (params.get("submitted") === "true") {
       setSuccess(true);
       window.history.replaceState({}, "", "/contact");
@@ -277,6 +282,16 @@ export default function Contact() {
                       defaultValue={SALESFORCE_CAPTCHA_SETTINGS}
                     />
                     <input type="hidden" name="oid" value={SALESFORCE_ORG_ID} />
+                    {debugEmail && (
+                      <>
+                        <input type="hidden" name="debug" value="1" />
+                        <input
+                          type="hidden"
+                          name="debugEmail"
+                          value={debugEmail}
+                        />
+                      </>
+                    )}
                     <input
                       type="hidden"
                       name="retURL"
