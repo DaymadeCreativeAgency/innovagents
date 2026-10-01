@@ -37,6 +37,7 @@ import {
   salesforceProductValue,
 } from "@/lib/contact";
 import { PRODUCT_INTEREST_OPTIONS } from "@/lib/products";
+import { COUNTRY_OPTIONS } from "@/lib/countries";
 import { track } from "@/lib/track";
 import { CalendlyEmbed, DemoButton } from "@/components/calendly";
 import { SalesforceRecaptcha } from "@/components/salesforce-recaptcha";
@@ -59,6 +60,11 @@ const contactSchema = z.object({
     .string()
     .min(1, "Company is required")
     .max(40, "Company name is too long"),
+  jobTitle: z
+    .string()
+    .min(1, "Job title is required")
+    .max(128, "Job title is too long"),
+  country: z.string().min(1, "Please choose a country"),
   productInterest: z.string().min(1, "Please choose a product interest"),
   subject: z
     .string()
@@ -78,6 +84,7 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState("");
   const productInterestRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const form = useForm<z.infer<typeof contactSchema>>({
@@ -87,6 +94,8 @@ export default function Contact() {
       lastName: "",
       email: "",
       company: "",
+      jobTitle: "",
+      country: "",
       productInterest: "",
       subject: "",
       message: "",
@@ -121,6 +130,7 @@ export default function Contact() {
         values.productInterest,
       );
     }
+    if (countryRef.current) countryRef.current.value = values.country;
     if (descriptionRef.current) {
       descriptionRef.current.value = salesforceDescription(
         values.subject,
@@ -281,6 +291,7 @@ export default function Contact() {
                       type="hidden"
                       name={SALESFORCE_PRODUCT_INTEREST_FIELD}
                     />
+                    <input ref={countryRef} type="hidden" name="country" />
                     <textarea
                       ref={descriptionRef}
                       name="description"
@@ -371,6 +382,58 @@ export default function Contact() {
                                 className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl"
                               />
                             </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="jobTitle"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                              Job Title
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                name="title"
+                                autoComplete="organization-title"
+                                placeholder="Salesforce Admin"
+                                className="h-11 bg-white border-black/[0.10] text-[#1a1814] placeholder:text-[#9a9490] focus:border-primary/40 transition-colors rounded-xl"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="country"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[#6b6460] text-[11px] uppercase tracking-widest font-semibold">
+                              Country/Region
+                            </FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="h-11 bg-white border-black/[0.10] text-[#1a1814] focus:border-primary/40 transition-colors rounded-xl data-[placeholder]:text-[#9a9490]">
+                                  <SelectValue placeholder="Select a country" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="max-h-72">
+                                {COUNTRY_OPTIONS.map((country) => (
+                                  <SelectItem key={country} value={country}>
+                                    {country}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                             <FormMessage />
                           </FormItem>
                         )}
